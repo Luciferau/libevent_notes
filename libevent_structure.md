@@ -260,3 +260,61 @@ struct event_base {
 | `weakrand_seed`               | `struct evutil_weakrand_state`           | 存储弱随机数生成器的种子。                                  |
 | `once_events`                 | `LIST_HEAD(once_event_list, event_once)` | 存储尚未触发的事件。                                     |
 ## struct <font color="#4bacc6">eventop</font>
+```c
+/** 用于定义给定事件基础结构的后端的结构体。 */
+
+struct eventop {
+    /** 后端的名称。 */
+    const char *name;
+
+    /** 初始化函数，用于设置事件基础结构以使用该后端。它应该创建一个新的结构体，
+     * 保存运行该后端所需的任何信息，并将其返回。返回的指针将由event_init存储在
+     * event_base.evbase字段中。如果初始化失败，该函数应返回NULL。 */
+    void *(*init)(struct event_base *);
+
+    /** 启用给定文件描述符或信号的读写事件。'events'参数表示我们要启用的事件类型，
+     * 可能是EV_READ、EV_WRITE、EV_SIGNAL和EV_ET的组合。'old'参数表示之前在该
+     * 文件描述符上启用的事件。'fdinfo'参数是与文件描述符相关联的结构体，在evmap
+     * 中管理；其大小由下面的fdinfo_len字段定义。第一次添加文件描述符时，
+     * 它将被设置为0。该函数应在成功时返回0，在错误时返回-1。 */
+    int (*add)(struct event_base *, evutil_socket_t fd, short old, short events, void *fdinfo);
+
+    /** 类似于'add'函数，但'events'参数表示我们要禁用的事件类型。 */
+    int (*del)(struct event_base *, evutil_socket_t fd, short old, short events, void *fdinfo);
+
+    /** 实现事件循环的核心功能。它需要检查哪些已添加的事件已准备就绪，并为每个活动事件
+     * 调用event_active函数（通常通过event_io_active等方式）。该函数应在成功时返回0，
+     * 在错误时返回-1。 */
+    int (*dispatch)(struct event_base *, struct timeval *);
+
+    /** 用于清理和释放事件基础结构中的数据的函数。 */
+    void (*dealloc)(struct event_base *);
+
+    /** 标志：如果我们在fork之后需要重新初始化事件基础结构，则设置此标志。 */
+    int need_reinit;
+
+    /** 支持的事件方法特性的位数组。 */
+    enum event_method_feature features;
+
+    /** 每个具有一个或多个活动事件的文件描述符应记录的额外信息的长度。
+     * 此信息作为每个文件描述符的evmap条目的一部分记录，并作为参数传递给上述的
+     * 'add'和'del'函数。 */
+    size_t fdinfo_len;
+};
+
+```
+
+
+  
+
+|**参数名称**|**类型**|**意义**|
+|---|---|---|
+|`name`|`const char *`|后端的名称。|
+|`init`|`void *(*)(struct event_base *)`|初始化函数，用于设置事件基础结构以使用该后端。创建和返回新的结构体，返回 `NULL` 表示初始化失败。|
+|`add`|`int (*)(struct event_base *, evutil_socket_t fd, short old, short events, void *fdinfo)`|启用给定文件描述符或信号的读写事件。成功时返回 `0`，失败时返回 `-1`。|
+|`del`|`int (*)(struct event_base *, evutil_socket_t fd, short old, short events, void *fdinfo)`|禁用给定文件描述符或信号的读写事件。成功时返回 `0`，失败时返回 `-1`。|
+|`dispatch`|`int (*)(struct event_base *, struct timeval *)`|实现事件循环的核心功能，检查已添加事件是否准备好，并调用事件回调函数。成功时返回 `0`，失败时返回 `-1`。|
+|`dealloc`|`void (*)(struct event_base *)`|清理和释放事件基础结构中的数据。|
+|`need_reinit`|`int`|标志：如果在 fork 之后需要重新初始化事件基础结构，则设置此标志。|
+|`features`|`enum event_method_feature`|支持的事件方法特性的位数组。|
+|`fdinfo_len`|`size_t`|每个具有一个或多个活动事件的文件描述符记录的额外信息的长度。该信息作为每个文件描述符的 `evmap` 条目的一部分。|

@@ -211,3 +211,52 @@ struct event_base {
 
 ```
 
+| **参数名称**                      | **类型**                                   | **意义**                                         |
+| ----------------------------- | ---------------------------------------- | ---------------------------------------------- |
+| `evsel`                       | `const struct eventop *`                 | 指向特定于后端数据的指针，用于描述 `event_base` 端。              |
+| `evbase`                      | `void *`                                 | 指向特定于后端数据的指针，用于指向底层事件驱动后端的实现。                  |
+| `changelist`                  | `struct event_changelist`                | 描述在下次调度时需要通知后端更改的事件。                           |
+| `evsigsel`                    | `const struct eventop *`                 | 指向特定于信号处理后端数据的指针，用于描述信号处理。                     |
+| `sig`                         | `struct evsig_info`                      | 实现信号处理通用代码的数据。                                 |
+| `virtual_event_count`         | `int`                                    | 当前虚拟事件的数量。                                     |
+| `virtual_event_count_max`     | `int`                                    | 最大虚拟事件的数量。                                     |
+| `event_count`                 | `int`                                    | 已添加到 `event_base` 的事件数量。                       |
+| `event_count_max`             | `int`                                    | 最大已添加到 `event_base` 的事件数量。                     |
+| `event_count_active`          | `int`                                    | 当前活动事件的数量。                                     |
+| `event_count_active_max`      | `int`                                    | 最大活动事件的数量。                                     |
+| `event_gotterm`               | `int`                                    | 是否应在处理完事件后终止循环。                                |
+| `event_break`                 | `int`                                    | 是否应立即终止循环。                                     |
+| `event_continue`              | `int`                                    | 是否应在处理完事件后继续执行循环。                              |
+| `event_running_priority`      | `int`                                    | 当前正在运行的事件优先级。                                  |
+| `running_loop`                | `int`                                    | 是否正在运行 `event_base_loop` 函数，以防止重入调用。           |
+| `n_deferreds_queued`          | `int`                                    | 已 `deferred_cbs` 数量，用于防止饥饿。                    |
+| `activequeues`                | `struct evcallback_list *`               | 存储活动事件队列。                                      |
+| `nactivequeues`               | `int`                                    | 活动事件队列的数量。                                     |
+| `active_later_queue`          | `struct evcallback_list`                 | 存储应该在下次处理事件时激活的事件。                             |
+| `common_timeout_queues`       | `struct common_timeout_list **`          | 存储所有已知的时间timeouts(以下简写outs。                    |
+| `n_common_timeouts`           | `int`                                    | 已使用的时间outs 数量。                                 |
+| `n_common_timeouts_allocated` | `int`                                    | 已分配的时间outs 数量。                                 |
+| `io`                          | `struct event_io_map`                    | 存储文件描述符到已添加事件的映射。                              |
+| `sigmap`                      | `struct event_signal_map`                | 存储信号编号到已添加事件的映射。                               |
+| `timeheap`                    | `struct min_heap`                        | 存储具有超时的事件的优先队列。                                |
+| `tv_cache`                    | `struct timeval`                         | 存储当前时间，以避免频繁调用 `gettimeofday/clock_gettime`。   |
+| `monotonic_timer`             | `struct evutil_monotonic_timer`          | 用于实现单调时钟。                                      |
+| `tv_clock_diff`               | `struct timeval`                         | 存储内部时间与 `gettimeofday` 之间的差异。                  |
+| `last_updated_clock_diff`     | `time_t`                                 | 上次更新 `tv_clock_diff` 时的单调时间。                   |
+| `th_owner_id`                 | `unsigned long`                          | 当前运行 `event_loop` 的线程 ID。                      |
+| `th_base_lock`                | `void *`                                 | 防止对 `event_base` 的冲突访问的锁。                      |
+| `current_event_cond`          | `void *`                                 | 当处理完事件后，通知有等待的线程的条件变量。                         |
+| `current_event_waiters`       | `int`                                    | 在 `current_event_cond` 上阻塞的线程数量。               |
+| `current_event`               | `struct event_callback *`                | 当前正在执行其回调的事件。                                  |
+| `iocp`                        | `struct event_iocp_port *`               | 如果在 Windows 上使用 IOCP，指向 `event_iocp_port` 结构体。 |
+| `flags`                       | `enum event_base_config_flag`            | 表示 `event_base` 的配置标志。                         |
+| `max_dispatch_time`           | `struct timeval`                         | 最大调度时间。                                        |
+| `max_dispatch_callbacks`      | `int`                                    | 最大调度回调数量。                                      |
+| `limit_callbacks_after_prio`  | `int`                                    | 在达到特定优先级后限制回调数量。                               |
+| `is_notify_pending`           | `int`                                    | 是否已经有待处理的通知。                                   |
+| `th_notify_fd`                | `evutil_socket_t[2]`                     | 一个套接字对，用于唤醒主线程。                                |
+| `th_notify`                   | `struct event`                           | 用于在主线程中唤醒其他线程的事件。                              |
+| `th_notify_fn`                | `int (*)(struct event_base *base)`       | 用于从另一个线程唤醒主线程的函数。                              |
+| `weakrand_seed`               | `struct evutil_weakrand_state`           | 存储弱随机数生成器的种子。                                  |
+| `once_events`                 | `LIST_HEAD(once_event_list, event_once)` | 存储尚未触发的事件。                                     |
+## event

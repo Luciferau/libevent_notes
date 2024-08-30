@@ -39,5 +39,6 @@
   "event_base.md": "📓",
   "macro function.md": "📓",
   "Variadic function.md": "📓",
-  "libevent memory management and allocation.md": "📓"
+  "libevent memory management and allocation.md": "📓",
+  "libevent_structure.md": "📓"
 }

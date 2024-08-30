@@ -25,7 +25,7 @@
 ## memory allocation function
 ---
 ```c
-static void *(*mm_malloc_fn_)(size_t sz) = NULL;
+static void *(*mm_malloc_fn_)(size_t sz) = NULL;//定义一个接受参数为seize_t类型的函数指针mm_malloc_fn_
 static void *(*mm_realloc_fn_)(void *p, size_t sz) = NULL;
 static void (*mm_free_fn_)(void *p) = NULL;
 ```
@@ -87,4 +87,83 @@ error:
 ```
 
 ## <font color="#4bacc6">mm_malloc()</font>
+```c
+void * event_mm_malloc_(size_t sz)
+{
+	if (sz == 0)
+		return NULL;
 
+	if (mm_malloc_fn_)
+		return mm_malloc_fn_(sz);
+	else
+		return malloc(sz);
+}
+
+```
+
+## <font color="#4bacc6">mm_free()</font>
+```c
+#define mm_free(p) event_mm_free_(p)
+
+static void (*mm_free_fn_)(void *p) = NULL;//指向释放内存的函数
+```
+
+```c
+void event_mm_free_(void *ptr)
+{
+	if (mm_free_fn_)
+		mm_free_fn_(ptr);
+	else
+		free(ptr);
+}
+```
+
+## <font color="#4bacc6">mm_calloc()</font>
+```c
+ 
+
+#ifndef EVENT__DISABLE_MM_REPLACEMENT
+#define mm_malloc(sz) event_mm_malloc_(sz)
+#define mm_calloc(count, size) event_mm_calloc_((count), (size))
+#define mm_strdup(s) event_mm_strdup_(s)
+#define mm_realloc(p, sz) event_mm_realloc_((p), (sz))
+#define mm_free(p) event_mm_free_(p)
+#else
+#define mm_malloc(sz) malloc(sz)
+#define mm_calloc(n, sz) calloc((n), (sz))
+#define mm_strdup(s) strdup(s)
+#define mm_realloc(p, sz) realloc((p), (sz))
+#define mm_free(p) free(p)
+#endif //EVENT__DISABLE_MM_REPLACEMENT
+
+static void *(*mm_malloc_fn_)(size_t sz) = NULL;//定义一个接受参数为seize_t类型的函数指针mm_malloc_fn_
+void * event_mm_calloc_(size_t count, size_t size)
+{
+	if (count == 0 || size == 0)
+		return NULL;
+
+	if (mm_malloc_fn_) { 
+        //非空
+		size_t sz = count * size;
+		void *p = NULL;
+		if (count > EV_SIZE_MAX / size)
+			goto error;
+		p = mm_malloc_fn_(sz);
+		if (p)
+			return memset(p, 0, sz);
+	} else {
+        //为空
+		void *p = calloc(count, size);
+#ifdef _WIN32
+		/* Windows calloc doesn't reliably set ENOMEM */
+		if (p == NULL)
+			goto error;
+#endif
+		return p;
+	}
+
+error:
+	errno = ENOMEM;
+	return NULL;
+}
+```

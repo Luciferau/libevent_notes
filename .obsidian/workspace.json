@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "libevent memory management and allocation.md",
+                "file": "libevent_structure.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "libevent memory management and allocation.md"
+                "file": "libevent_structure.md"
               }
             }
           },
@@ -75,8 +75,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -96,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "libevent memory management and allocation.md",
+                "file": "libevent_structure.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "libevent memory management and allocation.md",
+                "file": "libevent_structure.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,7 +135,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "libevent memory management and allocation.md"
+                "file": "libevent_structure.md"
               }
             }
           },
@@ -187,8 +186,9 @@
   },
   "active": "3bef6238a71593aa",
   "lastOpenFiles": [
-    "images/Pasted image 20240831004253.png",
     "libevent memory management and allocation.md",
+    "libevent_structure.md",
+    "images/Pasted image 20240831004253.png",
     "event_base.md",
     "Variadic function.md",
     "macro function.md",

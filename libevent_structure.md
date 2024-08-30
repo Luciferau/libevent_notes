@@ -10,3 +10,4 @@ struct event_config_entry {
 	const char *avoid_method;//要避免使用的网络通信方法。
 };
 ```
+TAILQ_ENTRY 见：[[macro function]]

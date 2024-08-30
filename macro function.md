@@ -126,7 +126,7 @@ event_logv_(int severity, const char *errstr, const char *fmt, va_list ap)
 }
 ```
 
-## <font color="#8064a2">EVBASE_ACQUIRE_LOCK</font>
+# <font color="#8064a2">EVBASE_ACQUIRE_LOCK</font>
 ```c
 /** Lock an event_base, if it is set up for locking.  Acquires the lock
     in the base structure whose field is named 'lockvar'. */
@@ -196,3 +196,19 @@ than them that want to be active.
 @see event_priority_set()
 
 ```
+# <font color="#8064a2">TAILQ_ENTRY</font>
+```c
+//通过使用 TAILQ_ENTRY 宏，可以为指定的数据类型创建一个双向链表的入口和出口结构体，方便在链表中进行插入、删除和遍历等操作。
+#define	_TAILQ_ENTRY(type, qual)					\
+struct {								\
+	qual type *tqe_next;		/* next element */		\
+	qual type *qual *tqe_prev;	/* address of previous next element */\
+}
+#define TAILQ_ENTRY(type)	_TAILQ_ENTRY(struct type,)
+
+```
+`qual` 用于指定链表结构体成员的修饰符(它可以是 `const`、`volatile` 或其他限定符。)
+
+-  `tqe_next`：指向链表中下一个元素的指针。
+  
+- `tqe_prev`：指向链表中上一个元素的指针的地址。这里使用了一个指向指针的指针，即二级指针，用于在删除元素时修改前一个元素的 `tqe_next` 指针。

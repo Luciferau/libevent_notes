@@ -75,7 +75,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -184,7 +185,7 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "e35340117c9e52e1",
+  "active": "3bef6238a71593aa",
   "lastOpenFiles": [
     "images/Pasted image 20240831004253.png",
     "libevent memory management and allocation.md",

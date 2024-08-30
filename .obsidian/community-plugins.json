@@ -1,6 +1,5 @@
 [
   "obsidian-kanban",
-  "obsidian-git",
   "obsidian-auto-link-title",
   "editing-toolbar",
   "obsidian-checklist-plugin",
@@ -15,5 +14,6 @@
   "obsidian-tasks-plugin",
   "obsidian-icons-plugin",
   "obsidian-emoji-toolbar",
-  "obsidian-timelines"
+  "obsidian-timelines",
+  "obsidian-git"
 ]

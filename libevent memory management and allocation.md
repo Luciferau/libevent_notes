@@ -55,5 +55,36 @@ void *  event_mm_realloc_(void *ptr, size_t sz)
 ```
 
 ## <font color="#4bacc6">mm_strdup()</font>
- 52afb3e554cec2500bee636ab6624d2e
-git remote add origin https://xc909249c:52afb3e554cec2500bee636ab6624d2e@gitee.com/libevent_notes.git
+```c
+char * event_mm_strdup_(const char *str)
+{
+	if (!str) {
+		errno = EINVAL;
+		return NULL;
+	}
+
+	if (mm_malloc_fn_) {
+		size_t ln = strlen(str);
+		void *p = NULL;
+		if (ln == EV_SIZE_MAX)
+			goto error;
+		p = mm_malloc_fn_(ln+1);
+		if (p)
+			return memcpy(p, str, ln+1);
+	} else
+        //不同平台下的函数不一样
+#ifdef _WIN32
+		return _strdup(str);
+#else
+		return strdup(str);
+#endif
+
+error:
+	errno = ENOMEM;
+	return NULL;
+}
+ 
+```
+
+## <font color="#4bacc6">mm_malloc()</font>
+

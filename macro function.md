@@ -212,3 +212,12 @@ struct {								\
 -  `tqe_next`：指向链表中下一个元素的指针。
   
 - `tqe_prev`：指向链表中上一个元素的指针的地址。这里使用了一个指向指针的指针，即二级指针，用于在删除元素时修改前一个元素的 `tqe_next` 指针。
+
+# <font color="#8064a2">TAILQ_HEAD</font>
+```c
+#define TAILQ_HEAD(name, type)			\
+struct name {					\
+	struct type *tqh_first;			\
+	struct type **tqh_last;			\
+}
+```

@@ -305,16 +305,42 @@ struct eventop {
 ```
 
 
-  
 
-|**参数名称**|**类型**|**意义**|
-|---|---|---|
-|`name`|`const char *`|后端的名称。|
-|`init`|`void *(*)(struct event_base *)`|初始化函数，用于设置事件基础结构以使用该后端。创建和返回新的结构体，返回 `NULL` 表示初始化失败。|
-|`add`|`int (*)(struct event_base *, evutil_socket_t fd, short old, short events, void *fdinfo)`|启用给定文件描述符或信号的读写事件。成功时返回 `0`，失败时返回 `-1`。|
-|`del`|`int (*)(struct event_base *, evutil_socket_t fd, short old, short events, void *fdinfo)`|禁用给定文件描述符或信号的读写事件。成功时返回 `0`，失败时返回 `-1`。|
-|`dispatch`|`int (*)(struct event_base *, struct timeval *)`|实现事件循环的核心功能，检查已添加事件是否准备好，并调用事件回调函数。成功时返回 `0`，失败时返回 `-1`。|
-|`dealloc`|`void (*)(struct event_base *)`|清理和释放事件基础结构中的数据。|
-|`need_reinit`|`int`|标志：如果在 fork 之后需要重新初始化事件基础结构，则设置此标志。|
-|`features`|`enum event_method_feature`|支持的事件方法特性的位数组。|
-|`fdinfo_len`|`size_t`|每个具有一个或多个活动事件的文件描述符记录的额外信息的长度。该信息作为每个文件描述符的 `evmap` 条目的一部分。|
+| **参数名称**      | **类型**                                                                                    | **意义**                                                      |
+| ------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| `name`        | `const char *`                                                                            | 后端的名称。                                                      |
+| `init`        | `void *(*)(struct event_base *)`                                                          | 初始化函数，用于设置事件基础结构以使用该后端。创建和返回新的结构体，返回 `NULL` 表示初始化失败。        |
+| `add`         | `int (*)(struct event_base *, evutil_socket_t fd, short old, short events, void *fdinfo)` | 启用给定文件描述符或信号的读写事件。成功时返回 `0`，失败时返回 `-1`。                     |
+| `del`         | `int (*)(struct event_base *, evutil_socket_t fd, short old, short events, void *fdinfo)` | 禁用给定文件描述符或信号的读写事件。成功时返回 `0`，失败时返回 `-1`。                     |
+| `dispatch`    | `int (*)(struct event_base *, struct timeval *)`                                          | 实现事件循环的核心功能，检查已添加事件是否准备好，并调用事件回调函数。成功时返回 `0`，失败时返回 `-1`。    |
+| `dealloc`     | `void (*)(struct event_base *)`                                                           | 清理和释放事件基础结构中的数据。                                            |
+| `need_reinit` | `int`                                                                                     | 标志：如果在 fork 之后需要重新初始化事件基础结构，则设置此标志。                         |
+| `features`    | `enum event_method_feature`                                                               | 支持的事件方法特性的位数组。                                              |
+| `fdinfo_len`  | `size_t`                                                                                  | 每个具有一个或多个活动事件的文件描述符记录的额外信息的长度。该信息作为每个文件描述符的 `evmap` 条目的一部分。 |
+## struct <font color="#4bacc6">event_config</font>
+
+```c
+/** Internal structure: describes the configuration we want for an event_base
+ * that we're about to allocate. */
+struct event_config {
+    ////于定义一个双向链表的头部。它将被用作存储event_config_entry类型的结构体的链表。
+	TAILQ_HEAD(event_configq, event_config_entry) entries;
+    
+    //用于提示事件配置所需的CPU数量。
+	int n_cpus_hint;
+    //指定最大分派间隔的时间值。
+	struct timeval max_dispatch_interval;
+    //指定在一次循环中最大的分派回调数量。
+	int max_dispatch_callbacks;
+    //用于限制在特定优先级之后的回调数量。
+	int limit_callbacks_after_prio;
+    //指定要求的事件方法特性。
+    //event_config_require_featureEV_FEATURE_ET：要求支持边沿触发的后端等
+	enum event_method_feature require_features;
+    //指定事件基础配置的标志。
+	enum event_base_config_flag flags;//event_config_set_flag 设置具体可用参数见上文
+};
+```
+<font color="#8064a2">TAILQ_HEAD</font> 见：[[macro function]]
+
+## timeval 

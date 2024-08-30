@@ -1,0 +1,210 @@
+{
+  "main": {
+    "id": "5abbe530e88d92b1",
+    "type": "split",
+    "children": [
+      {
+        "id": "077f4cd65f270ddb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3bef6238a71593aa",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "libevent memory management and allocation.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "e90f6836645f400e",
+    "type": "split",
+    "children": [
+      {
+        "id": "fceb073982f8bd44",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e35340117c9e52e1",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "db730313e0ffb1b4",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "libevent memory management and allocation.md"
+              }
+            }
+          },
+          {
+            "id": "bd20081267919763",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "83e2667632c34436",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 251.50260543823242
+  },
+  "right": {
+    "id": "89888e66bdb231a4",
+    "type": "split",
+    "children": [
+      {
+        "id": "f441d4d63496dfa3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "80e11fab48a73e51",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "libevent memory management and allocation.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "9ca2f2e1f76b8a93",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "libevent memory management and allocation.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "65efbcc9693b7841",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "019bfc050c6fffe2",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "libevent memory management and allocation.md"
+              }
+            }
+          },
+          {
+            "id": "c7c4fabed4c9bd5d",
+            "type": "leaf",
+            "state": {
+              "type": "todo",
+              "state": {}
+            }
+          },
+          {
+            "id": "0d1b33994788e24e",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {}
+            }
+          },
+          {
+            "id": "e8ce9a37402bd115",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "obsidian-kanban:创建新看板": false,
+      "command-palette:打开命令面板": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "random-note:开始漫游笔记": false,
+      "markdown-importer:打开 Markdown 格式转换器": false
+    }
+  },
+  "active": "e35340117c9e52e1",
+  "lastOpenFiles": [
+    "images/Pasted image 20240831004253.png",
+    "libevent memory management and allocation.md",
+    "event_base.md",
+    "Variadic function.md",
+    "macro function.md",
+    "从一万英尺外看libevent.md",
+    "可变参数.md",
+    "images/Pasted image 20240830112747.png",
+    "images/Pasted image 20240830112652.png",
+    "images/Pasted image 20240830110420.png",
+    "images/Pasted image 20240828232346.png",
+    "images/Pasted image 20240829113803.png",
+    "images/Pasted image 20240829000720.png",
+    "images/Pasted image 20240829000717.png",
+    "images",
+    "res/Pasted image 20240828231713.png",
+    "Pasted image 20240828231947.png",
+    "res",
+    "未命名.canvas",
+    "em.md"
+  ]
+}

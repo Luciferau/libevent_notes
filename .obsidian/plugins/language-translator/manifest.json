@@ -1,0 +1,10 @@
+{
+	"id": "language-translator",
+	"name": "Language Translator",
+	"version": "1.0.4",
+	"minAppVersion": "0.9.12",
+	"description": "Translates given text to desired language",
+	"author": "Florin Bobis",
+	"authorUrl": "https://florin.page",
+	"isDesktopOnly": false
+}

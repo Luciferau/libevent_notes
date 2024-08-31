@@ -225,7 +225,21 @@ int event_base_loopexit(struct event_base *event_base, const struct timeval *tv)
 ```
 
 #### source code
+
+
 ```c
+
+
+static void event_loopexit_cb(evutil_socket_t fd, short what, void *arg)
+
+{
+
+    struct event_base *base = arg;
+
+    base->event_gotterm = 1;
+
+}
+
 int event_base_loopexit(struct event_base *event_base, const struct timeval *tv)
 
 {
@@ -236,6 +250,165 @@ int event_base_loopexit(struct event_base *event_base, const struct timeval *tv)
 
 }
 ```
+- **`event_base`**: 事件基础。
+- **`-1`**: 事件标识符，`-1` 表示这是一个一次性事件，没有持久化标识。
+- **`EV_TIMEOUT`**: 事件类型，这里是超时事件。表示这个事件是基于超时的。
+- **`event_loopexit_cb`**: 事件回调函数，当事件触发时会调用这个函数。
+- **`event_base`**: 作为回调函数的用户数据传递，这里传递了 `event_base` 结构的指针。
+- **`tv`**: 超时时间。如果为 `NULL`，超时时间可能会被视为立即触发
+
 <font color="#4bacc6">event_base_loopexit（）</font>让event_base在给定时间之后停止循环。如果<font color="#00b050">tv</font>参数为<font color="#8064a2">NULL</font>，<font color="#4bacc6">event_base</font>会立即停止循环，没有延时。如果<font color="#4bacc6">event_base</font>当前正在执行任何激活事件的回调，则回调会继续运行，直到运行完所有激活事件的回调之才退出。
 
 <font color="#4bacc6">event_base_loopbreak（）</font>让event_base立即退出循环。它与<font color="#4bacc6">event_base_loopexit（base,NULL）</font>的不同在于，如果event_base当前正在执行激活事件的回调，它将在执行完当前正在处理的事件后立即退出。
+
+
+## <font color="#4bacc6">event_base_once()</font>
+```c
+/* Schedules an event once */
+
+int
+
+event_base_once(struct event_base *base, evutil_socket_t fd, short events,
+
+    void (*callback)(evutil_socket_t, short, void *),
+
+    void *arg, const struct timeval *tv)
+
+{
+
+    struct event_once *eonce;
+
+    int res = 0;
+
+    int activate = 0;
+
+  
+
+    if (!base)
+
+        return (-1);
+
+  
+
+    /* We cannot support signals that just fire once, or persistent
+
+     * events. */
+
+    if (events & (EV_SIGNAL|EV_PERSIST))
+
+        return (-1);
+
+  
+
+    if ((eonce = mm_calloc(1, sizeof(struct event_once))) == NULL)
+
+        return (-1);
+
+  
+
+    eonce->cb = callback;
+
+    eonce->arg = arg;
+
+  
+
+    if ((events & (EV_TIMEOUT|EV_SIGNAL|EV_READ|EV_WRITE|EV_CLOSED)) == EV_TIMEOUT) {
+
+        evtimer_assign(&eonce->ev, base, event_once_cb, eonce);
+
+  
+
+        if (tv == NULL || ! evutil_timerisset(tv)) {
+
+            /* If the event is going to become active immediately,
+
+             * don't put it on the timeout queue.  This is one
+
+             * idiom for scheduling a callback, so let's make
+
+             * it fast (and order-preserving). */
+
+            activate = 1;
+
+        }
+
+    } else if (events & (EV_READ|EV_WRITE|EV_CLOSED)) {
+
+        events &= EV_READ|EV_WRITE|EV_CLOSED;
+
+  
+
+        event_assign(&eonce->ev, base, fd, events, event_once_cb, eonce);
+
+    } else {
+
+        /* Bad event combination */
+
+        mm_free(eonce);
+
+        return (-1);
+
+    }
+
+  
+
+    if (res == 0) {
+
+        EVBASE_ACQUIRE_LOCK(base, th_base_lock);
+
+        if (activate)
+
+            event_active_nolock_(&eonce->ev, EV_TIMEOUT, 1);
+
+        else
+
+            res = event_add_nolock_(&eonce->ev, tv, 0);
+
+  
+
+        if (res != 0) {
+
+            mm_free(eonce);
+
+            return (res);
+
+        } else {
+
+            LIST_INSERT_HEAD(&base->once_events, eonce, next_once);
+
+        }
+
+        EVBASE_RELEASE_LOCK(base, th_base_lock);
+
+    }
+
+  
+
+    return (0);
+
+}
+```
+
+- **参数说明**:
+    
+    - **`base`**: 指向 `event_base` 结构的指针，用于指定事件基础。
+    - **`fd`**: 文件描述符。用于 I/O 事件时指定哪个文件描述符。
+    - **`events`**: 事件类型标志，包括超时 (`EV_TIMEOUT`)、读 (`EV_READ`)、写 (`EV_WRITE`) 和关闭 (`EV_CLOSED`)。
+    - **`callback`**: 回调函数指针，在事件发生时调用。
+    - **`arg`**: 传递给回调函数的用户数据。
+    - **`tv`**: 超时时间的指针。用于设置超时事件的超时时间。
+- **主要逻辑**:
+    
+    - **基础检查**: 检查 `base` 是否为 `NULL`，如果是，则返回 `-1`。
+    - **事件类型检查**: 只允许 `EV_TIMEOUT`、`EV_READ`、`EV_WRITE` 和 `EV_CLOSED` 事件类型。不能处理 `EV_SIGNAL` 和 `EV_PERSIST` 类型。
+    - **内存分配**: 分配 `struct event_once` 结构的内存，并检查分配是否成功。
+    - **事件类型处理**:
+        - **超时事件** (`EV_TIMEOUT`): 如果 `tv` 为 `NULL` 或无效，标记事件为立即激活。
+        - **I/O 事件** (`EV_READ`、`EV_WRITE`、`EV_CLOSED`): 处理与文件描述符相关的事件。
+    - **锁操作**:
+        - 获取 `base` 的锁。
+        - 如果事件需要立即激活，调用 `event_active_nolock_` 使事件立即激活。
+        - 否则，将事件添加到事件队列中，调用 `event_add_nolock_`。
+        - 在锁内将事件插入到一次性事件列表 `once_events` 中。
+        - 释放锁。
+    - **返回值**: 成功时返回 `0`，否则返回错误代码。

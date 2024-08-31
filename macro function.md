@@ -216,15 +216,18 @@ struct {								\
 
 # <font color="#8064a2">TAILQ_HEAD</font>
 ```c
-#define TAILQ_HEAD(name, type)			\
-struct name {					\
-	struct type *tqh_first;			\
-	struct type **tqh_last;			\
+#define TAILQ_HEAD(name, type)          \
+struct name {                          \
+    struct type *tqh_first;            /* 指向链表的第一个元素 */ \
+    struct type **tqh_last;            /* 指向链表的最后一个元素的指针的指针 */ \
 }
+
 ```
-
-
-## <font color="#4bacc6">EVBASE_NEED_NOTIFY</font>
+`TAILQ_HEAD` 是用于定义双向链表头结构的宏，使得管理链表的操作更加简单
+- **`tqh_first`**: 指向链表的第一个元素。对于空链表，它是 `NULL`。
+    
+- **`tqh_last`**: 指向链表的最后一个元素的指针的指针。在链表的最后一个元素中，`tqh_last` 指向链表中最后一个元素的指针（也就是指向该元素的指针的指针）。对于空链表，它指向 `&tqh_first`，即链表头结构中的 `tqh_first`。
+# <font color="#4bacc6">EVBASE_NEED_NOTIFY</font>
 ```c
 /** Return true iff we need to notify the base's main thread about changes to
 
@@ -240,3 +243,26 @@ struct name {					\
 
         (base)->th_owner_id != evthread_id_fn_())
 ```
+
+- **`evthread_id_fn_`**: 一个函数指针，用于获取当前线程的 ID。它用于确定事件循环是否在另一个线程中运行。
+    
+- **`(base)->running_loop`**: 表示事件基础是否正在运行主事件循环。如果为 `true`，表示主循环正在运行中。
+    
+- **`(base)->th_owner_id`**: 存储主事件循环线程的 ID。这个 ID 是在事件循环开始时设置的。
+    
+- **`evthread_id_fn_()`**: 调用 `evthread_id_fn_` 函数来获取当前线程的 ID。
+---
+
+- **`evthread_id_fn_ != NULL`**: 确保线程 ID 函数指针有效，这意味着线程 ID 函数已经设置并可用。
+    
+- **`(base)->running_loop`**: 确保事件循环确实在运行中。
+    
+- **`(base)->th_owner_id != evthread_id_fn_()`**: 确保当前线程的 ID 与事件循环主线程的 ID 不同，表明主循环在另一个线程中运行。
+- ---
+ 
+
+这个宏的作用是检查是否需要通知主线程关于状态的变化，因为事件基础的主线程可能在不同的线程中运行。如果条件满足（即事件循环在另一个线程中运行且当前线程不是主线程），则返回 `true`，表示需要通知主线程。否则返回 `false`。
+
+# <font color="#8064a2">EVBASE_RELEASE_LOCK</font>
+
+# EVBASE_RELEASE_LOCK

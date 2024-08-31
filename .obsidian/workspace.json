@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "077f4cd65f270ddb",
+        "id": "650def11686060e3",
         "type": "tabs",
         "children": [
           {
-            "id": "3bef6238a71593aa",
+            "id": "e23041600514d273",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -75,7 +75,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -184,9 +185,12 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "3bef6238a71593aa",
+  "active": "e23041600514d273",
   "lastOpenFiles": [
     "从一万英尺外看libevent.md",
+    "event_base.md",
+    "images/Pasted image 20240831141854.png",
+    "Event loop.md",
     "images/Pasted image 20240831140329.png",
     "images/Pasted image 20240830112747.png",
     "images/Pasted image 20240830112652.png",
@@ -194,8 +198,6 @@
     "images/Pasted image 20240829113803.png",
     "images/Pasted image 20240829000720.png",
     "images/Pasted image 20240828232346.png",
-    "Event loop.md",
-    "event_base.md",
     "libevent_structure.md",
     "可变参数.md",
     "macro function.md",
@@ -204,7 +206,6 @@
     "images/Pasted image 20240831004253.png",
     "images/Pasted image 20240829000717.png",
     "images",
-    "res/Pasted image 20240828231713.png",
     "res",
     "未命名.canvas",
     "em.md"

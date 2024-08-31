@@ -5,6 +5,213 @@
 int event_base_loop(struct event_base *, int);
 ```
 
+### source code
+```c
+
+int
+
+event_base_loop(struct event_base *base, int flags)
+
+{
+
+    const struct eventop *evsel = base->evsel;
+
+    struct timeval tv;
+
+    struct timeval *tv_p;
+
+    int res, done, retval = 0;
+
+  
+
+    /* Grab the lock.  We will release it inside evsel.dispatch, and again
+
+     * as we invoke user callbacks. */
+
+    EVBASE_ACQUIRE_LOCK(base, th_base_lock);
+
+  
+
+    if (base->running_loop) {
+
+        event_warnx("%s: reentrant invocation.  Only one event_base_loop"
+
+            " can run on each event_base at once.", __func__);
+
+        EVBASE_RELEASE_LOCK(base, th_base_lock);
+
+        return -1;
+
+    }
+
+  
+
+    base->running_loop = 1;
+
+  
+
+    clear_time_cache(base);
+
+  
+
+    if (base->sig.ev_signal_added && base->sig.ev_n_signals_added)
+
+        evsig_set_base_(base);
+
+  
+
+    done = 0;
+
+  
+
+#ifndef EVENT__DISABLE_THREAD_SUPPORT
+
+    base->th_owner_id = EVTHREAD_GET_ID();
+
+#endif
+
+  
+
+    base->event_gotterm = base->event_break = 0;
+
+  
+
+    while (!done) {
+
+        base->event_continue = 0;
+
+        base->n_deferreds_queued = 0;
+
+  
+
+        /* Terminate the loop if we have been asked to */
+
+        if (base->event_gotterm) {
+
+            break;
+
+        }
+
+  
+
+        if (base->event_break) {
+
+            break;
+
+        }
+
+  
+
+        tv_p = &tv;
+
+        if (!N_ACTIVE_CALLBACKS(base) && !(flags & EVLOOP_NONBLOCK)) {
+
+            timeout_next(base, &tv_p);
+
+        } else {
+
+            /*
+
+             * if we have active events, we just poll new events
+
+             * without waiting.
+
+             */
+
+            evutil_timerclear(&tv);
+
+        }
+
+  
+
+        /* If we have no events, we just exit */
+
+        if (0==(flags&EVLOOP_NO_EXIT_ON_EMPTY) &&
+
+            !event_haveevents(base) && !N_ACTIVE_CALLBACKS(base)) {
+
+            event_debug(("%s: no events registered.", __func__));
+
+            retval = 1;
+
+            goto done;
+
+        }
+
+  
+
+        event_queue_make_later_events_active(base);
+
+  
+
+        clear_time_cache(base);
+
+  
+
+        res = evsel->dispatch(base, tv_p);
+
+  
+
+        if (res == -1) {
+
+            event_debug(("%s: dispatch returned unsuccessfully.",
+
+                __func__));
+
+            retval = -1;
+
+            goto done;
+
+        }
+
+  
+
+        update_time_cache(base);
+
+  
+
+        timeout_process(base);
+
+  
+
+        if (N_ACTIVE_CALLBACKS(base)) {
+
+            int n = event_process_active(base);
+
+            if ((flags & EVLOOP_ONCE)
+
+                && N_ACTIVE_CALLBACKS(base) == 0
+
+                && n != 0)
+
+                done = 1;
+
+        } else if (flags & EVLOOP_NONBLOCK)
+
+            done = 1;
+
+    }
+
+    event_debug(("%s: asked to terminate loop.", __func__));
+
+  
+
+done:
+
+    clear_time_cache(base);
+
+    base->running_loop = 0;
+
+  
+
+    EVBASE_RELEASE_LOCK(base, th_base_lock);
+
+  
+
+    return (retval);
+
+}
+```
 
 ```c
   
@@ -50,3 +257,17 @@ int event_base_loop(struct event_base *, int);
 完成工作后，如果正常退出，<font color="#4bacc6">event_base_loop（）</font>返回0；如果因为后端中的某些未处理错误而退出，则返回-1。
 ## pseudo-code
  
+![[Pasted image 20240831141854.png]]
+## API
+
+```c
+int
+
+event_base_dispatch(struct event_base *event_base)
+
+{
+
+    return (event_base_loop(event_base, 0));
+
+}
+```

@@ -263,6 +263,36 @@ struct name {                          \
 
 这个宏的作用是检查是否需要通知主线程关于状态的变化，因为事件基础的主线程可能在不同的线程中运行。如果条件满足（即事件循环在另一个线程中运行且当前线程不是主线程），则返回 `true`，表示需要通知主线程。否则返回 `false`。
 
-# <font color="#8064a2">EVBASE_RELEASE_LOCK</font>
+# <font color="#8064a2">EVBASE_RELEASE_LOCK</font> <font color="#8064a2">EVLOCK_UNLOCK</font>
 
-# EVBASE_RELEASE_LOCK
+
+```c
+/** Unlock an event_base, if it is set up for locking. */
+
+#define EVBASE_RELEASE_LOCK(base, lockvar) do {             \
+
+        EVLOCK_UNLOCK((base)->lockvar, 0);          \
+
+    } while (0)
+```
+
+```c
+/** Release a lock */
+
+#define EVLOCK_UNLOCK(lockvar,mode)                 \
+
+    do {                                \
+
+        if (lockvar)                        \
+
+            evthread_lock_fns_.unlock(mode, lockvar);   \
+
+    } while (0)
+```
+
+- **`lockvar`**: 具体的锁变量。这个变量是锁的实际对象，用于加锁和解锁。
+- **`mode`**: 解锁模式，这个参数通常用于指定解锁的方式，但在这段代码中它被设置为 `0`，具体模式取决于锁的实现。
+- **`evthread_lock_fns_.unlock`**: 这是一个函数指针，指向实际的解锁函数。`evthread_lock_fns_` 是一个结构体，包含了各种锁操作的函数指针（例如加锁、解锁等）。
+- **`EVBASE_RELEASE_LOCK(base, lockvar)`**: 这是一个高层次的宏，用于释放 `event_base` 的锁。它通过调用 `EVLOCK_UNLOCK` 实现具体的解锁操作。
+    
+- **`EVLOCK_UNLOCK(lockvar, mode)`**: 这是一个底层宏，实际执行解锁操作。它使用 `evthread_lock_fns_.unlock` 函数指针来解锁。`mode` 参数通常用于指定解锁的详细模式，但在这段代码中，它被设置为 `0`。

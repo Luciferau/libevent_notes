@@ -178,6 +178,9 @@ event_base_dispatch(struct event_base *event_base)
 如果想在移除所有已注册的事件之前停止活动的事件循环，可以调用两个稍有不同的函数。
 ## API
 ### <font color="#4bacc6">event_base_loopbreak()</font>
+```c
+int event_base_loopbreak(struct event_base *event_base)
+```
 #### source code
 ```c
 int event_base_loopbreak(struct event_base *event_base)
@@ -191,7 +194,7 @@ int event_base_loopbreak(struct event_base *event_base)
         return (-1);
 
   
-
+	//获取锁
     EVBASE_ACQUIRE_LOCK(event_base, th_base_lock);
 
     event_base->event_break = 1;
@@ -217,8 +220,21 @@ int event_base_loopbreak(struct event_base *event_base)
 ### <font color="#4bacc6">event_base_loopexit()</font>
 
 ```c
-int event_base_loopbreak(struct event_base *event_base)
+
 int event_base_loopexit(struct event_base *event_base, const struct timeval *tv)
+```
+
+#### source code
+```c
+int event_base_loopexit(struct event_base *event_base, const struct timeval *tv)
+
+{
+
+    return (event_base_once(event_base, -1, EV_TIMEOUT, event_loopexit_cb,
+
+            event_base, tv));
+
+}
 ```
 <font color="#4bacc6">event_base_loopexit（）</font>让event_base在给定时间之后停止循环。如果<font color="#00b050">tv</font>参数为<font color="#8064a2">NULL</font>，<font color="#4bacc6">event_base</font>会立即停止循环，没有延时。如果<font color="#4bacc6">event_base</font>当前正在执行任何激活事件的回调，则回调会继续运行，直到运行完所有激活事件的回调之才退出。
 

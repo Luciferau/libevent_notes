@@ -48,3 +48,5 @@ int event_base_loop(struct event_base *, int);
 在<font color="#00b050">flags</font>参数中设置一个或者多个标志就可以改变<font color="#4bacc6">event_base_loop（）</font>的行为。如果设置了<font color="#8064a2">EVLOOP_ONCE</font>，循环将等待某些事件成为激活的，执行激活的事件直到没有更多的事件可以执行，然会返回。如果设置了<font color="#8064a2">EVLOOP_NONBLOCK</font>，循环不会等待事件被触发：循环将仅仅检测是否有事件已经就绪，可以立即触发，如果有，则执行事件的回调。
 
 完成工作后，如果正常退出，<font color="#4bacc6">event_base_loop（）</font>返回0；如果因为后端中的某些未处理错误而退出，则返回-1。
+## pseudo-code
+ 

@@ -6,211 +6,110 @@ int event_base_loop(struct event_base *, int);
 ```
 
 ### source code
+相关宏函数见：[[macro function]]
+	<font color="#8064a2">EVBASE_ACQUIRE_LOCK</font>
+
 ```c
 
 int
-
 event_base_loop(struct event_base *base, int flags)
-
 {
+	const struct eventop *evsel = base->evsel;  // 获取事件操作接口
+	struct timeval tv;  // 用于存储超时时间
+	struct timeval *tv_p;  // 超时时间指针
+	int res, done, retval = 0;  // 返回值、循环控制标志和结果状态
 
-    const struct eventop *evsel = base->evsel;
+	/* 获取锁，以确保线程安全。将在 evsel.dispatch 内部释放锁 */
+	EVBASE_ACQUIRE_LOCK(base, th_base_lock);
 
-    struct timeval tv;
+	if (base->running_loop) {  // 检查是否已有循环在运行
+		event_warnx("%s: reentrant invocation.  Only one event_base_loop"
+		    " can run on each event_base at once.", __func__);
+		EVBASE_RELEASE_LOCK(base, th_base_lock);  // 释放锁
+		return -1;  // 返回错误
+	}
 
-    struct timeval *tv_p;
+	base->running_loop = 1;  // 标记循环正在运行
 
-    int res, done, retval = 0;
+	clear_time_cache(base);  // 清理时间缓存
 
-  
+	if (base->sig.ev_signal_added && base->sig.ev_n_signals_added)  // 如果有信号事件，设置信号基础
+		evsig_set_base_(base);
 
-    /* Grab the lock.  We will release it inside evsel.dispatch, and again
-
-     * as we invoke user callbacks. */
-
-    EVBASE_ACQUIRE_LOCK(base, th_base_lock);
-
-  
-
-    if (base->running_loop) {
-
-        event_warnx("%s: reentrant invocation.  Only one event_base_loop"
-
-            " can run on each event_base at once.", __func__);
-
-        EVBASE_RELEASE_LOCK(base, th_base_lock);
-
-        return -1;
-
-    }
-
-  
-
-    base->running_loop = 1;
-
-  
-
-    clear_time_cache(base);
-
-  
-
-    if (base->sig.ev_signal_added && base->sig.ev_n_signals_added)
-
-        evsig_set_base_(base);
-
-  
-
-    done = 0;
-
-  
+	done = 0;  // 初始化循环终止标志
 
 #ifndef EVENT__DISABLE_THREAD_SUPPORT
-
-    base->th_owner_id = EVTHREAD_GET_ID();
-
+	base->th_owner_id = EVTHREAD_GET_ID();  // 设置线程所有者ID
 #endif
 
-  
+	base->event_gotterm = base->event_break = 0;  // 初始化事件终止和中断标志
 
-    base->event_gotterm = base->event_break = 0;
+	while (!done) {  // 循环直到 done 为真
+		base->event_continue = 0;  // 初始化继续标志
+		base->n_deferreds_queued = 0;  // 初始化延迟队列计数
 
-  
+		/* 检查是否需要终止循环 */
+		if (base->event_gotterm) {
+			break;
+		}
 
-    while (!done) {
+		if (base->event_break) {
+			break;
+		}
 
-        base->event_continue = 0;
+		tv_p = &tv;  // 设置超时指针
+		if (!N_ACTIVE_CALLBACKS(base) && !(flags & EVLOOP_NONBLOCK)) {  // 如果没有活动回调且非非阻塞标志
+			timeout_next(base, &tv_p);  // 获取下一个超时时间
+		} else {
+			/* 如果有活动事件，直接轮询而不等待 */
+			evutil_timerclear(&tv);  // 清除时间
+		}
 
-        base->n_deferreds_queued = 0;
+		/* 如果没有事件，并且不允许在空状态下退出，则退出 */
+		if (0==(flags&EVLOOP_NO_EXIT_ON_EMPTY) &&
+		    !event_haveevents(base) && !N_ACTIVE_CALLBACKS(base)) {
+			event_debug(("%s: no events registered.", __func__));
+			retval = 1;  // 设置结果状态为1
+			goto done;  // 跳转到清理部分
+		}
 
-  
+		event_queue_make_later_events_active(base);  // 激活稍后的事件
 
-        /* Terminate the loop if we have been asked to */
+		clear_time_cache(base);  // 再次清理时间缓存
 
-        if (base->event_gotterm) {
+		res = evsel->dispatch(base, tv_p);  // 调用事件调度函数
 
-            break;
+		if (res == -1) {  // 检查调度函数是否成功
+			event_debug(("%s: dispatch returned unsuccessfully.",
+				__func__));
+			retval = -1;  // 设置结果状态为-1
+			goto done;  // 跳转到清理部分
+		}
 
-        }
+		update_time_cache(base);  // 更新时间缓存
 
-  
+		timeout_process(base);  // 处理超时事件
 
-        if (base->event_break) {
-
-            break;
-
-        }
-
-  
-
-        tv_p = &tv;
-
-        if (!N_ACTIVE_CALLBACKS(base) && !(flags & EVLOOP_NONBLOCK)) {
-
-            timeout_next(base, &tv_p);
-
-        } else {
-
-            /*
-
-             * if we have active events, we just poll new events
-
-             * without waiting.
-
-             */
-
-            evutil_timerclear(&tv);
-
-        }
-
-  
-
-        /* If we have no events, we just exit */
-
-        if (0==(flags&EVLOOP_NO_EXIT_ON_EMPTY) &&
-
-            !event_haveevents(base) && !N_ACTIVE_CALLBACKS(base)) {
-
-            event_debug(("%s: no events registered.", __func__));
-
-            retval = 1;
-
-            goto done;
-
-        }
-
-  
-
-        event_queue_make_later_events_active(base);
-
-  
-
-        clear_time_cache(base);
-
-  
-
-        res = evsel->dispatch(base, tv_p);
-
-  
-
-        if (res == -1) {
-
-            event_debug(("%s: dispatch returned unsuccessfully.",
-
-                __func__));
-
-            retval = -1;
-
-            goto done;
-
-        }
-
-  
-
-        update_time_cache(base);
-
-  
-
-        timeout_process(base);
-
-  
-
-        if (N_ACTIVE_CALLBACKS(base)) {
-
-            int n = event_process_active(base);
-
-            if ((flags & EVLOOP_ONCE)
-
-                && N_ACTIVE_CALLBACKS(base) == 0
-
-                && n != 0)
-
-                done = 1;
-
-        } else if (flags & EVLOOP_NONBLOCK)
-
-            done = 1;
-
-    }
-
-    event_debug(("%s: asked to terminate loop.", __func__));
-
-  
+		if (N_ACTIVE_CALLBACKS(base)) {  // 如果有活动回调
+			int n = event_process_active(base);  // 处理活动回调
+			if ((flags & EVLOOP_ONCE)  // 如果是一次性循环
+			    && N_ACTIVE_CALLBACKS(base) == 0
+			    && n != 0)
+				done = 1;  // 设置循环结束标志
+		} else if (flags & EVLOOP_NONBLOCK)
+			done = 1;  // 如果是非阻塞标志，结束循环
+	}
+	event_debug(("%s: asked to terminate loop.", __func__));
 
 done:
+	clear_time_cache(base);  // 清理时间缓存
+	base->running_loop = 0;  // 标记循环已结束
 
-    clear_time_cache(base);
+	EVBASE_RELEASE_LOCK(base, th_base_lock);  // 释放锁
 
-    base->running_loop = 0;
-
-  
-
-    EVBASE_RELEASE_LOCK(base, th_base_lock);
-
-  
-
-    return (retval);
-
+	return (retval);  // 返回最终结果
 }
+
 ```
 
 ```c

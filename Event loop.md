@@ -6,7 +6,8 @@ int event_base_loop(struct event_base *, int);
 ```
 
 ### source code
-相关宏函数见：[[macro function]]
+相关宏定义见：[[Macro definition]]
+相关宏函数见：[[Macro function]]
 	<font color="#8064a2">EVBASE_ACQUIRE_LOCK</font>
 <font color="#8064a2">N_ACTIVE_CALLBACKS</font>
 ```c

@@ -10,7 +10,7 @@ struct event_config_entry {
 	const char *avoid_method;//要避免使用的网络通信方法。
 };
 ```
-TAILQ_ENTRY 见：[[macro function]]
+TAILQ_ENTRY 见：[[Macro function]]
 ## struct <font color="#4bacc6">event_base</font>
 ```c
 struct event_base {
@@ -341,7 +341,7 @@ struct event_config {
 	enum event_base_config_flag flags;//event_config_set_flag 设置具体可用参数见上文
 };
 ```
-<font color="#8064a2">TAILQ_HEAD</font> 见：[[macro function]]
+<font color="#8064a2">TAILQ_HEAD</font> 见：[[Macro function]]
 
 ## timeval 
 ```c

@@ -37,10 +37,10 @@
   "images/Pasted image 20240828232346.png": "LiImage",
   "images/Pasted image 20240829000720.png": "LiImage",
   "event_base.md": "📓",
-  "macro function.md": "📓",
   "Variadic function.md": "📓",
   "libevent memory management and allocation.md": "📓",
   "libevent_structure.md": "📓",
   "Event loop.md": "📓",
-  "Macro definition.md": "📓"
+  "Macro definition.md": "📓",
+  "Macro function.md": "📓"
 }

@@ -24,7 +24,7 @@ struct event_base * event_base_new(void)
 	要对取得什么类型的event_base有更多的控制，就需要使用event_config。event_config是一个容纳event_base配置信息的不透明结构体。需要event_base时，将event_config传递给event_base_new_with_config().
 
 ==这些函数和类型在<event2/event.h>中声明。==
-以下代码相关宏函数见：[[macro function]]
+以下代码相关宏函数见：[[Macro function]]
 ### <font color="#4bacc6">event_config_new()</font>
 
 ```c++
@@ -48,7 +48,7 @@ struct event_config * event_config_new(void)
 }
 
 ```
-<font color="#8064a2">TAILQ_INIT</font> 相关定义： [[macro function]]
+<font color="#8064a2">TAILQ_INIT</font> 相关定义： [[Macro function]]
 
  要使用这些函数分配<font color="#4bacc6">event_base</font>，先调用`event_config_new()`分配一个`event_config`。然后,对`event_config`调用其它函数，设置所需要的`event_base`特征。最后，调用其它函数，设置所需要的`event_base`特征。最后，调用`event_base_new_with_config()`获取新的`event_base`。完成工作后，使用`event_config_free()`释放`event_config`。
 
@@ -377,7 +377,7 @@ const char * event_base_get_method(const struct event_base *base)
 	return (base->evsel->name);
 }
 ```
-<font color="#8064a2">EVUTIL_ASSERT</font> 见：[[macro function]]
+<font color="#8064a2">EVUTIL_ASSERT</font> 见：[[Macro function]]
 
 ## free <font color="#4bacc6">event_base</font>
 使用完 <font color="#4bacc6">event_base</font> 之后，使用<font color="#4f81bd">event_base_free()</font>进行释放
@@ -635,7 +635,7 @@ int event_base_priority_init(struct event_base *base, int npriorities)
 默认情况下，与event_base相关联的事件将被初始化为具有优先级<font color="#00b050">n_priorities / 2</font>。<font color="#4bacc6">event_base_priority_init（）</font>函数定义在<event2/event.h>中，从libevent 1.0版就可用了。
 
 这个宏用于获取`event_base`_的锁（if support）
-<font color="#8064a2">EVBASE_ACQUIRE_LOCK</font> 见:[[macro function]]
+<font color="#8064a2">EVBASE_ACQUIRE_LOCK</font> 见:[[Macro function]]
 
 ### <font color="#4bacc6"> event_base_priority_init()</font>
 

@@ -1,6 +1,6 @@
 # run loop
 一旦有了一个已经注册了某些事件的event_base，就需要让libevent等待事件并且通知事件的发生。
-## event_base_loop()
+## <font color="#4bacc6">event_base_loop()</font>
 ```c
 int event_base_loop(struct event_base *, int);
 ```
@@ -171,3 +171,9 @@ event_base_dispatch(struct event_base *event_base)
 
 }
 ```
+<font color="#4bacc6">event_base_dispatch（）</font>等同于没有设置标志的<font color="#4bacc6">event_base_loop（）</font>。所以，<font color="#4bacc6">event_base_dispatch（）</font>将一直运行，直到没有已经注册的事件了，或者调用了<font color="#4bacc6">event_base_loopbreak（）</font>或者<font color="#4bacc6">event_base_loopexit（）</font>为止。
+
+
+# stop loop
+如果想在移除所有已注册的事件之前停止活动的事件循环，可以调用两个稍有不同的函数。
+## API

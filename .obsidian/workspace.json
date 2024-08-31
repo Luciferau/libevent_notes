@@ -4,45 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "8f5b538f355479c3",
-        "type": "split",
+        "id": "22ff85003d319b13",
+        "type": "tabs",
         "children": [
           {
-            "id": "5ef1599cada0b784",
-            "type": "tabs",
-            "dimension": 22.22222222222222,
-            "children": [
-              {
-                "id": "7179a874270453f5",
-                "type": "leaf",
-                "state": {
-                  "type": "markdown",
-                  "state": {
-                    "file": "libevent_structure.md",
-                    "mode": "source",
-                    "source": false
-                  }
-                }
+            "id": "d0a5f141b9ef4a3f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "libevent_structure.md",
+                "mode": "source",
+                "source": false
               }
-            ]
-          },
-          {
-            "id": "932344ddeea9bde0",
-            "type": "tabs",
-            "dimension": 77.77777777777779,
-            "children": [
-              {
-                "id": "7b7b6ff0a13a445f",
-                "type": "leaf",
-                "state": {
-                  "type": "mindmap",
-                  "state": {}
-                }
-              }
-            ]
+            }
           }
-        ],
-        "direction": "horizontal"
+        ]
       }
     ],
     "direction": "vertical"
@@ -61,7 +38,7 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "byModifiedTime"
               }
             }
           },
@@ -98,7 +75,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -207,24 +185,24 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "7179a874270453f5",
+  "active": "d0a5f141b9ef4a3f",
   "lastOpenFiles": [
-    "从一万英尺外看libevent.md",
-    "Macro function.md",
+    "event_base.md",
     "Event loop.md",
     "Macro definition.md",
-    "event_base.md",
+    "Macro function.md",
+    "images/Pasted image 20240829113803.png",
+    "images/Pasted image 20240830110420.png",
+    "images/Pasted image 20240828232346.png",
+    "images/Pasted image 20240830112652.png",
+    "Look at libevent from 10,000 feet away.md",
+    "Variadic function.md",
     "libevent_structure.md",
     "images/Pasted image 20240831141854.png",
     "images/Pasted image 20240831140329.png",
     "images/Pasted image 20240830112747.png",
-    "images/Pasted image 20240830112652.png",
-    "images/Pasted image 20240830110420.png",
-    "images/Pasted image 20240829113803.png",
     "images/Pasted image 20240829000720.png",
-    "images/Pasted image 20240828232346.png",
     "可变参数.md",
-    "Variadic function.md",
     "libevent memory management and allocation.md",
     "images/Pasted image 20240831004253.png",
     "images/Pasted image 20240829000717.png",

@@ -1,6 +1,6 @@
 # run loop
 一旦有了一个已经注册了某些事件的event_base，就需要让libevent等待事件并且通知事件的发生。
-## API
+## event_base_loop()
 ```c
 int event_base_loop(struct event_base *, int);
 ```
@@ -158,7 +158,7 @@ done:
 ## pseudo-code
  
 ![[Pasted image 20240831141854.png]]
-## API
+## <font color="#4bacc6">event_base_dispatch()</font>
 
 ```c
 int

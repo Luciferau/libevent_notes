@@ -75,7 +75,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -184,13 +185,14 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "d0a5f141b9ef4a3f",
+  "active": "db730313e0ffb1b4",
   "lastOpenFiles": [
-    "libevent_structure.md",
-    "event_base.md",
-    "Event loop.md",
     "Macro definition.md",
     "Macro function.md",
+    "event_base.md",
+    "libevent memory management and allocation.md",
+    "Event loop.md",
+    "libevent_structure.md",
     "images/Pasted image 20240829113803.png",
     "images/Pasted image 20240830110420.png",
     "images/Pasted image 20240828232346.png",
@@ -202,7 +204,6 @@
     "images/Pasted image 20240830112747.png",
     "images/Pasted image 20240829000720.png",
     "可变参数.md",
-    "libevent memory management and allocation.md",
     "images/Pasted image 20240831004253.png",
     "images/Pasted image 20240829000717.png",
     "images",

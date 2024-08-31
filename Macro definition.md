@@ -2,6 +2,7 @@
 
 ## <font color="#8064a2">EVLOOP_ONCE</font> <font color="#8064a2">EVLOOP_NONBLOCK</font> <font color="#8064a2">EVLOOP_NO_EXIT_ON_EMPTY</font>
 
+这三个也是 <font color="#4bacc6">event_base_loop()</font>的flag参数
 ```c
 /** @name Loop flags
 

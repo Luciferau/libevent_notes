@@ -126,7 +126,8 @@ event_logv_(int severity, const char *errstr, const char *fmt, va_list ap)
 }
 ```
 
-# <font color="#8064a2">EVBASE_ACQUIRE_LOCK</font>
+# <font color="#8064a2">EVBASE_ACQUIRE_LOCK</font> <font color="#8064a2">N_ACTIVE_CALLBACKS</font>
+
 ```c
 /** Lock an event_base, if it is set up for locking.  Acquires the lock
     in the base structure whose field is named 'lockvar'. */

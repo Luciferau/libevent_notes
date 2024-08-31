@@ -4,24 +4,6 @@
     "type": "split",
     "children": [
       {
-        "id": "650def11686060e3",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "e23041600514d273",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "macro function.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          }
-        ]
-      },
-      {
         "id": "5ef1599cada0b784",
         "type": "tabs",
         "children": [
@@ -31,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Event loop.md",
+                "file": "Macro definition.md",
                 "mode": "source",
                 "source": false
               }
@@ -66,7 +48,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "macro function.md"
+                "file": "Macro definition.md"
               }
             }
           },
@@ -93,8 +75,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -114,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "macro function.md",
+                "file": "Macro definition.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -131,7 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "macro function.md",
+                "file": "Macro definition.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -154,7 +135,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "macro function.md"
+                "file": "Macro definition.md"
               }
             }
           },
@@ -203,13 +184,14 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "e23041600514d273",
+  "active": "7179a874270453f5",
   "lastOpenFiles": [
     "Event loop.md",
+    "event_base.md",
     "macro function.md",
+    "Macro definition.md",
     "libevent_structure.md",
     "从一万英尺外看libevent.md",
-    "event_base.md",
     "images/Pasted image 20240831141854.png",
     "images/Pasted image 20240831140329.png",
     "images/Pasted image 20240830112747.png",

@@ -701,6 +701,7 @@ err:
 
 
 ## Reinitializes <font color="#f79646">event_base</font> after <font color="#4bacc6">fork()</font>
+### <font color="#4bacc6">event_reinit()</font>
 
 	不是所有事件后端都在调用fork（）创建一个新的进程之后可以正确工作。所以，如果在使用fork（）或者其他相关系统调用启动新进程之后，希望在新进程中继续使用event_base，就需要进行重新初始化。
 ```c

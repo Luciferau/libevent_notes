@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Event loop.md",
+                "file": "Work with events.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Event loop.md"
+                "file": "Work with events.md"
               }
             }
           },
@@ -75,8 +75,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -96,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Event loop.md",
+                "file": "Work with events.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Event loop.md",
+                "file": "Work with events.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,7 +135,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Event loop.md"
+                "file": "Work with events.md"
               }
             }
           },
@@ -187,9 +186,10 @@
   },
   "active": "d0a5f141b9ef4a3f",
   "lastOpenFiles": [
+    "Event loop.md",
+    "Work with events.md",
     "Macro function.md",
     "Macro definition.md",
-    "Event loop.md",
     "images/Pasted image 20240831141854.png",
     "images/Pasted image 20240831140329.png",
     "images/Pasted image 20240830112747.png",

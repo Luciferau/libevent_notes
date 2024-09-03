@@ -469,4 +469,44 @@ int event_base_gettimeofday_cached(struct event_base *base, struct timeval *tv)
 
 }
 ```
-如果当前正在执行回调，event_base_gettimeofday_cached()函数设置tv_out参数的值为缓存的时间。否则，函数调用evutil_gettimeofday()获取真正的当前时间。成功时函数返回0，失败时返回负数。
+如果当前正在执行回调，<font color="#4bacc6">event_base_gettimeofday_cached()</font>函数设置tv_out参数的值为缓存的时间。否则，函数调用evutil_gettimeofday()获取真正的当前时间。成功时函数返回0，失败时返回负数。
+
+注意，因为libevent在开始执行回调的时候缓存时间值，所以这个值至少是有一点不精确的。如果回调执行很长时间，这个值将非常不精确。
+
+这个函数是libevent 2.0.4-alpha新引入的
+
+# Example Dump <font color="#4bacc6">event_base</font> status
+```c
+void event_base_dump_events(struct event_base *base, FILE *output)
+```
+
+## source code
+~~~c
+  
+
+void
+
+event_base_dump_events(struct event_base *base, FILE *output)
+
+{
+
+    EVBASE_ACQUIRE_LOCK(base, th_base_lock);
+
+    fprintf(output, "Inserted events:\n");
+
+    event_base_foreach_event_nolock_(base, dump_inserted_event_fn, output);
+
+  
+
+    fprintf(output, "Active events:\n");
+
+    event_base_foreach_event_nolock_(base, dump_active_event_fn, output);
+
+    EVBASE_RELEASE_LOCK(base, th_base_lock);
+
+}
+~~~
+为帮助调试程序（或者调试libevent），有时候可能需要加入到event_base的事件及其状态的完整列表。调用event_base_dump_events()可以将这个列表输出到指定的文件中。
+这个函数在libevent 2.0.1-alpha版本中引入。
+
+# Discarded event loop function

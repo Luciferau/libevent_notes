@@ -429,4 +429,44 @@ event_base_once(struct event_base *base, evutil_socket_t fd, short events,
 ```c
 int event_base_gettimeofday_cached(struct event_base *base, struct timeval *tv)
 ```
+## source code
+```c  
+int event_base_gettimeofday_cached(struct event_base *base, struct timeval *tv)
+
+{
+
+    int r;
+
+    if (!base) {
+
+        base = current_base;
+
+        if (!current_base)
+
+            return evutil_gettimeofday(tv, NULL);
+
+    }
+
+  
+
+    EVBASE_ACQUIRE_LOCK(base, th_base_lock);
+
+    if (base->tv_cache.tv_sec == 0) {
+
+        r = evutil_gettimeofday(tv, NULL);
+
+    } else {
+
+        evutil_timeradd(&base->tv_cache, &base->tv_clock_diff, tv);
+
+        r = 0;
+
+    }
+
+    EVBASE_RELEASE_LOCK(base, th_base_lock);
+
+    return r;
+
+}
+```
 如果当前正在执行回调，event_base_gettimeofday_cached()函数设置tv_out参数的值为缓存的时间。否则，函数调用evutil_gettimeofday()获取真正的当前时间。成功时函数返回0，失败时返回负数。

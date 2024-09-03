@@ -51,3 +51,27 @@
     
     - **含义**: 即使没有待处理的事件，也不要退出循环。事件循环将会继续运行，直到调用 `event_base_loopexit()` 或 `event_base_loopbreak()` 使其停止。
     - **行为**: 当设置了这个标志时，事件循环即使在没有活动事件的情况下也不会退出。它将继续运行，直到显式地要求它退出。这适用于需要长期运行的事件循环，直到收到特定的退出命令。
+# <font color="#8064a2">evutil_gettimeofday</font>
+
+```c
+/** Replacement for gettimeofday on platforms that lack it. */
+
+#ifdef EVENT__HAVE_GETTIMEOFDAY
+
+#define evutil_gettimeofday(tv, tz) gettimeofday((tv), (tz))
+
+#else
+
+struct timezone;
+
+EVENT2_EXPORT_SYMBOL
+
+int evutil_gettimeofday(struct timeval *tv, struct timezone *tz);
+
+#endif
+```
+
+这段代码定义了一个函数`evutil_gettimeofday`，它是用于获取当前时间的函数，用于替代一些平台中没有`gettimeofday`函数的情况。
+
+首先，代码中使用了`#ifdef`和`#define`来判断编译器是否支持`gettimeofday`函数。如果支持，则直接使用`gettimeofday`函数。如果不支持，则定义了一个名为`evutil_gettimeofday`的函数，它接受两个参数：`tv`和`tz`，分别表示要设置的时间值和时区信息。
+ 

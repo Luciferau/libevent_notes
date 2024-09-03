@@ -422,3 +422,11 @@ event_base_once(struct event_base *base, evutil_socket_t fd, short events,
         - 释放锁。
     - **返回值**: 成功时返回 `0`，否则返回错误代码。
 
+# Check the internal time cache
+有时候需要在事件回调中获取当前时间的近似视图，但不想调用<font color="#4bacc6">gettimeofday()</font>（可能是因为OS将<font color="#4bacc6">gettimeofday()</font>作为系统调用实现，而你试图避免系统调用的开销）。
+
+在回调中，可以请求libevent开始本轮回调时的当前时间视图。
+```c
+int event_base_gettimeofday_cached(struct event_base *base, struct timeval *tv)
+```
+如果当前正在执行回调，event_base_gettimeofday_cached()函数设置tv_out参数的值为缓存的时间。否则，函数调用evutil_gettimeofday()获取真正的当前时间。成功时函数返回0，失败时返回负数。

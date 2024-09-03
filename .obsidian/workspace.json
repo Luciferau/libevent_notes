@@ -164,12 +164,12 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -185,8 +185,9 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "db730313e0ffb1b4",
+  "active": "d0a5f141b9ef4a3f",
   "lastOpenFiles": [
+    "Macro function.md",
     "Macro definition.md",
     "Event loop.md",
     "images/Pasted image 20240831141854.png",
@@ -200,7 +201,6 @@
     "event_base.md",
     "Variadic function.md",
     "libevent memory management and allocation.md",
-    "Macro function.md",
     "libevent_structure.md",
     "Look at libevent from 10,000 feet away.md",
     "可变参数.md",

@@ -482,11 +482,7 @@ void event_base_dump_events(struct event_base *base, FILE *output)
 
 ## source code
 ~~~c
-  
-
-void
-
-event_base_dump_events(struct event_base *base, FILE *output)
+void event_base_dump_events(struct event_base *base, FILE *output)
 
 {
 
@@ -510,3 +506,11 @@ event_base_dump_events(struct event_base *base, FILE *output)
 这个函数在libevent 2.0.1-alpha版本中引入。
 
 # Discarded event loop function
+前面已经讨论过，老版本的libevent 具有“当前”event_base的概念。
+
+本文讨论的某些事件循环函数具有操作当前event_base的变体。除了没有base参数外，这些函数跟当前新版本函数的行为相同。
+
+| Current function                                                             | Obsolete current-base version                                 |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| event_base_dispatch()<br><br>event base loopexit()<br>event base loopbreak() | event_dispatch()<br><br>event loopexit()<br>event loopbreak() |
+| event base loop()                                                            | event loop()                                                  |

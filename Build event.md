@@ -1,7 +1,16 @@
 ![](images/Pasted%20image%2020240904112623.png)
- 
-# Create <font color="#ffff00">event</font>
+ libevent的基本操作单元是事件。每个事件代表一组条件的集合，这些条件包括：
+- 文件描述符已经就绪，可以读取或者写入
 
+- 文件描述符变为就绪状态，可以读取或者写入（仅对于边沿触发IO）
+- 超时事件
+
+- 发生某信号
+
+- 用户触发事件
+所有事件具有相似的生命周期。调用libevent函数设置事件并且关联到event_base之后，事件进入“**已初始化（initialized）**”状态。此时可以将事件添加到<font color="#4bacc6">event_base</font>中，这使之进入“**未决（pending）**”状态。在未决状态下，如果触发事件的条件发生（比如说，文件描述符的状态改变，或者超时时间到达），则事件进入“**激活（active）**”状态，（用户提供的）事件回调函数将被执行。如果配置为“**持久的（persistent）**”，事件将保持为未决状态
+# Create <font color="#ffff00">event</font>
+使用<font color="#4bacc6">event_new（）</font>接口创建事件。
 event support 相关宏见：[Macro definition](Macro%20definition.md)
 
 ~~~c
@@ -48,9 +57,7 @@ void event_free(struct event *ev)
      * valid target for event_free(). That's */
 
     // event_debug_assert_is_setup_(ev);
-
   
-
     /* make sure that this event won't be coming back to haunt us. */
 
     event_del(ev);

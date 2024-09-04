@@ -1,8 +1,8 @@
-![[Pasted image 20240828232346.png]]
 
+ ![libevent](libevent.png)
 ## 前言
 
-此笔记采用obsidian编写。如遇到无法打开找到照片等问题，请使用obsidan。
+此笔记采用obsidian编写。如遇到无法打开笔记、照片等问题，请使用obsidan。
 
 Libevent是用于编写高速可移植非阻塞IO应用的库，其设计目标是：
 
@@ -40,7 +40,8 @@ libevent由下列组件构成：
 - Libevent旨在取代事件驱动网络服务器中的事件循环。应用程序只需要调用event_dispatch()，然后动态地添加或删除事件，而不必更改事件循环。
     
 - Libevent还为缓冲网络IO提供了一个复杂的框架，支持套接字、过滤器、速率限制、SSL、零拷贝文件传输和IOCP。Libevent支持几种有用的协议，包括DNS、HTTP和一个最小的RPC框架。
-![[Pasted image 20240829000720.png]]
+![](20240829000720.png)
+
 
 
 ## 相关的库
@@ -55,9 +56,7 @@ libevent公用头文件都安装在event2目录中，分为三类：
 ## 如何使用libevent
 
 ### 创建event_base
- [[event_base]]
-
+ [event_base](event_base.md)
+ 
 ## 使用事件循环
-[[Event loop]]
-
-1111
+ [Event loop](Event%20loop.md)

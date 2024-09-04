@@ -1,8 +1,11 @@
 {
-  "promptDelete": false,
+  "promptDelete": true,
   "showLineNumber": false,
   "attachmentFolderPath": "./images",
   "readableLineLength": false,
   "strictLineBreaks": true,
-  "alwaysUpdateLinks": true
+  "alwaysUpdateLinks": true,
+  "trashOption": "local",
+  "newLinkFormat": "relative",
+  "useMarkdownLinks": true
 }

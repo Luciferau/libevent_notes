@@ -33,8 +33,6 @@
     "lucideIconPackType": "native",
     "debugMode": false
   },
-  "images/Pasted image 20240828232346.png": "LiImage",
-  "images/Pasted image 20240829000720.png": "LiImage",
   "event_base.md": "📓",
   "Variadic function.md": "📓",
   "libevent_structure.md": "📓",
@@ -52,5 +50,7 @@
   "images/Pasted image 20240904092708.png": "LiImage",
   "images/Pasted image 20240904092035.png": "LiImage",
   "Memory management.md": "📓",
-  "README.md": "📓"
+  "README.md": "📓",
+  "images/libevent.png": "LiImage",
+  "images/20240829000720.png": "LiImage"
 }

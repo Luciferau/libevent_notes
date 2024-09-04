@@ -57,7 +57,7 @@
               "state": {
                 "file": "Build event.md",
                 "mode": "source",
-                "source": true
+                "source": false
               }
             }
           }
@@ -227,13 +227,15 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "0dab94956be6b467",
+  "active": "e35340117c9e52e1",
   "lastOpenFiles": [
-    "Event loop.md",
+    "未命名",
+    "images/Pasted.md",
     "Build event.md",
+    "2024-09-04.md",
+    "Event loop.md",
     "Macro definition.md",
     "images/libevent.png",
-    "images/Pasted.md",
     "images/Pasted image 20240904112623.png",
     "images/Pasted image 20240829113803.png",
     "images/Pasted image 20240830112652.png",

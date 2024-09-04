@@ -72,7 +72,9 @@ void event_free(struct event *ev)
 要释放事件，调用event_free（）。对未决或者激活状态的事件调用event_free（）是安全的：在释放事件之前，函数将会使事件成为非激活和非未决的。
 
 ## example
-![[Pasted image 20240904090807.png]]
+ 
+![Pasted image 20240904090807](images/Pasted%20image%2020240904090807.png)
+
  
 上述函数定义在<event2/event.h>中，首次出现在libevent 2.0.1-alpha版本中。event_callback_fn类型首次在2.0.4-alpha版本中作为typedef出现。
 
@@ -369,7 +371,6 @@ int event_initialized(const struct event *ev)
 event_new((b), (x), EV_SIGNAL|EV_PERSIST, (cb), (arg))
 ~~~
 除了提供一个信号编号代替文件描述符之外，各个参数与event_new（）相同。
-
 
 ![Pasted image 20240904103355](images/Pasted%20image%2020240904103355.png)
 

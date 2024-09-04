@@ -60,3 +60,6 @@ libevent公用头文件都安装在event2目录中，分为三类：
  
 ## 使用事件循环
  [Event loop](Event%20loop.md)
+
+## 创建事件
+[Build event](Build%20event.md)

@@ -23,8 +23,9 @@ struct event_base * event_base_new(void)
 ## build complex <font color="#f79646">event_base</font>
 	要对取得什么类型的event_base有更多的控制，就需要使用event_config。event_config是一个容纳event_base配置信息的不透明结构体。需要event_base时，将event_config传递给event_base_new_with_config().
 
-==这些函数和类型在<event2/event.h>中声明。==
-以下代码相关宏函数见：[[Macro function]]
+这些函数和类型在<event2/event.h>中声明。
+以下代码相关宏函数见：[Macro definition](Macro%20definition.md)
+
 ### <font color="#4bacc6">event_config_new()</font>
 
 ```c++
@@ -48,7 +49,7 @@ struct event_config * event_config_new(void)
 }
 
 ```
-<font color="#8064a2">TAILQ_INIT</font> 相关定义： [[Macro function]]
+<font color="#8064a2">TAILQ_INIT</font> 相关定义： [Macro function](Macro%20function.md)
 
  要使用这些函数分配<font color="#4bacc6">event_base</font>，先调用`event_config_new()`分配一个`event_config`。然后,对`event_config`调用其它函数，设置所需要的`event_base`特征。最后，调用其它函数，设置所需要的`event_base`特征。最后，调用`event_base_new_with_config()`获取新的`event_base`。完成工作后，使用`event_config_free()`释放`event_config`。
 

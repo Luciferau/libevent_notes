@@ -1,4 +1,4 @@
-![Pasted image 20240904090807](images/Pasted%20image%2020240904090807.png)
+![](images/Pasted%20image%2020240904112623.png)
  
 # Create <font color="#ffff00">event</font>
 
@@ -77,7 +77,7 @@ void event_free(struct event *ev)
 上述函数定义在<event2/event.h>中，首次出现在libevent 2.0.1-alpha版本中。event_callback_fn类型首次在2.0.4-alpha版本中作为typedef出现。
 
 # Event flag
-事件标志见：[[Macro definition]]
+事件标志见：[Macro definition](Macro%20definition.md)
 
 
 # Only timeout <font color="#f79646">events</font>

@@ -40,8 +40,9 @@ libevent由下列组件构成：
 - Libevent旨在取代事件驱动网络服务器中的事件循环。应用程序只需要调用event_dispatch()，然后动态地添加或删除事件，而不必更改事件循环。
     
 - Libevent还为缓冲网络IO提供了一个复杂的框架，支持套接字、过滤器、速率限制、SSL、零拷贝文件传输和IOCP。Libevent支持几种有用的协议，包括DNS、HTTP和一个最小的RPC框架。
- 
- ![imagse/20240829000720.png](imagse/20240829000720.png)
+
+![](images/Pasted%20image%2020240904111332.png) 
+
 
 ## 相关的库
 libevent公用头文件都安装在event2目录中，分为三类：

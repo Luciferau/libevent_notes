@@ -62,9 +62,29 @@
               },
               "pinned": true
             }
+          },
+          {
+            "id": "acb867aebf67158b",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "images/libevent.png"
+              }
+            }
+          },
+          {
+            "id": "b12565b8d2053c1e",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "images/Pasted image 20240904103007.png"
+              }
+            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -93,7 +113,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "README.md"
+                "file": "images/Pasted image 20240904103007.png"
               }
             }
           },
@@ -140,7 +160,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md",
+                "file": "images/Pasted image 20240904103007.png",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -157,7 +177,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "README.md",
+                "file": "images/Pasted image 20240904103007.png",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -180,7 +200,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "README.md"
+                "file": "images/Pasted image 20240904103007.png"
               }
             }
           },
@@ -230,13 +250,17 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "1dc408a5d3d3c7f5",
+  "active": "b12565b8d2053c1e",
   "lastOpenFiles": [
     "images/20240829000720.png",
+    "images/Pasted image 20240904103007.png",
+    "images/Pasted image 20240904103355.png",
+    "images/Pasted image 20240904111332.png",
+    "README.md",
+    "images/libevent.png",
+    "imagse/20240829000720.png.md",
     "Build event.md",
     "Macro definition.md",
-    "imagse/20240829000720.png.md",
-    "README.md",
     "imagse",
     "Memory management.md",
     "images/Pasted image 20240904090807.png",
@@ -245,11 +269,8 @@
     "images/Pasted image 20240831140329.png",
     "images/Pasted image 20240831141854.png",
     "images/Pasted image 20240904092035.png",
-    "images/Pasted image 20240904103007.png",
     "images/Pasted image 20240904092708.png",
     "images/Pasted image 20240830112652.png",
-    "images/Pasted image 20240829113803.png",
-    "images/libevent.png",
     "Work with events.md",
     "event_base.md",
     "libevent_structure.md",

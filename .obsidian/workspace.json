@@ -50,7 +50,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -79,7 +79,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Macro definition.md"
+                "file": "Build event.md"
               }
             }
           },
@@ -106,7 +106,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -126,7 +127,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Macro definition.md",
+                "file": "Build event.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -143,7 +144,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Macro definition.md",
+                "file": "Build event.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -166,7 +167,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Macro definition.md"
+                "file": "Build event.md"
               }
             }
           },
@@ -216,17 +217,19 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "28ee838660eb4041",
+  "active": "ed486de451d92cd9",
   "lastOpenFiles": [
+    "images/Pasted image 20240904103355.png",
+    "Macro definition.md",
+    "Build event.md",
+    "images/Pasted image 20240904103007.png",
+    "Variadic function.md",
     "images/Pasted image 20240904092035.png",
     "images/Pasted image 20240904090807.png",
     "images/Pasted image 20240904092708.png",
-    "Build event.md",
-    "Macro definition.md",
     "Event loop.md",
     "Work with events.md",
     "event_base.md",
-    "Variadic function.md",
     "Macro function.md",
     "libevent_structure.md",
     "Look at libevent from 10,000 feet away.md",
@@ -237,7 +240,6 @@
     "images/Pasted image 20240830112652.png",
     "images/Pasted image 20240828232346.png",
     "images/Pasted image 20240829000720.png",
-    "images/Pasted image 20240829113803.png",
     "可变参数.md",
     "images",
     "res",

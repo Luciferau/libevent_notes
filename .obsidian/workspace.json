@@ -50,41 +50,21 @@
             }
           },
           {
-            "id": "c936aee67b16aa10",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Memory management.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "7d8f6df9c0105a33",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "images/Pasted image 20240904090807.png"
-              }
-            }
-          },
-          {
             "id": "1dc408a5d3d3c7f5",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
                 "file": "README.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "pinned": true
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -252,12 +232,15 @@
   },
   "active": "1dc408a5d3d3c7f5",
   "lastOpenFiles": [
-    "Pasted.md",
-    "README.md",
+    "images/20240829000720.png",
     "Build event.md",
     "Macro definition.md",
+    "imagse/20240829000720.png.md",
+    "README.md",
+    "imagse",
     "Memory management.md",
     "images/Pasted image 20240904090807.png",
+    "Pasted.md",
     "Event loop.md",
     "images/Pasted image 20240831140329.png",
     "images/Pasted image 20240831141854.png",
@@ -266,7 +249,6 @@
     "images/Pasted image 20240904092708.png",
     "images/Pasted image 20240830112652.png",
     "images/Pasted image 20240829113803.png",
-    "images/20240829000720.png",
     "images/libevent.png",
     "Work with events.md",
     "event_base.md",

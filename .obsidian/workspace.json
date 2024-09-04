@@ -48,53 +48,9 @@
               },
               "pinned": true
             }
-          },
-          {
-            "id": "1dc408a5d3d3c7f5",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "README.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true
-            }
-          },
-          {
-            "id": "acb867aebf67158b",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "images/libevent.png"
-              }
-            }
-          },
-          {
-            "id": "b12565b8d2053c1e",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "images/Pasted image 20240904103007.png"
-              }
-            }
-          },
-          {
-            "id": "34aa06fc7e0f3f7e",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "images/Pasted image 20240831141854.png"
-              }
-            }
           }
         ],
-        "currentTab": 6
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -123,7 +79,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "images/Pasted image 20240831141854.png"
+                "file": "Build event.md"
               }
             }
           },
@@ -170,7 +126,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "images/Pasted image 20240831141854.png",
+                "file": "Build event.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -187,7 +143,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "images/Pasted image 20240831141854.png",
+                "file": "Build event.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -210,7 +166,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "images/Pasted image 20240831141854.png"
+                "file": "Build event.md"
               }
             }
           },
@@ -260,27 +216,26 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "34aa06fc7e0f3f7e",
+  "active": "ed486de451d92cd9",
   "lastOpenFiles": [
+    "Macro definition.md",
+    "README.md",
+    "images/Pasted image 20240904090807.png",
+    "Build event.md",
+    "images/libevent.png",
+    "Event loop.md",
+    "images/Pasted image 20240904103007.png",
+    "images/Pasted image 20240831141854.png",
     "images/Pasted image 20240831140329.png",
     "images/Pasted image 20240830112747.png",
     "images/Pasted image 20240830112652.png",
     "images/Pasted image 20240829113803.png",
-    "images/libevent.png",
     "images/Pasted image 20240904092708.png",
-    "images/Pasted image 20240904103007.png",
     "images/Pasted image 20240904103355.png",
-    "images/Pasted image 20240904111332.png",
-    "README.md",
-    "images/20240829000720.png",
     "imagse/20240829000720.png.md",
-    "Build event.md",
-    "Macro definition.md",
     "imagse",
     "Memory management.md",
-    "images/Pasted image 20240904090807.png",
     "Pasted.md",
-    "Event loop.md",
     "Work with events.md",
     "event_base.md",
     "libevent_structure.md",

@@ -1,4 +1,5 @@
-![images](Pasted%20image%2020240904090807.png)<center></center>
+![Pasted image 20240904090807](images/Pasted%20image%2020240904090807.png)
+ 
 # Create <font color="#ffff00">event</font>
 
 event support 相关宏见：[Macro definition](Macro%20definition.md)

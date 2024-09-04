@@ -37,12 +37,10 @@
   "images/Pasted image 20240829000720.png": "LiImage",
   "event_base.md": "📓",
   "Variadic function.md": "📓",
-  "libevent memory management and allocation.md": "📓",
   "libevent_structure.md": "📓",
   "Event loop.md": "📓",
   "Macro definition.md": "📓",
   "Macro function.md": "📓",
-  "Look at libevent from 10,000 feet away.md": "📓",
   "images/Pasted image 20240829113803.png": "LiImage",
   "images/Pasted image 20240830112652.png": "LiImage",
   "images/Pasted image 20240830112747.png": "LiImage",
@@ -52,5 +50,7 @@
   "Build event.md": "📓",
   "images/Pasted image 20240904090807.png": "LiImage",
   "images/Pasted image 20240904092708.png": "LiImage",
-  "images/Pasted image 20240904092035.png": "LiImage"
+  "images/Pasted image 20240904092035.png": "LiImage",
+  "Memory management.md": "📓",
+  "README.md": "📓"
 }

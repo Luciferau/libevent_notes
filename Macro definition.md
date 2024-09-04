@@ -74,4 +74,161 @@ int evutil_gettimeofday(struct timeval *tv, struct timezone *tz);
 这段代码定义了一个函数`evutil_gettimeofday`，它是用于获取当前时间的函数，用于替代一些平台中没有`gettimeofday`函数的情况。
 
 首先，代码中使用了`#ifdef`和`#define`来判断编译器是否支持`gettimeofday`函数。如果支持，则直接使用`gettimeofday`函数。如果不支持，则定义了一个名为`evutil_gettimeofday`的函数，它接受两个参数：`tv`和`tz`，分别表示要设置的时间值和时区信息。
+
+# event definition flag
+
+
+<font color="#8064a2">EV_TIMEOUT</font>
+<font color="#8064a2">EV_READ</font>
+<font color="#8064a2">EV_WRITE</font>
+<font color="#8064a2">EV_SIGNAL</font>
+<font color="#8064a2">EV_PERSIST</font>
+<font color="#8064a2">EV_ET</font>
+
+~~~c
+/**
+
+ * @name event flags
+
+ * Flags to pass to event_new(), event_assign(), event_pending(), and
+
+ * anything else with an argument of the form "short events"
+
+ */
+
+/**@{*/
+
+/** Indicates that a timeout has occurred.  It's not necessary to pass
+
+ * this flag to event_for new()/event_assign() to get a timeout. */
+
+#define EV_TIMEOUT   0x01
+
+/** Wait for a socket or FD to become readable */
+
+#define EV_READ      0x02
+
+/** Wait for a socket or FD to become writeable */
+
+#define EV_WRITE  0x04
+
+/** Wait for a POSIX signal to be raised*/
+
+#define EV_SIGNAL 0x08
+
+/**
+
+ * Persistent event: won't get removed automatically when activated.
+
+ *
+
+ * When a persistent event with a timeout becomes activated, its timeout
+
+ * is reset to 0.
+
+ */
+
+#define EV_PERSIST   0x10
+
+/** Select edge-triggered behavior, if supported by the backend. */
+
+#define EV_ET     0x20
+
+/**
+ * If this option is provided, then event_del() will not block in one thread
+
+ * while waiting for the event callback to complete in another thread.
+
+ * To use this option safely, you may need to use event_finalize() or
+
+ * event_free_finalize() in order to safely tear down an event in a
+
+ * multithreaded application.  See those functions for more information.
+
+ **/
+ 
+/**
+	*如果提供了这个选项，那么event_del()将不会在一个线程中阻塞
+	
+	当在另一个线程中等待事件回调完成时。
+	
+	*为了安全地使用这个选项，你可能需要使用event_finalize()或
+	
+	event_free_finalize()，以便安全地删除事件
+	
+	*多线程应用程序。有关更多信息，请参阅这些函数。
+**/
+
+#define EV_FINALIZE     0x40
+
+/**
+ * Detects connection close events.  You can use this to detect when a
+ * connection has been closed, without having to read all the pending data
+ * from a connection.
+ * Not all backends support EV_CLOSED.  To detect or require it, use the
+ * feature flag EV_FEATURE_EARLY_CLOSE.
+ **/
+#define EV_CLOSED 0x80
+
+/**@}*/
+
+/**
+   @name evtimer_* macros
+   Aliases for working with one-shot timer events
+   If you need EV_PERSIST timer use event_*() functions.
+ */
+/**@{*/
+~~~
+## <font color="#8064a2">EV_TIMEOUT</font>
+这个标志表示某超时时间流逝后事件成为激活的。构造事件的时候，<font color="#8064a2">EV_TIMEOUT</font>标志是被忽略的：可以在添加事件的时候设置超时，也可以不设置。超时发生时，回调函数的<font color="#4bacc6">what</font>参数将带有这个标志
+
+## <font color="#8064a2">EV_READ</font>
+
+表示指定的文件描述符已经就绪，可以读取的时候，事件将成为激活的。
+
+## <font color="#8064a2">EV_WRITE</font>
+表示指定的文件描述符已经就绪，可以写入的时候，事件将成为激活的。
+
+## <font color="#8064a2">EV_SIGNAL</font>
+用于实现信号检测。见[[]]
+
+## <font color="#8064a2">EV_PERSIST</font>
+表示事件是“持久的”， 
+
+---
+
+默认情况下，每当未决事件成为激活的（因为fd已经准备好读取或者写入，或者因为超时），事件将在其回调被执行前成为非未决的。如果想让事件再次成为未决的，可以在回调函数中再次对其调用<font color="#4bacc6">event_add（）</font>。
+
+然而，如果设置了EV_PERSIST标志，事件就是持久的。这意味着即使其回调被激活，事件还是会保持为<font color="#c0504d">未决状态</font>。如果想在回调中让事件成为非未决的，可以对其调用<font color="#c0504d">event_del（）</font>。
+
+每次执行事件回调的时候，持久事件的超时值会被复位。因此，如果具有<font color="#8064a2">EV_READ|EV_PERSIST</font>标志，以及5秒的超时值，则事件将在以下情况下成为激活的：
+
+-  套接字已经准备好被读取的时候
+
+-  从最后一次成为激活的开始，已经逝去5秒
+
+## <font color="#8064a2">EV_ET</font>
+表示如果底层的<font color="#4bacc6">event_base</font>后端支持边沿触发事件，则事件应该是边沿触发的。这个标志影响EV_READ和EV_WRITE的语义。
+
+从2.0.1-alpha版本开始，可以有任意多个事件因为同样的条件而未决。比如说，可以有两个事件因为某个给定的fd已经就绪，可以读取而成为激活的。这种情况下，多个事件回调被执行的次序是不确定的。
+
+这些标志定义在<event2/event.h>中。除了<font color="#8064a2">EV_ET</font>在2.0.1-alpha版本中引入外，所有标志从1.0版本开始就存在了。
+
+# timeout event
+
  
+~~~c
+#define evtimer_assign(ev, b, cb, arg) \
+
+   event_assign((ev), (b), -1, 0, (cb), (arg))
+
+#define evtimer_new(b, cb, arg)     event_new((b), -1, 0, (cb), (arg))
+
+#define evtimer_add(ev, tv)      event_add((ev), (tv))
+
+#define evtimer_del(ev)       event_del(ev)
+
+#define evtimer_pending(ev, tv)     event_pending((ev), EV_TIMEOUT, (tv))
+
+#define evtimer_initialized(ev)     event_initialized(ev)
+~~~

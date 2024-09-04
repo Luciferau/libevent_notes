@@ -8,18 +8,49 @@
         "type": "tabs",
         "children": [
           {
-            "id": "d0a5f141b9ef4a3f",
+            "id": "4df5a0683df36e6d",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Work with events.md",
+                "file": "Event loop.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "ed486de451d92cd9",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Build event.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "28ee838660eb4041",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Macro definition.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -48,7 +79,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Work with events.md"
+                "file": "Macro definition.md"
               }
             }
           },
@@ -95,7 +126,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Work with events.md",
+                "file": "Macro definition.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -112,7 +143,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Work with events.md",
+                "file": "Macro definition.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +166,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Work with events.md"
+                "file": "Macro definition.md"
               }
             }
           },
@@ -164,11 +195,12 @@
             }
           }
         ],
-        "currentTab": 6
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -184,12 +216,21 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "d0a5f141b9ef4a3f",
+  "active": "28ee838660eb4041",
   "lastOpenFiles": [
+    "images/Pasted image 20240904092035.png",
+    "images/Pasted image 20240904090807.png",
+    "images/Pasted image 20240904092708.png",
+    "Build event.md",
+    "Macro definition.md",
     "Event loop.md",
     "Work with events.md",
+    "event_base.md",
+    "Variadic function.md",
     "Macro function.md",
-    "Macro definition.md",
+    "libevent_structure.md",
+    "Look at libevent from 10,000 feet away.md",
+    "libevent memory management and allocation.md",
     "images/Pasted image 20240831141854.png",
     "images/Pasted image 20240831140329.png",
     "images/Pasted image 20240830112747.png",
@@ -197,15 +238,7 @@
     "images/Pasted image 20240828232346.png",
     "images/Pasted image 20240829000720.png",
     "images/Pasted image 20240829113803.png",
-    "images/Pasted image 20240830110420.png",
-    "event_base.md",
-    "Variadic function.md",
-    "libevent memory management and allocation.md",
-    "libevent_structure.md",
-    "Look at libevent from 10,000 feet away.md",
     "可变参数.md",
-    "images/Pasted image 20240831004253.png",
-    "images/Pasted image 20240829000717.png",
     "images",
     "res",
     "未命名.canvas",

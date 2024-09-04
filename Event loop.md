@@ -6,9 +6,9 @@ int event_base_loop(struct event_base *, int);
 ```
 
 ### source code
-相关宏定义见：[[Macro definition]]
-相关宏函数见：[[Macro function]]
-	<font color="#8064a2">EVBASE_ACQUIRE_LOCK</font>
+相关宏定义见： [Macro definition](Macro%20definition.md)
+相关宏函数见： [Macro function](Macro%20function.md)
+<font color="#8064a2">EVBASE_ACQUIRE_LOCK</font>
 <font color="#8064a2">N_ACTIVE_CALLBACKS</font>
 ```c
 
@@ -157,7 +157,10 @@ done:
 完成工作后，如果正常退出，<font color="#4bacc6">event_base_loop（）</font>返回0；如果因为后端中的某些未处理错误而退出，则返回-1。
 ## pseudo-code
  
-![[Pasted image 20240831141854.png]]
+ 
+
+![Pasted image 20240831141854](images/Pasted%20image%2020240831141854.png)
+
 ## <font color="#4bacc6">event_base_dispatch()</font>
 
 ```c

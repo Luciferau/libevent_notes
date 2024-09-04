@@ -55,7 +55,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Build event.md",
+                "file": "Event loop.md",
                 "mode": "source",
                 "source": false
               }
@@ -91,7 +91,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Build event.md"
+                "file": "Event loop.md"
               }
             }
           },
@@ -138,7 +138,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Build event.md",
+                "file": "Event loop.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -155,7 +155,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Build event.md",
+                "file": "Event loop.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -178,7 +178,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Build event.md"
+                "file": "Event loop.md"
               }
             }
           },
@@ -227,14 +227,15 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "e35340117c9e52e1",
+  "active": "0dab94956be6b467",
   "lastOpenFiles": [
+    "Macro definition.md",
+    "README.md",
+    "Build event.md",
     "未命名",
     "images/Pasted.md",
-    "Build event.md",
     "2024-09-04.md",
     "Event loop.md",
-    "Macro definition.md",
     "images/libevent.png",
     "images/Pasted image 20240904112623.png",
     "images/Pasted image 20240829113803.png",
@@ -245,7 +246,6 @@
     "images/Pasted image 20240904090807.png",
     "images/Pasted image 20240904092035.png",
     "images/Pasted image 20240904092708.png",
-    "README.md",
     "imagse/20240829000720.png.md",
     "imagse",
     "Memory management.md",

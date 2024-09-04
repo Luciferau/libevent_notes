@@ -1,5 +1,5 @@
 {
-  "promptDelete": true,
+  "promptDelete": false,
   "showLineNumber": false,
   "attachmentFolderPath": "./images",
   "readableLineLength": false,

@@ -360,7 +360,8 @@ int event_initialized(const struct event *ev)
 # Build singal event
 	libevent也可以监测POSIX风格的信号。要构造信号处理器，使用：
 
-![[Pasted image 20240904103007.png]]
+ 
+![Pasted image 20240904103007](images/Pasted%20image%2020240904103007.png)
 
 ~~~c
 #define evsignal_new(b, x, cb, arg)          \
@@ -368,5 +369,8 @@ int event_initialized(const struct event *ev)
 event_new((b), (x), EV_SIGNAL|EV_PERSIST, (cb), (arg))
 ~~~
 除了提供一个信号编号代替文件描述符之外，各个参数与event_new（）相同。
-![[Pasted image 20240904103355.png]]
+
+
+![Pasted image 20240904103355](images/Pasted%20image%2020240904103355.png)
+
 <font color="#ff0000">注意</font>：信号回调是信号发生后在事件循环中被执行的，所以可以安全地调用通常不能在POSIX风格信号处理器中使用的函数。

@@ -343,7 +343,7 @@ struct event_config {
 ```
 <font color="#8064a2">TAILQ_HEAD</font> 见：[[Macro function]]
 
-## timeval 
+## struct timeval 
 ```c
 /* A time value that is accurate to the nearest
 

@@ -427,7 +427,7 @@ event_base_once(struct event_base *base, evutil_socket_t fd, short events,
 
 # Check the internal time cache
 有时候需要在事件回调中获取当前时间的近似视图，但不想调用<font color="#4bacc6">gettimeofday()</font>（可能是因为OS将<font color="#4bacc6">gettimeofday()</font>作为系统调用实现，而你试图避免系统调用的开销）。
-
+## event_base_gettimeofday_cached()
 在回调中，可以请求libevent开始本轮回调时的当前时间视图。
 ```c
 int event_base_gettimeofday_cached(struct event_base *base, struct timeval *tv)
@@ -479,6 +479,7 @@ int event_base_gettimeofday_cached(struct event_base *base, struct timeval *tv)
 这个函数是libevent 2.0.4-alpha新引入的
 
 # Example Dump <font color="#4bacc6">event_base</font> status
+## event_base_dump_events
 ```c
 void event_base_dump_events(struct event_base *base, FILE *output)
 ```

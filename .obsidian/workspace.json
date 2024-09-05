@@ -126,8 +126,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -236,7 +235,7 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "965d9ca9a1c251f8",
+  "active": "e35340117c9e52e1",
   "lastOpenFiles": [
     "libevent_structure.md",
     "Build event.md",

@@ -863,7 +863,9 @@ event_get_priority(const struct event *ev)
  event_get_callback（）和event_get_callback_arg（）返回事件的回调函数及其参数指针。
 
 # Configure a trigger event
+
 如果不需要多次添加一个事件，或者要在添加后立即删除事件，而事件又不需要是持久的，则可以使用event_base_once（）。
+## <font color="#4bacc6">event_base_once()</font>
 
 ~~~c
 int
@@ -1007,3 +1009,48 @@ event_base_once(struct event_base *base, evutil_socket_t fd, short events,
 }
 ~~~
 
+# Manual Activation Events
+极少数情况下，需要在事件的条件没有触发的时候让事件成为激活的。
+## event_active()
+~~~c
+void
+
+event_active(struct event *ev, int res, short ncalls)
+~~~
+这个函数让事件ev带有标志what（<font color="#8064a2">EV_READ</font>、<font color="#8064a2">EV_WRITE</font>和<font color="#8064a2">EV_TIMEOUT</font>的组合）成为激活的。事件不需要已经处于未决状态，激活事件也不会让它成为未决的。
+
+## source code
+
+~~~c
+void
+
+event_active(struct event *ev, int res, short ncalls)
+
+{
+
+    if (EVUTIL_FAILURE_CHECK(!ev->ev_base)) {
+
+        event_warnx("%s: event has no event_base set.", __func__);
+
+        return;
+
+    }
+
+  
+
+    EVBASE_ACQUIRE_LOCK(ev->ev_base, th_base_lock);
+
+  
+
+    event_debug_assert_is_setup_(ev);
+
+  
+
+    event_active_nolock_(ev, res, ncalls);
+
+  
+
+    EVBASE_RELEASE_LOCK(ev->ev_base, th_base_lock);
+
+}
+~~~

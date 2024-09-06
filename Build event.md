@@ -1080,6 +1080,50 @@ event_base_init_common_timeout(struct event_base *base,
 
 
 这个函数需要event_base和要初始化的公用超时值作为参数。函数返回一个到特别的timeval结构体的指针，可以使用这个指针指示事件应该被添加到O（1）队列，而不是O（logN）堆。可以在代码中自由地复制这个特别的timeval或者进行赋值，但它仅对用于构造它的特定event_base有效。不能依赖于其实际内容：libevent使用这个内容来告知自身使用哪个队列。
+## example
+~~~c
+#include <bits/types/struct_timeval.h>
+
+#include <cstring>
+
+#include <event2/event.h>
+
+#include <cstring>
+
+#include <memory.h>
+
+  
+
+struct timeval ten_s = {10,0};
+
+  
+
+void initialise_time_out(struct event_base *base){
+
+    struct timeval tv_in = {10,0};
+
+    const struct timeval *tv_out ;
+
+    tv_out = event_base_init_common_timeout(base, &tv_in);
+
+    memcpy(&ten_s, tv_out, sizeof(struct timeval));
+
+}
+
+a
+
+int my_event_add(struct event* ev,const struct timeval *tv){
+
+    if(tv && tv->tv_sec == ten_s.tv_sec && tv->tv_usec == ten_s.tv_usec){
+
+        return event_add(ev, &ten_s);
+
+    }
+
+    return event_add(ev, tv);
+
+}
+~~~
 
 ## source code
 ~~~c
@@ -1235,3 +1279,5 @@ done:
 
 }
 ~~~
+ ---
+ 2024 9.6 0:21

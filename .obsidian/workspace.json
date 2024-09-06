@@ -4,73 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "22ff85003d319b13",
+        "id": "56b82f4fd3c46325",
         "type": "tabs",
         "children": [
           {
-            "id": "12ef59e0de731edc",
+            "id": "d4f993d7b560d76e",
             "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Macro definition.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "965d9ca9a1c251f8",
-            "type": "leaf",
-            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
                 "file": "Build event.md",
                 "mode": "source",
                 "source": false
-              },
-              "pinned": true
-            }
-          },
-          {
-            "id": "03497d3161736a2c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "libevent_structure.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "e07f715e8f880149",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Event loop.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "6b2aa7dc637dfca5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "README.md",
-                "mode": "source",
-                "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -126,8 +75,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -236,14 +184,14 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "db730313e0ffb1b4",
+  "active": "e35340117c9e52e1",
   "lastOpenFiles": [
-    "Macro definition.md",
-    "libevent_structure.md",
-    "Build event.md",
-    "README.md",
-    "Event loop.md",
     "Memory management.md",
+    "Event loop.md",
+    "Macro definition.md",
+    "README.md",
+    "Build event.md",
+    "libevent_structure.md",
     "images/Pasted image 20240904153810.png",
     "images/Pasted image 20240904153038.png",
     "event_base.md",

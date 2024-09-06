@@ -1070,5 +1070,168 @@ event_active(struct event *ev, int res, short ncalls)
 
 libevent通过放置一些超时值到队列中，另一些到二进制堆中来解决这个问题。要使用这个机制，需要向libevent请求一个“**公用超时(common timeout)**”值，然后使用它来添加事件。如果有大量具有单个公用超时值的事件，使用这个优化应该可以改进超时处理性能。
 
+~~~c
+const struct timeval *
+
+event_base_init_common_timeout(struct event_base *base,
+
+    const struct timeval *duration)
+~~~
 
 
+这个函数需要event_base和要初始化的公用超时值作为参数。函数返回一个到特别的timeval结构体的指针，可以使用这个指针指示事件应该被添加到O（1）队列，而不是O（logN）堆。可以在代码中自由地复制这个特别的timeval或者进行赋值，但它仅对用于构造它的特定event_base有效。不能依赖于其实际内容：libevent使用这个内容来告知自身使用哪个队列。
+
+## source code
+~~~c
+  
+
+#define MAX_COMMON_TIMEOUTS 256
+
+  
+
+const struct timeval *
+
+event_base_init_common_timeout(struct event_base *base,
+
+    const struct timeval *duration)
+
+{
+
+    int i;
+
+    struct timeval tv;
+
+    const struct timeval *result=NULL;
+
+    struct common_timeout_list *new_ctl;
+
+  
+
+    EVBASE_ACQUIRE_LOCK(base, th_base_lock);
+
+    if (duration->tv_usec > 1000000) {
+
+        memcpy(&tv, duration, sizeof(struct timeval));
+
+        if (is_common_timeout(duration, base))
+
+            tv.tv_usec &= MICROSECONDS_MASK;
+
+        tv.tv_sec += tv.tv_usec / 1000000;
+
+        tv.tv_usec %= 1000000;
+
+        duration = &tv;
+
+    }
+
+    for (i = 0; i < base->n_common_timeouts; ++i) {
+
+        const struct common_timeout_list *ctl =
+
+            base->common_timeout_queues[i];
+
+        if (duration->tv_sec == ctl->duration.tv_sec &&
+
+            duration->tv_usec ==
+
+            (ctl->duration.tv_usec & MICROSECONDS_MASK)) {
+
+            EVUTIL_ASSERT(is_common_timeout(&ctl->duration, base));
+
+            result = &ctl->duration;
+
+            goto done;
+
+        }
+
+    }
+
+    if (base->n_common_timeouts == MAX_COMMON_TIMEOUTS) {
+
+        event_warnx("%s: Too many common timeouts already in use; "
+
+            "we only support %d per event_base", __func__,
+
+            MAX_COMMON_TIMEOUTS);
+
+        goto done;
+
+    }
+
+    if (base->n_common_timeouts_allocated == base->n_common_timeouts) {
+
+        int n = base->n_common_timeouts < 16 ? 16 :
+
+            base->n_common_timeouts*2;
+
+        struct common_timeout_list **newqueues =
+
+            mm_realloc(base->common_timeout_queues,
+
+            n*sizeof(struct common_timeout_queue *));
+
+        if (!newqueues) {
+
+            event_warn("%s: realloc",__func__);
+
+            goto done;
+
+        }
+
+        base->n_common_timeouts_allocated = n;
+
+        base->common_timeout_queues = newqueues;
+
+    }
+
+    new_ctl = mm_calloc(1, sizeof(struct common_timeout_list));
+
+    if (!new_ctl) {
+
+        event_warn("%s: calloc",__func__);
+
+        goto done;
+
+    }
+
+    TAILQ_INIT(&new_ctl->events);
+
+    new_ctl->duration.tv_sec = duration->tv_sec;
+
+    new_ctl->duration.tv_usec =
+
+        duration->tv_usec | COMMON_TIMEOUT_MAGIC |
+
+        (base->n_common_timeouts << COMMON_TIMEOUT_IDX_SHIFT);
+
+    evtimer_assign(&new_ctl->timeout_event, base,
+
+        common_timeout_callback, new_ctl);
+
+    new_ctl->timeout_event.ev_flags |= EVLIST_INTERNAL;
+
+    event_priority_set(&new_ctl->timeout_event, 0);
+
+    new_ctl->base = base;
+
+    base->common_timeout_queues[base->n_common_timeouts++] = new_ctl;
+
+    result = &new_ctl->duration;
+
+  
+
+done:
+
+    if (result)
+
+        EVUTIL_ASSERT(is_common_timeout(result, base));
+
+  
+
+    EVBASE_RELEASE_LOCK(base, th_base_lock);
+
+    return result;
+
+}
+~~~

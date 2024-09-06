@@ -1022,6 +1022,12 @@ event_active(struct event *ev, int res, short ncalls)
 ## source code
 
 ~~~c
+
+/*
+- `struct event *ev`：指向 `event` 结构体的指针，表示需要激活的事件。
+- `int res`：事件激活的结果状态（具体含义取决于事件的类型）。EV_READ等宏
+- `short ncalls`：调用的次数或其它相关的信息。
+*/
 void
 
 event_active(struct event *ev, int res, short ncalls)
@@ -1054,3 +1060,15 @@ event_active(struct event *ev, int res, short ncalls)
 
 }
 ~~~
+
+# Optimizing common timeouts
+当前版本的libevent使用二进制堆算法跟踪未决事件的超时值，这让添加和删除事件超时值具有O(logN)性能。对于随机分布的超时值集合，这是优化的，但对于大量具有相同超时值的事件集合，则不是。
+
+比如说，假定有10000个事件，每个都需要在添加后5秒触发超时事件。这种情况下，使用双链队列实现才可以取得O（1）性能。
+
+自然地，不希望为所有超时值使用队列，因为队列仅对常量超时值更快。如果超时值或多或少地随机分布，则向队列添加超时值的性能将是O（n），这显然比使用二进制堆糟糕得多。
+
+libevent通过放置一些超时值到队列中，另一些到二进制堆中来解决这个问题。要使用这个机制，需要向libevent请求一个“**公用超时(common timeout)**”值，然后使用它来添加事件。如果有大量具有单个公用超时值的事件，使用这个优化应该可以改进超时处理性能。
+
+
+

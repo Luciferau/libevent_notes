@@ -823,4 +823,7 @@ event_get_priority(const struct event *ev)
 }
 
 ~~~
- 
+ event_get_fd（）和event_get_signal（）返回为事件配置的文件描述符或者信号值。
+ event_get_base（）返回为事件配置的event_base。
+ event_get_events（）返回事件的标志（EV_READ、EV_WRITE等）。
+ event_get_callback（）和event_get_callback_arg（）返回事件的回调函数及其参数指针。

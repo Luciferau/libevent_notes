@@ -821,4 +821,3 @@ event_get_priority(const struct event *ev)
 }
 
 ~~~
-test commit to contain the contribution

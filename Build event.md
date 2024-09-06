@@ -716,6 +716,40 @@ void event_get_assignment(const struct event *event, struct event_base **base_ou
 
 event_pending（）函数确定给定的事件是否是未决的或者激活的。如果是，而且what参数设置了<font color="#8064a2">EV_READ</font>、<font color="#8064a2">EV_WRITE</font>、<font color="#8064a2">EV_SIGNAL</font>或者<font color="#8064a2">EV_TIMEOUT</font>等标志，则函数会返回事件当前为之未决或者激活的所有标志。如果提供了<font color="#00b050">tv_out</font>参数，并且what参数中设置了<font color="#8064a2">EV_TIMEOUT</font>标志，而事件当前正因超时事件而未决或者激活，则tv_out会返回事件的超时值。
 
+~~~c
+#include <cstddef>
+
+#include <event2/event.h>
+
+#include <stdio.h>
+
+  
+
+int repplace_callback(struct event *ev,event_callback_fn new_callback,
+
+    void *new_callback_arg)  
+{
+
+    struct event_base *base;
+    evutil_socket_t fd;
+    short events;  
+    int pengding;
+
+    pengding = event_pending(ev,EV_READ|EV_WRITE|EV_SIGNAL|EV_TIMEOUT,NULL);  
+    if(pengding){
+        fprintf(stderr,"Error! replace_callback() called on a pending event!\n");
+        return -1;
+    }
+    event_get_assignment(ev,&base,&fd,&events,NULL,NULL);
+    event_assign(ev,base,fd,events,new_callback,new_callback_arg);
+    return 0;  
+}
+~~~
+
+
+event_get_fd（）和event_get_signal（）返回为事件配置的文件描述符或者信号值。event_get_base（）返回为事件配置的event_base。event_get_events（）返回事件的标志（EV_READ、EV_WRITE等）。event_get_callback（）和event_get_callback_arg（）返回事件的回调函数及其参数指针。
+
+event_get_assignment（）复制所有为事件分配的字段到提供的指针中。任何为NULL的参数会被忽略。
 ## source code
 ~~~c
 void event_get_assignment(const struct event *event, struct event_base **base_out, evutil_socket_t *fd_out, 

@@ -773,7 +773,7 @@ void event_get_assignment(const struct event *event, struct event_base **base_ou
 
 ~~~c
   
-
+//获取配置的文件描述符
 evutil_socket_t
 
 event_get_fd(const struct event *ev)
@@ -787,7 +787,7 @@ event_get_fd(const struct event *ev)
 }
 
   
-
+//获取操作后端
 struct event_base *
 
 event_get_base(const struct event *ev)
@@ -801,7 +801,7 @@ event_get_base(const struct event *ev)
 }
 
   
-
+//返回事件
 short
 
 event_get_events(const struct event *ev)
@@ -815,7 +815,7 @@ event_get_events(const struct event *ev)
 }
 
   
-
+//返回事件的回调函数
 event_callback_fn
 
 event_get_callback(const struct event *ev)
@@ -829,7 +829,7 @@ event_get_callback(const struct event *ev)
 }
 
   
-
+//返回回调函数的参数
 void *
 
 event_get_callback_arg(const struct event *ev)
@@ -843,7 +843,7 @@ event_get_callback_arg(const struct event *ev)
 }
 
   
-
+//返回事件的优先级
 int
 
 event_get_priority(const struct event *ev)
@@ -861,3 +861,5 @@ event_get_priority(const struct event *ev)
  event_get_base（）返回为事件配置的event_base。
  event_get_events（）返回事件的标志（EV_READ、EV_WRITE等）。
  event_get_callback（）和event_get_callback_arg（）返回事件的回调函数及其参数指针。
+
+# Configure a trigger event

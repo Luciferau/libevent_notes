@@ -714,6 +714,8 @@ void event_get_assignment(const struct event *event, struct event_base **base_ou
                      short *events_out, event_callback_fn *callback_out, void **arg_out)
 ~~~
 
+event_pending（）函数确定给定的事件是否是未决的或者激活的。如果是，而且what参数设置了<font color="#8064a2">EV_READ</font>、<font color="#8064a2">EV_WRITE</font>、<font color="#8064a2">EV_SIGNAL</font>或者<font color="#8064a2">EV_TIMEOUT</font>等标志，则函数会返回事件当前为之未决或者激活的所有标志。如果提供了<font color="#00b050">tv_out</font>参数，并且what参数中设置了<font color="#8064a2">EV_TIMEOUT</font>标志，而事件当前正因超时事件而未决或者激活，则tv_out会返回事件的超时值。
+
 ## source code
 ~~~c
 void event_get_assignment(const struct event *event, struct event_base **base_out, evutil_socket_t *fd_out, 
@@ -821,3 +823,4 @@ event_get_priority(const struct event *ev)
 }
 
 ~~~
+ 

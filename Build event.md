@@ -1369,3 +1369,26 @@ int event_base_set(struct event_base *base, struct event *ev)
 void event_set(struct event *ev, evutil_socket_t fd, short events,
       void (*callback)(evutil_socket_t, short, void *), void *arg)
 ~~~
+
+除了使用当前event_base之外，event_set（）跟event_assign（）是相似的。event_base_set（）用于修改事件所关联到的event_base。
+
+event_set（）具有一些用于更方便地处理定时器和信号的变体：evtimer_set（）大致对应evtimer_assign（）；evsignal_set（）大致对应evsignal_assign（）。
+
+2.0版本之前的libevent使用“signal_”作为用于信号的event_set（）等函数变体的前缀，而不是“evsignal_”（也就是说，有signal_set()、signal_add()、signal_del()、signal_pending()和signal_initialized()）。远古版本(0.6版之前)的libevent使用“timeout_”而不是“evtimer_”。因此，做代码考古（code archeology）（注：这个翻译似乎不正确，是否有更专业的术语？比如说，“代码复审”）时可能会看到timeout_add()、timeout_del()、timeout_initialized()、timeout_set()和timeout_pending()等等。
+
+较老版本（2.0版之前）的libevent用宏EVENT_FD()和EVENT_SIGNAL()代表现在的event_get_fd()和event_get_signal()函数。这两个宏直接检查event结构体的内容，所以会妨碍不同版本之间的二进制兼容性。在2.0以及后续版本中，这两个宏仅仅是event_get_fd()和event_get_signal()的别名。
+
+因为2.0之前的版本不支持锁，所以在运行event_base的线程之外的任何线程调用修改事件状态的函数都是不安全的。这些函数包括event_add()、event_del()、event_active()和event_base_once()。
+
+有一个event_once()与event_base_once()相似，只是用于当前event_base。
+
+2.0版本之前EV_PERSIST标志不能正确地操作超时。标志不会在事件激活时复位超时值，而是没有任何操作。
+
+2.0之前的版本不支持同时添加多个带有相同fd和READ/WRITE标志的事件。也就是说，在每个fd上，某时刻只能有一个事件等待读取，也只能有一个事件等待写入。
+43 Things： [IT](http://www.43things.com/tag/IT), [libevent](http://www.43things.com/tag/libevent), [非阻塞IO](http://www.43things.com/tag/%E9%9D%9E%E9%98%BB%E5%A1%9EIO), [公用超时](http://www.43things.com/tag/%E5%85%AC%E7%94%A8%E8%B6%85%E6%97%B6), [激活](http://www.43things.com/tag/%E6%BF%80%E6%B4%BB), [网络编程](http://www.43things.com/tag/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B), [未决](http://www.43things.com/tag/%E6%9C%AA%E5%86%B3), [信号事件](http://www.43things.com/tag/%E4%BF%A1%E5%8F%B7%E4%BA%8B%E4%BB%B6)  
+BuzzNet： [IT](http://www.buzznet.com/IT), [libevent](http://www.buzznet.com/libevent), [非阻塞IO](http://www.buzznet.com/%E9%9D%9E%E9%98%BB%E5%A1%9EIO), [公用超时](http://www.buzznet.com/%E5%85%AC%E7%94%A8%E8%B6%85%E6%97%B6), [激活](http://www.buzznet.com/%E6%BF%80%E6%B4%BB), [网络编程](http://www.buzznet.com/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B), [未决](http://www.buzznet.com/%E6%9C%AA%E5%86%B3), [信号事件](http://www.buzznet.com/%E4%BF%A1%E5%8F%B7%E4%BA%8B%E4%BB%B6)  
+del.icio.us： [IT](http://del.icio.us/popular/IT), [libevent](http://del.icio.us/popular/libevent), [非阻塞IO](http://del.icio.us/popular/%E9%9D%9E%E9%98%BB%E5%A1%9EIO), [公用超时](http://del.icio.us/popular/%E5%85%AC%E7%94%A8%E8%B6%85%E6%97%B6), [激活](http://del.icio.us/popular/%E6%BF%80%E6%B4%BB), [网络编程](http://del.icio.us/popular/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B), [未决](http://del.icio.us/popular/%E6%9C%AA%E5%86%B3), [信号事件](http://del.icio.us/popular/%E4%BF%A1%E5%8F%B7%E4%BA%8B%E4%BB%B6)  
+Flickr： [IT](http://flickr.com/photos/tags/IT), [libevent](http://flickr.com/photos/tags/libevent), [非阻塞IO](http://flickr.com/photos/tags/%E9%9D%9E%E9%98%BB%E5%A1%9EIO), [公用超时](http://flickr.com/photos/tags/%E5%85%AC%E7%94%A8%E8%B6%85%E6%97%B6), [激活](http://flickr.com/photos/tags/%E6%BF%80%E6%B4%BB), [网络编程](http://flickr.com/photos/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B), [未决](http://flickr.com/photos/tags/%E6%9C%AA%E5%86%B3), [信号事件](http://flickr.com/photos/tags/%E4%BF%A1%E5%8F%B7%E4%BA%8B%E4%BB%B6)  
+IceRocket： [IT](http://blogs.icerocket.com/search?q=IT), [libevent](http://blogs.icerocket.com/search?q=libevent), [非阻塞IO](http://blogs.icerocket.com/search?q=%E9%9D%9E%E9%98%BB%E5%A1%9EIO), [公用超时](http://blogs.icerocket.com/search?q=%E5%85%AC%E7%94%A8%E8%B6%85%E6%97%B6), [激活](http://blogs.icerocket.com/search?q=%E6%BF%80%E6%B4%BB), [网络编程](http://blogs.icerocket.com/search?q=%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B), [未决](http://blogs.icerocket.com/search?q=%E6%9C%AA%E5%86%B3), [信号事件](http://blogs.icerocket.com/search?q=%E4%BF%A1%E5%8F%B7%E4%BA%8B%E4%BB%B6)  
+LiveJournal： [IT](http://www.livejournal.com/interests.bml?int=IT), [libevent](http://www.livejournal.com/interests.bml?int=libevent), [非阻塞IO](http://www.livejournal.com/interests.bml?int=%E9%9D%9E%E9%98%BB%E5%A1%9EIO), [公用超时](http://www.livejournal.com/interests.bml?int=%E5%85%AC%E7%94%A8%E8%B6%85%E6%97%B6), [激活](http://www.livejournal.com/interests.bml?int=%E6%BF%80%E6%B4%BB), [网络编程](http://www.livejournal.com/interests.bml?int=%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B), [未决](http://www.livejournal.com/interests.bml?int=%E6%9C%AA%E5%86%B3), [信号事件](http://www.livejournal.com/interests.bml?int=%E4%BF%A1%E5%8F%B7%E4%BA%8B%E4%BB%B6)  
+Technorati： [IT](http://technorati.com/tags/IT), [libevent](http://technorati.com/tags/libevent), [非阻塞IO](http://technorati.com/tags/%E9%9D%9E%E9%98%BB%E5%A1%9EIO), [公用超时](http://technorati.com/tags/%E5%85%AC%E7%94%A8%E8%B6%85%E6%97%B6), [激活](http://technorati.com/tags/%E6%BF%80%E6%B4%BB), [网络编程](http://technorati.com/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B), [未决](http://technorati.com/tags/%E6%9C%AA%E5%86%B3), [信号事件](http://technorati.com/tags/%E4%BF%A1%E5%8F%B7%E4%BA%8B%E4%BB%B6)

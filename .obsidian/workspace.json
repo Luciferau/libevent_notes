@@ -39,11 +39,9 @@
             "id": "f391d09c82205129",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "未命名.md",
-                "mode": "source",
-                "source": false
+                "file": "images/Pasted image 20240904153810.png"
               }
             }
           }
@@ -77,7 +75,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "未命名.md"
+                "file": "images/Pasted image 20240904153810.png"
               }
             }
           },
@@ -124,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "未命名.md",
+                "file": "images/Pasted image 20240904153810.png",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -141,7 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "未命名.md",
+                "file": "images/Pasted image 20240904153810.png",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -164,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "未命名.md"
+                "file": "images/Pasted image 20240904153810.png"
               }
             }
           },
@@ -213,17 +211,22 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "f391d09c82205129",
+  "active": "e35340117c9e52e1",
   "lastOpenFiles": [
+    "images/Pasted image 20240904153038.png",
+    "images/Pasted image 20240904112623.png",
+    "images/Pasted image 20240904111332.png",
+    "images/Pasted image 20240904103007.png",
+    "images/Pasted image 20240904092708.png",
+    "images/Pasted image 20240904103355.png",
+    "Helper types and functions.md",
     "Build event.md",
-    "未命名.md",
     "Macro definition.md",
     "Memory management.md",
     "Event loop.md",
     "README.md",
     "libevent_structure.md",
     "images/Pasted image 20240904153810.png",
-    "images/Pasted image 20240904153038.png",
     "event_base.md",
     "Work with events.md",
     "Variadic function.md",
@@ -232,13 +235,9 @@
     "images/Pasted.md",
     "2024-09-04.md",
     "images/libevent.png",
-    "images/Pasted image 20240904112623.png",
     "images/Pasted image 20240829113803.png",
     "images/Pasted image 20240830112652.png",
     "images/Pasted image 20240830112747.png",
-    "images/Pasted image 20240831140329.png",
-    "images/Pasted image 20240831141854.png",
-    "images/Pasted image 20240904090807.png",
     "imagse/20240829000720.png.md",
     "imagse",
     "Pasted.md",

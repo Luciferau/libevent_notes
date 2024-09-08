@@ -1385,10 +1385,59 @@ event_set（）具有一些用于更方便地处理定时器和信号的变体�
 2.0版本之前EV_PERSIST标志不能正确地操作超时。标志不会在事件激活时复位超时值，而是没有任何操作。
 
 2.0之前的版本不支持同时添加多个带有相同fd和READ/WRITE标志的事件。也就是说，在每个fd上，某时刻只能有一个事件等待读取，也只能有一个事件等待写入。
-43 Things： [IT](http://www.43things.com/tag/IT), [libevent](http://www.43things.com/tag/libevent), [非阻塞IO](http://www.43things.com/tag/%E9%9D%9E%E9%98%BB%E5%A1%9EIO), [公用超时](http://www.43things.com/tag/%E5%85%AC%E7%94%A8%E8%B6%85%E6%97%B6), [激活](http://www.43things.com/tag/%E6%BF%80%E6%B4%BB), [网络编程](http://www.43things.com/tag/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B), [未决](http://www.43things.com/tag/%E6%9C%AA%E5%86%B3), [信号事件](http://www.43things.com/tag/%E4%BF%A1%E5%8F%B7%E4%BA%8B%E4%BB%B6)  
+43 Things： [IT](http://www.43things.com/tag/IT), [libevent](http://www.43things.com/tag/libevent), [非阻塞IO](http://www.43things.com/tag/%E9%9D%9E%E9%98%BB%E5%A1%9EIO), [公用超时](http://www.43things.com/tag/%E5%85%AC%E7%94%A8%E8%B6%85%E6%97%B6), [激活](http://www.43things.com/tag/%E6%BF%80%E6%B4%BB), [网络编程](http://www.43things.com/tag/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B), [未决](http://www.43things.com/tag/%E6%9C%AA%E5%86%B3), [信号事件](http://www.43things.com/tag/%E4%BF%A1%E5%8F%B7%E4%BA%8B%E4%BB%B6)
 BuzzNet： [IT](http://www.buzznet.com/IT), [libevent](http://www.buzznet.com/libevent), [非阻塞IO](http://www.buzznet.com/%E9%9D%9E%E9%98%BB%E5%A1%9EIO), [公用超时](http://www.buzznet.com/%E5%85%AC%E7%94%A8%E8%B6%85%E6%97%B6), [激活](http://www.buzznet.com/%E6%BF%80%E6%B4%BB), [网络编程](http://www.buzznet.com/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B), [未决](http://www.buzznet.com/%E6%9C%AA%E5%86%B3), [信号事件](http://www.buzznet.com/%E4%BF%A1%E5%8F%B7%E4%BA%8B%E4%BB%B6)  
 del.icio.us： [IT](http://del.icio.us/popular/IT), [libevent](http://del.icio.us/popular/libevent), [非阻塞IO](http://del.icio.us/popular/%E9%9D%9E%E9%98%BB%E5%A1%9EIO), [公用超时](http://del.icio.us/popular/%E5%85%AC%E7%94%A8%E8%B6%85%E6%97%B6), [激活](http://del.icio.us/popular/%E6%BF%80%E6%B4%BB), [网络编程](http://del.icio.us/popular/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B), [未决](http://del.icio.us/popular/%E6%9C%AA%E5%86%B3), [信号事件](http://del.icio.us/popular/%E4%BF%A1%E5%8F%B7%E4%BA%8B%E4%BB%B6)  
 Flickr： [IT](http://flickr.com/photos/tags/IT), [libevent](http://flickr.com/photos/tags/libevent), [非阻塞IO](http://flickr.com/photos/tags/%E9%9D%9E%E9%98%BB%E5%A1%9EIO), [公用超时](http://flickr.com/photos/tags/%E5%85%AC%E7%94%A8%E8%B6%85%E6%97%B6), [激活](http://flickr.com/photos/tags/%E6%BF%80%E6%B4%BB), [网络编程](http://flickr.com/photos/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B), [未决](http://flickr.com/photos/tags/%E6%9C%AA%E5%86%B3), [信号事件](http://flickr.com/photos/tags/%E4%BF%A1%E5%8F%B7%E4%BA%8B%E4%BB%B6)  
 IceRocket： [IT](http://blogs.icerocket.com/search?q=IT), [libevent](http://blogs.icerocket.com/search?q=libevent), [非阻塞IO](http://blogs.icerocket.com/search?q=%E9%9D%9E%E9%98%BB%E5%A1%9EIO), [公用超时](http://blogs.icerocket.com/search?q=%E5%85%AC%E7%94%A8%E8%B6%85%E6%97%B6), [激活](http://blogs.icerocket.com/search?q=%E6%BF%80%E6%B4%BB), [网络编程](http://blogs.icerocket.com/search?q=%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B), [未决](http://blogs.icerocket.com/search?q=%E6%9C%AA%E5%86%B3), [信号事件](http://blogs.icerocket.com/search?q=%E4%BF%A1%E5%8F%B7%E4%BA%8B%E4%BB%B6)  
 LiveJournal： [IT](http://www.livejournal.com/interests.bml?int=IT), [libevent](http://www.livejournal.com/interests.bml?int=libevent), [非阻塞IO](http://www.livejournal.com/interests.bml?int=%E9%9D%9E%E9%98%BB%E5%A1%9EIO), [公用超时](http://www.livejournal.com/interests.bml?int=%E5%85%AC%E7%94%A8%E8%B6%85%E6%97%B6), [激活](http://www.livejournal.com/interests.bml?int=%E6%BF%80%E6%B4%BB), [网络编程](http://www.livejournal.com/interests.bml?int=%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B), [未决](http://www.livejournal.com/interests.bml?int=%E6%9C%AA%E5%86%B3), [信号事件](http://www.livejournal.com/interests.bml?int=%E4%BF%A1%E5%8F%B7%E4%BA%8B%E4%BB%B6)  
 Technorati： [IT](http://technorati.com/tags/IT), [libevent](http://technorati.com/tags/libevent), [非阻塞IO](http://technorati.com/tags/%E9%9D%9E%E9%98%BB%E5%A1%9EIO), [公用超时](http://technorati.com/tags/%E5%85%AC%E7%94%A8%E8%B6%85%E6%97%B6), [激活](http://technorati.com/tags/%E6%BF%80%E6%B4%BB), [网络编程](http://technorati.com/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B), [未决](http://technorati.com/tags/%E6%9C%AA%E5%86%B3), [信号事件](http://technorati.com/tags/%E4%BF%A1%E5%8F%B7%E4%BA%8B%E4%BB%B6)
+
+## source code
+~~~c
+int
+
+event_base_set(struct event_base *base, struct event *ev)
+
+{
+
+    /* Only innocent events may be assigned to a different base */
+
+    if (ev->ev_flags != EVLIST_INIT)
+
+        return (-1);
+
+  
+
+    event_debug_assert_is_setup_(ev);
+
+  
+
+    ev->ev_base = base;
+
+    ev->ev_pri = base->nactivequeues/2;
+
+  
+
+    return (0);
+
+}
+
+  
+
+void
+
+event_set(struct event *ev, evutil_socket_t fd, short events,
+
+      void (*callback)(evutil_socket_t, short, void *), void *arg)
+
+{
+
+    int r;
+
+    r = event_assign(ev, current_base, fd, events, callback, arg);
+
+    EVUTIL_ASSERT(r == 0);
+
+}
+~~~

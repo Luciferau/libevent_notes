@@ -1275,3 +1275,7 @@ done:
 ~~~
 # Identifying events from cleared memory
 	libevent提供了函数，可以从已经通过设置为0（比如说，通过calloc（）分配的，或者使用memset（）或者bzero（）清除了的）而清除的内存识别出已初始化的事件。
+
+~~~c
+int event_initialized(const struct event *ev)
+~~~

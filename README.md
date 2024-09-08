@@ -63,3 +63,6 @@ libevent公用头文件都安装在event2目录中，分为三类：
 
 ## 创建事件
 [Build event](Build%20event.md)
+
+## 相关的辅助函数和类型
+[Helper types and functions](Helper%20types%20and%20functions.md)

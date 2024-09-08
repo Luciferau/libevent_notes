@@ -10,16 +10,33 @@
           {
             "id": "d4f993d7b560d76e",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
                 "file": "Macro definition.md",
                 "mode": "source",
                 "source": false
-              }
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "0d3e56e6681e5b53",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Build event.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -48,7 +65,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Macro definition.md"
+                "file": "Build event.md"
               }
             }
           },
@@ -96,7 +113,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Macro definition.md",
+                "file": "Build event.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +130,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Macro definition.md",
+                "file": "Build event.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,7 +153,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Macro definition.md"
+                "file": "Build event.md"
               }
             }
           },
@@ -187,10 +204,10 @@
   },
   "active": "db730313e0ffb1b4",
   "lastOpenFiles": [
+    "Macro definition.md",
     "Build event.md",
     "Memory management.md",
     "Event loop.md",
-    "Macro definition.md",
     "README.md",
     "libevent_structure.md",
     "images/Pasted image 20240904153810.png",

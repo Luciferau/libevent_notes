@@ -1291,3 +1291,6 @@ int event_initialized(const struct event *ev)
 }
 ~~~
 
+~~~c
+#define evsignal_initialized(ev) event_initialized(ev)
+~~~

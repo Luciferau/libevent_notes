@@ -1261,17 +1261,11 @@ event_base_init_common_timeout(struct event_base *base,
 
     base->common_timeout_queues[base->n_common_timeouts++] = new_ctl;
 
-    result = &new_ctl->duration;
-
-  
+    result = &new_ctl->duration;  
 
 done:
-
     if (result)
-
-        EVUTIL_ASSERT(is_common_timeout(result, base));
-
-  
+        EVUTIL_ASSERT(is_common_timeout(result, base));  
 
     EVBASE_RELEASE_LOCK(base, th_base_lock);
 
@@ -1279,5 +1273,5 @@ done:
 
 }
 ~~~
- ---
- 2024 9.6 0:21
+# Identifying events from cleared memory
+	libevent提供了函数，可以从已经通过设置为0（比如说，通过calloc（）分配的，或者使用memset（）或者bzero（）清除了的）而清除的内存识别出已初始化的事件。

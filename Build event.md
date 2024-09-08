@@ -1279,3 +1279,15 @@ done:
 ~~~c
 int event_initialized(const struct event *ev)
 ~~~
+
+## source code
+~~~c
+int event_initialized(const struct event *ev)
+{
+    if (!(ev->ev_flags & EVLIST_INIT))
+        return 0;  
+    return 1;
+
+}
+~~~
+

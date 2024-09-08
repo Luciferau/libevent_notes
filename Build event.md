@@ -1363,3 +1363,9 @@ event_initialized（）函数从0.3版本就存在了。
 
 # Deprecated event handling functions
 	2.0版本之前的libevent没有event_assign（）或者event_new（）。替代的是将事件关联到“当前”event_base的event_set（）。如果有多个event_base，需要记得调用event_base_set（）来确定事件确实是关联到当前使用的event_base的。
+
+~~~c
+int event_base_set(struct event_base *base, struct event *ev)
+void event_set(struct event *ev, evutil_socket_t fd, short events,
+      void (*callback)(evutil_socket_t, short, void *), void *arg)
+~~~

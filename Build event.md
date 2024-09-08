@@ -1293,4 +1293,10 @@ int event_initialized(const struct event *ev)
 
 ~~~c
 #define evsignal_initialized(ev) event_initialized(ev)
+#define evtimer_initialized(ev)     event_initialized(ev)
 ~~~
+
+<font color="#ff0000">警告</font>
+这个函数不能可靠地从没有初始化的内存块中识别出已经初始化的事件。除非知道被查询的内存要么是已清除的，要么是已经初始化为事件的，才能使用这个函数。
+
+除非编写一个非常特别的应用，通常不需要使用这个函数。event_new（）返回的事件总是已经初始化的。

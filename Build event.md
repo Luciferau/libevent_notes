@@ -98,108 +98,106 @@ void event_free(struct event *ev)
 
 ## <font color="#4bacc6">event_assign()</font>
 ~~~c
-  
-
-
-
-int
-
-event_assign(struct event *ev, struct event_base *base, evutil_socket_t fd, short events, void (*callback)(evutil_socket_t, short, void *), void *arg)
-
+ /**
+ * @brief  Assigns a file descriptor to an event structure and sets its properties.
+ *
+ * This function initializes an `event` structure to be used with the given `event_base`.
+ * It sets up the event with a file descriptor, event types, and a callback function.
+ *
+ * @param ev         Pointer to the `event` structure to be initialized.
+ * @param base       Pointer to the `event_base` to which this event will be assigned.
+ *                   If NULL, the global or current event base is used.
+ * @param fd         File descriptor associated with the event. This can be a socket,
+ *                   pipe, or any other file descriptor used for I/O operations.
+ * @param events     Bitmask of event types. This can include flags such as `EV_READ`,
+ *                   `EV_WRITE`, `EV_SIGNAL`, `EV_PERSIST`, etc.
+ * @param callback   Pointer to the function that will be called when the event is triggered.
+ *                   This function should match the signature: `void callback(evutil_socket_t fd, short events, void *arg)`.
+ * @param arg        Pointer to user-defined data that will be passed to the callback function.
+ *                   This can be NULL or any pointer to additional context or state information.
+ *
+ * @return  0 on success, or -1 if there is an error (e.g., incompatible event types).
+ */
+int event_assign(struct event *ev, struct event_base *base, evutil_socket_t fd, short events, void (*callback)(evutil_socket_t, short, void *), void *arg)
 {
+    // If no event base is provided, use the current base.
+    if (!base)
+        base = current_base;
 
-    if (!base)
+    // If the argument is a special value, use the event structure itself.
+    if (arg == &event_self_cbarg_ptr_)
+        arg = ev;
 
-        base = current_base;
+    // Ensure the event is not already added to an event base.
+    if (!(events & EV_SIGNAL))
+        event_debug_assert_socket_nonblocking_(fd);
 
-    if (arg == &event_self_cbarg_ptr_)
+    // Ensure the event structure is in an initial state.
+    event_debug_assert_not_added_(ev);
 
-        arg = ev;
+    // Initialize the event structure with provided parameters.
+    ev->ev_base = base;  
+    ev->ev_callback = callback;
+    ev->ev_arg = arg;
+    ev->ev_fd = fd;
+    ev->ev_events = events;
+    ev->ev_res = 0;
+    ev->ev_flags = EVLIST_INIT;
+    ev->ev_ncalls = 0;
+    ev->ev_pncalls = NULL;
 
-  
+    // Special handling for signal events.
+    if (events & EV_SIGNAL) {
+        // EV_SIGNAL should not be combined with EV_READ, EV_WRITE, or EV_CLOSED.
+        if ((events & (EV_READ|EV_WRITE|EV_CLOSED)) != 0) {
+            event_warnx("%s: EV_SIGNAL is not compatible with "
+                "EV_READ, EV_WRITE or EV_CLOSED", __func__);
+            return -1;
+        }
+        ev->ev_closure = EV_CLOSURE_EVENT_SIGNAL;
+    } else {
+        // Handle persistent and one-time events.
+        if (events & EV_PERSIST) {
+            evutil_timerclear(&ev->ev_io_timeout);
+            ev->ev_closure = EV_CLOSURE_EVENT_PERSIST;
+        } else {
+            ev->ev_closure = EV_CLOSURE_EVENT;
+        }
+    }
 
-    if (!(events & EV_SIGNAL))
+    // Initialize priority and other internal structures.
+    min_heap_elem_init_(ev);
 
-        event_debug_assert_socket_nonblocking_(fd);
+    // Set event priority if the event base is not NULL.
+    if (base != NULL) {
+        ev->ev_pri = base->nactivequeues / 2;
+    }
 
-    event_debug_assert_not_added_(ev);
-  
-    ev->ev_base = base;  
+    // Debug note for setting up the event.
+    event_debug_note_setup_(ev);
 
-    ev->ev_callback = callback;
-
-    ev->ev_arg = arg;
-
-    ev->ev_fd = fd;
-
-    ev->ev_events = events;
-
-    ev->ev_res = 0;
-
-    ev->ev_flags = EVLIST_INIT;
-
-    ev->ev_ncalls = 0;
-
-    ev->ev_pncalls = NULL;
-
-  
-
-    if (events & EV_SIGNAL) {
-
-        if ((events & (EV_READ|EV_WRITE|EV_CLOSED)) != 0) {
-
-            event_warnx("%s: EV_SIGNAL is not compatible with "
-
-                "EV_READ, EV_WRITE or EV_CLOSED", __func__);
-
-            return -1;
-
-        }
-
-        ev->ev_closure = EV_CLOSURE_EVENT_SIGNAL;
-
-    } else {
-
-        if (events & EV_PERSIST) {
-
-            evutil_timerclear(&ev->ev_io_timeout);
-
-            ev->ev_closure = EV_CLOSURE_EVENT_PERSIST;
-
-        } else {
-
-            ev->ev_closure = EV_CLOSURE_EVENT;
-
-        }
-
-    }
-
-  
-
-    min_heap_elem_init_(ev);
-
-  
-
-    if (base != NULL) {
-
-        /* by default, we put new events into the middle priority */
-
-        ev->ev_pri = base->nactivequeues / 2;
-
-    }
-
-  
-
-    event_debug_note_setup_(ev);
-
-  
-
-    return 0;
-
+    return 0;
 }
+
 ~~~
 
+**参数说明：**
 
+- `ev`: 要初始化的事件结构体的指针。
+- `base`: 事件基底的指针。如果传递 `NULL`，则使用当前全局事件基底。
+- `fd`: 关联的文件描述符。
+- `events`: 事件类型的位掩码，例如 `EV_READ` 表示读事件，`EV_WRITE` 表示写事件等。
+- `callback`: 事件触发时调用的回调函数。
+- `arg`: 传递给回调函数的用户数据。
+
+**功能说明：**
+
+- 检查并设置事件基底。
+- 设置事件的回调函数、参数、文件描述符和事件类型。
+- 特殊处理信号事件和持久事件。
+- 初始化事件的内部状态。
+- 设置事件优先级（如果事件基底不为 `NULL`）。
+- 执行调试相关的初始化操作。
 ## <font color="#4bacc6">event_add()</font>
 ~~~c
 int event_add(struct event *ev, const struct timeval *tv)
@@ -393,7 +391,7 @@ libevent也提供了一组方便使用的宏用于处理信号事件：
 ![Pasted image 20240904103007](images/Pasted%20image%2020240904103007.png)
 evsignal_*宏从2.0.1-alpha版本开始存在。先前版本中这些宏叫做<font color="#4bacc6">signal_add（）</font><font color="#4bacc6">、signal_del（）</font>等等。
 
-## <font color="#ff0000">关于信号的警告</font>
+## Warning about signals
 在当前版本的libevent和大多数后端中，每个进程任何时刻只能有一个<font color="#ff0000">event_base</font>可以监听信号。如果同时向两个event_base添加信号事件，即使是不同的信号，也只有一个event_base可以取得信号。
 
 kqueue后端没有这个限制

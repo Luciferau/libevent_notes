@@ -100,6 +100,8 @@ void event_free(struct event *ev)
 ~~~c
   
 
+
+
 int
 
 event_assign(struct event *ev, struct event_base *base, evutil_socket_t fd, short events, void (*callback)(evutil_socket_t, short, void *), void *arg)
@@ -1300,3 +1302,66 @@ int event_initialized(const struct event *ev)
 这个函数不能可靠地从没有初始化的内存块中识别出已经初始化的事件。除非知道被查询的内存要么是已清除的，要么是已经初始化为事件的，才能使用这个函数。
 
 除非编写一个非常特别的应用，通常不需要使用这个函数。event_new（）返回的事件总是已经初始化的。
+## example
+~~~c
+#include <event2/event.h>
+
+#include <stdlib.h>
+  
+struct reader{
+
+    evutil_socket_t fd;
+
+};
+
+  
+
+#define READER_ACTUAL_SIZE \
+
+    (sizeof(struct reader) + sizeof(evutil_socket_t))
+
+  
+
+#define READER_EVENT_PTR(r) \
+
+    ((struct event *)((char *)(r) + sizeof(struct reader)))
+
+  
+
+struct reader* allocate_reader(evutil_socket_t fd){
+
+  
+
+    struct reader *r = (reader*)calloc(1, READER_ACTUAL_SIZE);
+
+    if(r)
+
+        r->fd = fd;
+
+    return r;
+
+};
+
+void readcb(evutil_socket_t fd, short event, void *arg);
+
+  
+
+int add_reader(struct reader*r ,struct event_base *base)
+
+{
+
+    struct event* ev = READER_EVENT_PTR(r);
+
+    if(!event_initialized(ev))
+
+        event_assign(ev,base,r->fd,EV_READ,readcb,r);
+
+    return event_add(ev,NULL);  
+
+}
+~~~
+
+event_initialized（）函数从0.3版本就存在了。
+
+# Deprecated event handling functions
+	2.0版本之前的libevent没有event_assign（）或者event_new（）。替代的是将事件关联到“当前”event_base的event_set（）。如果有多个event_base，需要记得调用event_base_set（）来确定事件确实是关联到当前使用的event_base的。

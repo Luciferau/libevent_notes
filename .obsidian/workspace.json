@@ -36,19 +36,19 @@
             }
           },
           {
-            "id": "f391d09c82205129",
+            "id": "8aada533386dfd19",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "libevent_structure.md",
+                "file": "Helper types and functions.md",
                 "mode": "source",
                 "source": false
               }
             }
           },
           {
-            "id": "20e3d64f7a02bf05",
+            "id": "b093d5f911ec2036",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -225,14 +225,14 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "20e3d64f7a02bf05",
+  "active": "b093d5f911ec2036",
   "lastOpenFiles": [
-    "Event loop.md",
     "Build event.md",
-    "README.md",
-    "Helper types and functions.md",
-    "Macro definition.md",
     "libevent_structure.md",
+    "Helper types and functions.md",
+    "Event loop.md",
+    "README.md",
+    "Macro definition.md",
     "event_base.md",
     "Variadic function.md",
     "images/Pasted image 20240904153810.png",

@@ -23,7 +23,7 @@
 ~~~
 
 
-# Standard integer types
+# Standard int types
 
 落后于21世纪的C系统常常没有实现C99标准规定的stdint.h头文件。考虑到这种情况，
 libevent定义了来自于stdint.h的、位宽度确定（bit-width-specific）的整数类型：
@@ -496,5 +496,3 @@ extern int gettimeofday (struct timeval *__restrict __tv,
 	void *__restrict __tz) __THROW __nonnull ((1));
 ~~~
 evutil_gettimeofdy（）函数设置tv为当前时间，tz参数未使用。           
-
-## example

@@ -345,3 +345,130 @@ ev_intptr_t是一个有符号整数类型，足够容纳指针类型而不会产
 ev_ssize_t类型由2.0.2-alpha版本加入。ev_socklen_t类型由2.0.3-alpha版本加入。ev_intptr_t与ev_uintptr_t类型，以及EV_SSIZE_MAX/MIN宏定义由2.0.4-alpha版本加入。ev_off_t类型首次出现在2.0.9-rc版本。
 
 # Timer portable functions
+不是每个平台都定义了标准timeval操作函数，所以libevent也提供了自己的实现。
+
+## API
+~~~
+#define evutil_timeradd(tvp, uvp, vvp) timeradd((tvp), (uvp), (vvp))
+
+#define evutil_timersub(tvp, uvp, vvp) timersub((tvp), (uvp), (vvp))
+~~~
+
+
+~~~c
+#ifdef EVENT__HAVE_TIMERADD
+
+#define evutil_timeradd(tvp, uvp, vvp) timeradd((tvp), (uvp), (vvp))
+
+#define evutil_timersub(tvp, uvp, vvp) timersub((tvp), (uvp), (vvp))
+
+#else
+
+#define evutil_timeradd(tvp, uvp, vvp)                  \
+
+    do {                                \
+
+        (vvp)->tv_sec = (tvp)->tv_sec + (uvp)->tv_sec;      \
+
+        (vvp)->tv_usec = (tvp)->tv_usec + (uvp)->tv_usec;       \
+
+        if ((vvp)->tv_usec >= 1000000) {            \
+
+            (vvp)->tv_sec++;                \
+
+            (vvp)->tv_usec -= 1000000;          \
+
+        }                           \
+
+    } while (0)
+
+#define evutil_timersub(tvp, uvp, vvp)                  \
+
+    do {                                \
+
+        (vvp)->tv_sec = (tvp)->tv_sec - (uvp)->tv_sec;      \
+
+        (vvp)->tv_usec = (tvp)->tv_usec - (uvp)->tv_usec;   \
+
+        if ((vvp)->tv_usec < 0) {               \
+
+            (vvp)->tv_sec--;                \
+
+            (vvp)->tv_usec += 1000000;          \
+
+        }                           \
+
+    } while (0)
+
+#endif /* !EVENT__HAVE_TIMERADD */
+~~~
+
+这些宏分别对前两个参数进行加或者减运算，将结果存放到第三个参数中。
+~~~c
+#ifdef __USE_MISC
+
+/* Convenience macros for operations on timevals.
+
+   NOTE: `timercmp' does not work for >= or <=.  */
+
+# define timerisset(tvp)   ((tvp)->tv_sec || (tvp)->tv_usec)
+
+# define timerclear(tvp)   ((tvp)->tv_sec = (tvp)->tv_usec = 0)
+
+# define timercmp(a, b, CMP)                       \
+
+  (((a)->tv_sec == (b)->tv_sec)                    \
+
+   ? ((a)->tv_usec CMP (b)->tv_usec)                     \
+
+   : ((a)->tv_sec CMP (b)->tv_sec))
+
+# define timeradd(a, b, result)                       \
+
+  do {                                 \
+
+    (result)->tv_sec = (a)->tv_sec + (b)->tv_sec;              \
+
+    (result)->tv_usec = (a)->tv_usec + (b)->tv_usec;              \
+
+    if ((result)->tv_usec >= 1000000)                    \
+
+      {                                \
+
+   ++(result)->tv_sec;                       \
+
+   (result)->tv_usec -= 1000000;                   \
+
+      }                                \
+
+  } while (0)
+
+# define timersub(a, b, result)                       \
+
+  do {                                 \
+
+    (result)->tv_sec = (a)->tv_sec - (b)->tv_sec;              \
+
+    (result)->tv_usec = (a)->tv_usec - (b)->tv_usec;              \
+
+    if ((result)->tv_usec < 0) {                   \
+
+      --(result)->tv_sec;                       \
+
+      (result)->tv_usec += 1000000;                   \
+
+    }                               \
+
+  } while (0)
+
+#endif   /* Misc.  */
+~~~
+
+## API
+~~~c
+# define timerisset(tvp)   ((tvp)->tv_sec || (tvp)->tv_usec)
+
+# define timerclear(tvp)   ((tvp)->tv_sec = (tvp)->tv_usec = 0)
+~~~
+
+清除timeval会将其值设置为0。evutil_timerisset宏检查timeval是否已经设置，如果已经设置为非零值，返回ture，否则返回false。

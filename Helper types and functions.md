@@ -486,4 +486,15 @@ ev_ssize_t类型由2.0.2-alpha版本加入。ev_socklen_t类型由2.0.3-alpha版
 ~~~
 evutil_timercmp宏比较两个timeval，如果其关系满足cmp关系运算符，返回true。比如说，evutil_timercmp(t1,t2,<=)的意思是“是否t1<=t2？”。注意：与某些操作系统版本不同的是，libevent的时间比较支持所有C关系运算符（也就是<、>、\==、!=、<=和>=）。
 
-## API
+## evutil_gettimeofday
+~~~
+#define evutil_gettimeofday(tv, tz) gettimeofday((tv), (tz))
+~~~
+
+~~~c
+extern int gettimeofday (struct timeval *__restrict __tv,
+	void *__restrict __tz) __THROW __nonnull ((1));
+~~~
+evutil_gettimeofdy（）函数设置tv为当前时间，tz参数未使用。           
+
+## example

@@ -684,7 +684,8 @@ const char *evutil_socket_error_to_string(int errcode);
 
 ## evutil_make_socket_nonblocking()
 ~~~c
-int
-
-evutil_make_socket_nonblocking(evutil_socket_t fd)
+int evutil_make_socket_nonblocking(evutil_socket_t fd)
 ~~~
+用于对套接字进行非阻塞IO的调用也不能移植到Windows中。<font color="#00b050">evutil_make_socket_nonblocking</font>()函数要求一个套接字（来自socket()或者accept()）作为参数，将其设置为非阻塞的。（设置Unix中的O_NONBLOCK标志和Windows中的FIONBIO标志）
+
+## API

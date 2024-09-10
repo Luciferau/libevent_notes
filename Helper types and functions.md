@@ -1082,3 +1082,10 @@ evutil_vsnprintf(char *buf, size_t buflen, const char *format, va_list ap)
 
 # Locale-independent string manipulation functions
 实现基于ASCII的协议时，可能想要根据字符类型的ASCII记号来操作字符串，而不管当前的区域设置。libevent为此提供了一些函数：
+~~~c  
+int evutil_ascii_strcasecmp(const char *s1, const char *s2);
+
+int evutil_ascii_strncasecmp(const char *s1, const char *s2, size_t n);
+~~~
+
+这些函数与strcasecmp()和strncasecmp()的行为类似，只是它们总是使用ASCII字符集进行比较，而不管当前的区域设置。这两个函数首次在2.0.3-alpha版本出现。

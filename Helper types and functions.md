@@ -870,3 +870,5 @@ evutil_socketpair(int family, int type, int protocol, evutil_socket_t fd[2])
 ~~~c
 ev_int64_t evutil_strtoll(const char *s, char **endptr, int base)
 ~~~
+
+这个函数与strtol行为相同，只是用于64位整数。在某些平台上，仅支持十进制。

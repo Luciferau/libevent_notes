@@ -29,16 +29,16 @@
 libevent定义了来自于stdint.h的、位宽度确定（bit-width-specific）的整数类型：
 
 
-| Type        | Width | Signed | Maximum       | Minimum      |
-| ----------- | ----- | ------ | ------------- | ------------ |
-| ev_uint64_t | 64    | No     | EV_UINT64_MAX | 0            |
-| ev_int64_t  | 64    | Yes    | EV_INT64_MAX  | EV_INT64_MIN |
-| ev_uint32_t | 32    | No     | EV_UINT32_MAX | 0            |
-| ev_int32_t  | 32    | Yes    | EV_INT32_MAX  | EV_INT32_MIN |
-| ev_uint16_t | 16    | No     | EV_UINT16_MAX | 0            |
-| ev_int16_t  | 16    | Yes    | EV_INT16_MAX  | EV_INT16_MIN |
-| ev_uint8_t  | 8     | No     | EV_UINT8_MAX  | 0            |
-| ev_int8_t   | 8     | Yes    | EV_INT8_MAX   | EV_INT8_MIN  |
+| Type                                     | Width | Signed | Maximum                                    | Minimum      |
+| ---------------------------------------- | ----- | ------ | ------------------------------------------ | ------------ |
+| <font color="#4bacc6">ev_uint64_t</font> | 64    | No     | <font color="#8064a2">EV_UINT64_MAX</font> | 0            |
+| <font color="#4bacc6">ev_int64_t</font>  | 64    | Yes    | <font color="#8064a2">EV_INT64_MAX</font>  | EV_INT64_MIN |
+| <font color="#4bacc6">ev_uint32_t</font> | 32    | No     | <font color="#8064a2">EV_UINT32_MAX</font> | 0            |
+| <font color="#4bacc6">ev_int32_t</font>  | 32    | Yes    | <font color="#8064a2">EV_INT32_MAX</font>  | EV_INT32_MIN |
+| <font color="#4bacc6">ev_uint16_t</font> | 16    | No     | <font color="#8064a2">EV_UINT16_MAX</font>                              | 0            |
+| <font color="#4bacc6">ev_int16_t</font>  | 16    | Yes    | EV_INT16_MAX                               | EV_INT16_MIN |
+| <font color="#4bacc6">ev_uint8_t</font>  | 8     | No     | EV_UINT8_MAX                               | 0            |
+| <font color="#4bacc6">ev_int8_t</font>   | 8     | Yes    | EV_INT8_MAX                                | EV_INT8_MIN  |
 跟C99标准一样，这些类型都有明确的位宽度。
 
 这些类型由1.4.0-alpha版本引入。MAX/MIN常量首次出现在2.0.4-alpha版本。

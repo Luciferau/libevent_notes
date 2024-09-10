@@ -550,3 +550,7 @@ void func()
 ~~~c
 int evutil_closesocket(evutil_socket_t sock)
 ~~~
+
+这个接口用于关闭套接字。在Unix中，它是close()的别名；在Windows中，它调用closesocket()。（在Windows中不能将close()用于套接字，也没有其他系统定义了closesocket()）
+
+evutil_closesocket()函数在2.0.5-alpha版本引入。在此之前，需要使用<font color="#8064a2">EVUTIL_CLOSESOCKE</font>T宏。

@@ -546,3 +546,7 @@ void func()
 # Socket API compatibility
 
 本节由于历史原因而存在：Windows从来没有以良好兼容的方式实现Berkeley套接字API。
+
+~~~c
+int evutil_closesocket(evutil_socket_t sock)
+~~~

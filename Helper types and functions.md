@@ -681,3 +681,10 @@ const char *evutil_socket_error_to_string(int errcode);
 （因为对于来自套接字函数的错误，Windows不使用errno，而是使用WSAGetLastError()，所以需要这些函数。）
 
 **注意**：Windows套接字错误与从errno看到的标准C错误是不同的。
+
+## evutil_make_socket_nonblocking()
+~~~c
+int
+
+evutil_make_socket_nonblocking(evutil_socket_t fd)
+~~~

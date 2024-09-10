@@ -571,5 +571,107 @@ int evutil_closesocket(evutil_socket_t sock)
 #endif
 
 }
+
+#define EVUTIL_CLOSESOCKET(s) evutil_closesocket(s)
 ~~~
 
+## EVUTIL_*
+~~~C
+EVENT2_EXPORT_SYMBOL
+
+int evutil_make_tcp_listen_socket_deferred(evutil_socket_t sock);
+
+  
+
+#ifdef _WIN32
+
+/** Return the most recent socket error.  Not idempotent on all platforms. */
+
+#define EVUTIL_SOCKET_ERROR() WSAGetLastError()
+
+/** Replace the most recent socket error with errcode */
+
+#define EVUTIL_SET_SOCKET_ERROR(errcode)        \
+
+    do { WSASetLastError(errcode); } while (0)
+
+/** Return the most recent socket error to occur on sock. */
+
+EVENT2_EXPORT_SYMBOL
+
+int evutil_socket_geterror(evutil_socket_t sock);
+
+/** Convert a socket error to a string. */
+
+EVENT2_EXPORT_SYMBOL
+
+const char *evutil_socket_error_to_string(int errcode);
+
+#define EVUTIL_INVALID_SOCKET INVALID_SOCKET
+
+#elif defined(EVENT_IN_DOXYGEN_)
+
+/**
+
+   @name Socket error functions
+
+  
+
+   These functions are needed for making programs compatible between
+
+   Windows and Unix-like platforms.
+
+  
+
+   You see, Winsock handles socket errors differently from the rest of
+
+   the world.  Elsewhere, a socket error is like any other error and is
+
+   stored in errno.  But winsock functions require you to retrieve the
+
+   error with a special function, and don't let you use strerror for
+
+   the error codes.  And handling EWOULDBLOCK is ... different.
+
+  
+
+   @{
+
+*/
+
+/** Return the most recent socket error.  Not idempotent on all platforms. */
+
+#define EVUTIL_SOCKET_ERROR() ...
+
+/** Replace the most recent socket error with errcode */
+
+#define EVUTIL_SET_SOCKET_ERROR(errcode) ...
+
+/** Return the most recent socket error to occur on sock. */
+
+#define evutil_socket_geterror(sock) ...
+
+/** Convert a socket error to a string. */
+
+#define evutil_socket_error_to_string(errcode) ...
+
+#define EVUTIL_INVALID_SOCKET -1
+
+/**@}*/
+
+#else /** !EVENT_IN_DOXYGEN_ && !_WIN32 */
+
+#define EVUTIL_SOCKET_ERROR() (errno)
+
+#define EVUTIL_SET_SOCKET_ERROR(errcode)        \
+
+        do { errno = (errcode); } while (0)
+
+#define evutil_socket_geterror(sock) (errno)
+
+#define evutil_socket_error_to_string(errcode) (strerror(errcode))
+
+#define EVUTIL_INVALID_SOCKET -1
+
+#endif /** !_WIN32 */
+~~~

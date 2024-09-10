@@ -692,6 +692,8 @@ int evutil_make_socket_nonblocking(evutil_socket_t fd)
 ~~~c
 int evutil_make_listen_socket_reuseable(evutil_socket_t sock)
 ~~~
+这个函数确保关闭监听套接字后，它使用的地址可以立即被另一个套接字使用。（在Unix中它设置<font color="#8064a2">SO_REUSEADDR</font>标志，在Windows中则不做任何操作。不能在Windows中使用<font color="#8064a2">SO_REUSEADDR</font>标志：它有另外不同的含义（译者注：多个套接字绑定到相同地址））
+
 
 ### source code
 #### evutil_make_socket_nonblocking

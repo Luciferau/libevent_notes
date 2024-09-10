@@ -541,5 +541,6 @@ void func()
 
 注意：在1.4.4之前的版本中使用<=或者>=是不安全的。
 
+`evutil_gettimeofday()` 是 `libevent` 库中的一个函数，用于获取当前的时间。它的功能是填充一个 `struct timeval` 结构体，该结构体包含当前的秒数和微秒数。这个函数通常用于需要精确时间戳或时间间隔计算的场景。
 
 # Socket API compatibility

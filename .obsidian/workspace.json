@@ -80,7 +80,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 302.5026054382324
+    "width": 318.5026054382324
   },
   "right": {
     "id": "89888e66bdb231a4",
@@ -185,7 +185,7 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "db730313e0ffb1b4",
+  "active": "dee1553610898fd3",
   "lastOpenFiles": [
     "Build event.md",
     "README.md",

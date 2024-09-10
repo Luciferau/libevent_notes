@@ -1092,6 +1092,8 @@ int evutil_ascii_strncasecmp(const char *s1, const char *s2, size_t n);
 这些函数与strcasecmp()和strncasecmp()的行为类似，只是它们总是使用ASCII字符集进行比较，而不管当前的区域设置。这两个函数首次在2.0.3-alpha版本出现。
 
 ### source code
+#### evutil_ascii_strcasecmp()
+
 ~~~c
 int
 
@@ -1123,6 +1125,11 @@ evutil_ascii_strcasecmp(const char *s1, const char *s2)
 
 }
 
+
+~~~
+
+#### evutil_ascii_strncasecmp()
+~~~c
 int evutil_ascii_strncasecmp(const char *s1, const char *s2, size_t n)
 
 {
@@ -1153,3 +1160,4 @@ int evutil_ascii_strncasecmp(const char *s1, const char *s2, size_t n)
 
 }
 ~~~
+

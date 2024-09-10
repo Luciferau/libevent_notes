@@ -700,6 +700,12 @@ int evutil_make_socket_closeonexec(evutil_socket_t fd)
 ~~~
 
 这个函数告诉操作系统，如果调用了exec()，应该关闭指定的套接字。在Unix中函数设置FD_CLOEXEC标志，在Windows上则没有操作。
+
+## evutil_socketpair()
+~~~c
+int evutil_socketpair(int family, int type, int protocol, evutil_socket_t fd[2])
+~~~
+
 ### source code
 #### evutil_make_socket_nonblocking
 ~~~c
@@ -831,3 +837,6 @@ evutil_make_socket_closeonexec(evutil_socket_t fd)
 
 }
 ~~~
+
+
+##

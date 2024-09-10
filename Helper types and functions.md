@@ -866,12 +866,14 @@ evutil_socketpair(int family, int type, int protocol, evutil_socket_t fd[2])
 
 
 # Portable string manipulation functions
+## evutil_strtoll
 
 ~~~c
 ev_int64_t evutil_strtoll(const char *s, char **endptr, int base)
 ~~~
 
 这个函数与strtol行为相同，只是用于64位整数。在某些平台上，仅支持十进制。
+## evutil_snprintf evutil_vsnprintf
 
 ~~~c
  int evutil_snprintf(char *buf, size_t buflen, const char *format, ...);
@@ -884,8 +886,8 @@ ev_int64_t evutil_strtoll(const char *s, char **endptr, int base)
 
 evutil_strtoll（）从1.4.2-rc版本就存在了，其他函数首次出现在1.4.5版本中。
 
-### source code
-#### evutil_strtoll()
+## source code
+### evutil_strtoll()
 ~~~c
 ev_int64_t
 
@@ -1006,7 +1008,7 @@ evutil_strtoll(const char *s, char **endptr, int base)
 }
 ~~~
 
-#### evutil_snprintf()
+### evutil_snprintf()
 ~~~c
 int
 
@@ -1029,7 +1031,7 @@ evutil_snprintf(char *buf, size_t buflen, const char *format, ...)
 }
 ~~~
 
-#### evutil_vsnprintf()
+### evutil_vsnprintf()
 ~~~c
 int
 
@@ -1077,3 +1079,5 @@ evutil_vsnprintf(char *buf, size_t buflen, const char *format, va_list ap)
 
 }
 ~~~
+
+# Locale-independent string manipulation functions

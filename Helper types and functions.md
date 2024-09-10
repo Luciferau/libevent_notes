@@ -675,3 +675,9 @@ const char *evutil_socket_error_to_string(int errcode);
 
 #endif /** !_WIN32 */
 ~~~
+
+这些宏访问和操作套接字错误代码。<font color="#8064a2">EVUTIL_SOCKET_ERROR（）</font>返回本线程最后一次套接字操作的全局错误号，evutil_socket_geterror（）则返回某特定套接字的错误号。（在类Unix系统中都是errno）<font color="#8064a2">EVUTIL_SET_SOCKET_ERROR</font>()修改当前套接字错误号（与设置Unix中的errno类似），<font color="#8064a2">evutil_socket_error_to_string</font>（）返回代表某给定套接字错误号的字符串（与Unix中的strerror()类似）。
+
+（因为对于来自套接字函数的错误，Windows不使用errno，而是使用WSAGetLastError()，所以需要这些函数。）
+
+**注意**：Windows套接字错误与从errno看到的标准C错误是不同的。

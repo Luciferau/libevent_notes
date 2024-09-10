@@ -868,3 +868,5 @@ evutil_socketpair(int family, int type, int protocol, evutil_socket_t fd[2])
 # Portable string manipulation functions
 
 ~~~c
+ev_int64_t evutil_strtoll(const char *s, char **endptr, int base)
+~~~

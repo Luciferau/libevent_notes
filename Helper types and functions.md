@@ -694,7 +694,12 @@ int evutil_make_listen_socket_reuseable(evutil_socket_t sock)
 ~~~
 这个函数确保关闭监听套接字后，它使用的地址可以立即被另一个套接字使用。（在Unix中它设置<font color="#8064a2">SO_REUSEADDR</font>标志，在Windows中则不做任何操作。不能在Windows中使用<font color="#8064a2">SO_REUSEADDR</font>标志：它有另外不同的含义（译者注：多个套接字绑定到相同地址））
 
+## 
+~~~c
+int
 
+evutil_make_socket_closeonexec(evutil_socket_t fd)
+~~~
 ### source code
 #### evutil_make_socket_nonblocking
 ~~~c
@@ -784,6 +789,45 @@ evutil_make_listen_socket_reuseable(evutil_socket_t sock)
     return 0;
 
 #endif
+
+}
+~~~
+
+#### evutil_make_socket_closeonexec
+~~~c
+int
+
+evutil_make_socket_closeonexec(evutil_socket_t fd)
+
+{
+
+#if !defined(_WIN32) && defined(EVENT__HAVE_SETFD)
+
+    int flags;
+
+    if ((flags = fcntl(fd, F_GETFD, NULL)) < 0) {
+
+        event_warn("fcntl(%d, F_GETFD)", fd);
+
+        return -1;
+
+    }
+
+    if (!(flags & FD_CLOEXEC)) {
+
+        if (fcntl(fd, F_SETFD, flags | FD_CLOEXEC) == -1) {
+
+            event_warn("fcntl(%d, F_SETFD)", fd);
+
+            return -1;
+
+        }
+
+    }
+
+#endif
+
+    return 0;
 
 }
 ~~~

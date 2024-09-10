@@ -1081,3 +1081,4 @@ evutil_vsnprintf(char *buf, size_t buflen, const char *format, va_list ap)
 ~~~
 
 # Locale-independent string manipulation functions
+实现基于ASCII的协议时，可能想要根据字符类型的ASCII记号来操作字符串，而不管当前的区域设置。libevent为此提供了一些函数：

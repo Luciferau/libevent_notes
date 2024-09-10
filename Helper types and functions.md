@@ -540,3 +540,6 @@ void func()
 除evutil_gettimeofday（）由2.0版本引入外，这些函数由1.4.0-beta版本引入。
 
 注意：在1.4.4之前的版本中使用<=或者>=是不安全的。
+
+
+# Socket API compatibility

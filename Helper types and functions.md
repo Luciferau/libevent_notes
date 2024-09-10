@@ -880,6 +880,8 @@ ev_int64_t evutil_strtoll(const char *s, char **endptr, int base)
 ~~~
 
 
-这些snprintf替代函数的行为与标准snprintf和vsnprintf接口相同。函数返回在缓冲区足够长的情况下将写入的字节数，不包括结尾的NULL字节。（这个行为遵循C99的snprintf()标准，但与Windows的_snprintf()相反：如果字符串无法放入缓冲区，_snprintf()会返回负数）
+这些<font color="#8064a2">snprintf</font>替代函数的行为与标准snprintf和vsnprintf接口相同。函数返回在缓冲区足够长的情况下将写入的字节数，不包括结尾的NULL字节。（这个行为遵循C99的snprintf()标准，但与Windows的_snprintf()相反：如果字符串无法放入缓冲区，_snprintf()会返回负数）
 
 evutil_strtoll（）从1.4.2-rc版本就存在了，其他函数首次出现在1.4.5版本中。
+
+### source code

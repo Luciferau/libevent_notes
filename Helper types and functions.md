@@ -35,10 +35,11 @@ libevent定义了来自于stdint.h的、位宽度确定（bit-width-specific）�
 | <font color="#4bacc6">ev_int64_t</font>  | 64    | Yes    | <font color="#8064a2">EV_INT64_MAX</font>  | EV_INT64_MIN |
 | <font color="#4bacc6">ev_uint32_t</font> | 32    | No     | <font color="#8064a2">EV_UINT32_MAX</font> | 0            |
 | <font color="#4bacc6">ev_int32_t</font>  | 32    | Yes    | <font color="#8064a2">EV_INT32_MAX</font>  | EV_INT32_MIN |
-| <font color="#4bacc6">ev_uint16_t</font> | 16    | No     | <font color="#8064a2">EV_UINT16_MAX</font>                              | 0            |
-| <font color="#4bacc6">ev_int16_t</font>  | 16    | Yes    | EV_INT16_MAX                               | EV_INT16_MIN |
-| <font color="#4bacc6">ev_uint8_t</font>  | 8     | No     | EV_UINT8_MAX                               | 0            |
-| <font color="#4bacc6">ev_int8_t</font>   | 8     | Yes    | EV_INT8_MAX                                | EV_INT8_MIN  |
+| <font color="#4bacc6">ev_uint16_t</font> | 16    | No     | <font color="#8064a2">EV_UINT16_MAX</font> | 0            |
+| <font color="#4bacc6">ev_int16_t</font>  | 16    | Yes    | <font color="#8064a2">EV_INT16_MAX</font>  | EV_INT16_MIN |
+| <font color="#4bacc6">ev_uint8_t</font>  | 8     | No     | <font color="#8064a2">EV_UINT8_MAX</font>  | 0            |
+| <font color="#4bacc6">ev_int8_t</font>   | 8     | Yes    | <font color="#8064a2">EV_INT8_MAX</font>   | EV_INT8_MIN  |
+|                                          |       |        |                                            |              |
 跟C99标准一样，这些类型都有明确的位宽度。
 
 这些类型由1.4.0-alpha版本引入。MAX/MIN常量首次出现在2.0.4-alpha版本。

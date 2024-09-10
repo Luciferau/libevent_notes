@@ -863,3 +863,6 @@ evutil_socketpair(int family, int type, int protocol, evutil_socket_t fd[2])
 
 }
 ~~~
+
+
+# Portable string manipulation functions

@@ -1081,6 +1081,7 @@ evutil_vsnprintf(char *buf, size_t buflen, const char *format, va_list ap)
 ~~~
 
 # Locale-independent string manipulation functions
+## evutil_ascii_strcasecmp evutil_ascii_strncasecmp
 实现基于ASCII的协议时，可能想要根据字符类型的ASCII记号来操作字符串，而不管当前的区域设置。libevent为此提供了一些函数：
 ~~~c  
 int evutil_ascii_strcasecmp(const char *s1, const char *s2);
@@ -1089,3 +1090,66 @@ int evutil_ascii_strncasecmp(const char *s1, const char *s2, size_t n);
 ~~~
 
 这些函数与strcasecmp()和strncasecmp()的行为类似，只是它们总是使用ASCII字符集进行比较，而不管当前的区域设置。这两个函数首次在2.0.3-alpha版本出现。
+
+### source code
+~~~c
+int
+
+evutil_ascii_strcasecmp(const char *s1, const char *s2)
+
+{
+
+    char c1, c2;
+
+    while (1) {
+
+        c1 = EVUTIL_TOLOWER_(*s1++);
+
+        c2 = EVUTIL_TOLOWER_(*s2++);
+
+        if (c1 < c2)
+
+            return -1;
+
+        else if (c1 > c2)
+
+            return 1;
+
+        else if (c1 == 0)
+
+            return 0;
+
+    }
+
+}
+
+int evutil_ascii_strncasecmp(const char *s1, const char *s2, size_t n)
+
+{
+
+    char c1, c2;
+
+    while (n--) {
+
+        c1 = EVUTIL_TOLOWER_(*s1++);
+
+        c2 = EVUTIL_TOLOWER_(*s2++);
+
+        if (c1 < c2)
+
+            return -1;
+
+        else if (c1 > c2)
+
+            return 1;
+
+        else if (c1 == 0)
+
+            return 0;
+
+    }
+
+    return 0;
+
+}
+~~~

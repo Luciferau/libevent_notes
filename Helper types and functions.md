@@ -497,3 +497,42 @@ extern int gettimeofday (struct timeval *__restrict __tv,
 	void *__restrict __tz) __THROW __nonnull ((1));
 ~~~
 evutil_gettimeofdy（）函数设置tv为当前时间，tz参数未使用。           
+~~~c
+#include <bits/types/struct_timeval.h>
+
+#include <event2/event.h>  
+
+#include <event2/util.h>
+
+#include <ctime>
+
+#include <unistd.h>
+
+  
+
+void func()
+
+{
+
+    struct timeval tv1,tv2,tv3;
+
+    tv1.tv_sec = 5; tv1.tv_usec = 500*1000;
+
+    evutil_gettimeofday(&tv2,NULL);
+
+    evutil_timeradd(&tv1,&tv2,&tv3);
+
+    if(evutil_timercmp(&tv1,&tv2,==))
+
+        puts("tv1 == tv2");
+
+    if(evutil_timercmp(&tv1,&tv2,>=))
+
+        puts("tv1 >= tv2");
+
+    if(evutil_timercmp(&tv1,&tv2,<))
+
+        puts("tv1 < tv2");
+
+}
+~~~

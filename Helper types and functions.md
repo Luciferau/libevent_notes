@@ -1923,3 +1923,100 @@ evutil_sockaddr_cmp(const struct sockaddr *sa1, const struct sockaddr *sa2,
 ~~~
 
 # Struct Portability Functions
+## evutil_offsetof
+~~~c
+/** Replacement for offsetof on platforms that don't define it. */
+
+#ifdef offsetof
+
+#define evutil_offsetof(type, field) offsetof(type, field)
+
+#else
+
+#define evutil_offsetof(type, field) ((off_t)(&((type *)0)->field))
+
+#endif
+
+~~~
+
+~~~c
+#define offsetof(t, d) __builtin_offsetof(t, d)
+~~~
+
+
+用于计算结构体成员相对于结构体起始位置的字节偏移量
+`evutil_offsetof` 是 `libevent` 库中的一个宏，用于计算结构体成员相对于结构体起始位置的字节偏移量。它的作用类似于 C 标准库中的 `offsetof` 宏，但在 `libevent` 中可能有一些额外的检查或调整。
+ 
+
+`#define evutil_offsetof(type, member) ((size_t)(&((type *)0)->member))`
+
+这个宏通过创建一个指向 `type` 类型的空指针，并访问它的 `member` 成员，然后将其转换为 `size_t` 类型，计算成员的偏移量。由于我们从一个零地址的指针开始，这样可以获得成员在结构体中的实际偏移量。
+
+# Secure Random Number Generator
+很多应用（包括evdns）为了安全考虑需要很难预测的随机数。
+
+~~~c
+void
+
+evutil_secure_rng_get_bytes(void *buf, size_t n)
+
+{
+
+    ev_arc4random_buf(buf, n);
+
+}
+~~~
+
+这个函数用随机数据填充buf处的n个字节。
+
+如果所在平台提供了arc4random()，libevent会使用这个函数。否则，libevent会使用自己的arc4random()实现，种子则来自操作系统的熵池（entropy pool）（Windows中的CryptGenRandom，其他平台中的/dev/urandom）
+
+~~~c
+int
+
+evutil_secure_rng_init(void)
+
+{
+
+    int val;
+
+  
+
+    ARC4_LOCK_();
+
+    val = (!arc4_stir()) ? 0 : -1;
+
+    ARC4_UNLOCK_();
+
+    return val;
+
+}
+~~~
+
+~~~c
+  
+
+#if !defined(EVENT__HAVE_ARC4RANDOM) || defined(EVENT__HAVE_ARC4RANDOM_ADDRANDOM)
+
+void
+
+evutil_secure_rng_add_bytes(const char *buf, size_t n)
+
+{
+
+    arc4random_addrandom((unsigned char*)buf,
+
+        n>(size_t)INT_MAX ? INT_MAX : (int)n);
+
+}
+
+#endif
+~~~
+
+不需要手动初始化安全随机数发生器，但是如果要确认已经成功初始化，可以调用evutil_secure_rng_init()。函数会播种RNG（如果没有播种过），并在成功时返回0。函数返回-1则表示libevent无法在操作系统中找到合适的熵源（source of entropy），如果不自己初始化RNG，就无法安全使用RNG了。
+
+如果程序运行在可能会放弃权限的环境中（比如说，通过执行chroot()），在放弃权限前应该调用evutil_secure_rng_init()。
+
+可以调用evutil_secure_rng_add_bytes()向熵池加入更多随机字节，但通常不需要这么做。
+
+这些函数是2.0.4-alpha版本引入的。

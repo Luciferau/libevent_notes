@@ -1172,9 +1172,37 @@ int evutil_inet_pton(int af, const char *src, void *dst);
 这些函数根据RFC 3493的规定解析和格式化IPv4与IPv6地址，与标准inet_ntop()和inet_pton()函数行为相同。要格式化IPv4地址，调用evutil_inet_ntop()，设置af为AF_INET，src指向in_addr结构体，dst指向大小为len的字符缓冲区。对于IPv6地址，af应该是AF_INET6，src则指向in6_addr结构体。要解析IP地址，调用evutil_inet_pton()，设置af为AF_INET或者AF_INET6，src指向要解析的字符串，dst指向一个in_addr或者in_addr6结构体。
 
 失败时evutil_inet_ntop()返回NULL，成功时返回到dst的指针。成功时evutil_inet_pton()返回0，失败时返回-1。
+## evutil_parse_sockaddr_port()
+~~~c
+int evutil_parse_sockaddr_port(const char *ip_as_string, struct sockaddr *out, int *outlen);
+~~~
+这个接口解析来自str的地址，将结果写入到out中。outlen参数应该指向一个表示out中可用字节数的整数；函数返回时这个整数将表示实际使用了的字节数。成功时函数返回0，失败时返回-1。函数识别下列地址格式：
+-  [ipv6]:端口号（如[ffff::]:80）
+
+-  ipv6（如ffff::）
+
+-  [ipv6]（如[ffff::]）
+
+-  ipv4:端口号（如1.2.3.4:80）
+
+-  ipv4（如1.2.3.4）
+
+如果没有给出端口号，结果中的端口号将被设置为0。
+
+~~~c
+int
+
+evutil_sockaddr_cmp(const struct sockaddr *sa1, const struct sockaddr *sa2,
+
+    int include_port)
+~~~
 
 
+evutil_sockaddr_cmp()函数比较两个地址，如果sa1在sa2前面，返回负数；如果二者相等，则返回0；如果sa2在sa1前面，则返回正数。函数可用于AF_INET和AF_INET6地址；对于其他地址，返回值未定义。函数确保考虑地址的完整次序，但是不同版本中的次序可能不同。
 
+如果include_port参数为false，而两个地址只有端口号不同，则它们被认为是相等的。否则，具有不同端口号的地址被认为是不等的。
+
+除evutil_sockaddr_cmp()在2.0.3-alpha版本引入外，这些函数在2.0.1-alpha版本中引入。
 ## source code
 ### evutil_inet_ntop
 ~~~c
@@ -1596,3 +1624,302 @@ evutil_inet_pton(int af, const char *src, void *dst)
 
 }
 ~~~
+
+### evutil_parse_sockaddr_port()
+~~~c
+  
+
+int
+
+evutil_parse_sockaddr_port(const char *ip_as_string, struct sockaddr *out, int *outlen)
+
+{
+
+    int port;
+
+    unsigned int if_index;
+
+    char buf[128];
+
+    const char *cp, *addr_part, *port_part;
+
+    int is_ipv6;
+
+    /* recognized formats are:
+
+     * [ipv6]:port
+
+     * ipv6
+
+     * [ipv6]
+
+     * ipv4:port
+
+     * ipv4
+
+     */
+
+  
+
+    cp = strchr(ip_as_string, ':');
+
+    if (*ip_as_string == '[') {
+
+        size_t len;
+
+        if (!(cp = strchr(ip_as_string, ']'))) {
+
+            return -1;
+
+        }
+
+        len = ( cp-(ip_as_string + 1) );
+
+        if (len > sizeof(buf)-1) {
+
+            return -1;
+
+        }
+
+        memcpy(buf, ip_as_string+1, len);
+
+        buf[len] = '\0';
+
+        addr_part = buf;
+
+        if (cp[1] == ':')
+
+            port_part = cp+2;
+
+        else
+
+            port_part = NULL;
+
+        is_ipv6 = 1;
+
+    } else if (cp && strchr(cp+1, ':')) {
+
+        is_ipv6 = 1;
+
+        addr_part = ip_as_string;
+
+        port_part = NULL;
+
+    } else if (cp) {
+
+        is_ipv6 = 0;
+
+        if (cp - ip_as_string > (int)sizeof(buf)-1) {
+
+            return -1;
+
+        }
+
+        memcpy(buf, ip_as_string, cp-ip_as_string);
+
+        buf[cp-ip_as_string] = '\0';
+
+        addr_part = buf;
+
+        port_part = cp+1;
+
+    } else {
+
+        addr_part = ip_as_string;
+
+        port_part = NULL;
+
+        is_ipv6 = 0;
+
+    }
+
+  
+
+    if (port_part == NULL) {
+
+        port = 0;
+
+    } else {
+
+        port = atoi(port_part);
+
+        if (port <= 0 || port > 65535) {
+
+            return -1;
+
+        }
+
+    }
+
+  
+
+    if (!addr_part)
+
+        return -1; /* Should be impossible. */
+
+#ifdef AF_INET6
+
+    if (is_ipv6)
+
+    {
+
+        struct sockaddr_in6 sin6;
+
+        memset(&sin6, 0, sizeof(sin6));
+
+#ifdef EVENT__HAVE_STRUCT_SOCKADDR_IN6_SIN6_LEN
+
+        sin6.sin6_len = sizeof(sin6);
+
+#endif
+
+        sin6.sin6_family = AF_INET6;
+
+        sin6.sin6_port = htons(port);
+
+        if (1 != evutil_inet_pton_scope(
+
+            AF_INET6, addr_part, &sin6.sin6_addr, &if_index)) {
+
+            return -1;
+
+        }
+
+        if ((int)sizeof(sin6) > *outlen)
+
+            return -1;
+
+        sin6.sin6_scope_id = if_index;
+
+        memset(out, 0, *outlen);
+
+        memcpy(out, &sin6, sizeof(sin6));
+
+        *outlen = sizeof(sin6);
+
+        return 0;
+
+    }
+
+    else
+
+#endif
+
+    {
+
+        struct sockaddr_in sin;
+
+        memset(&sin, 0, sizeof(sin));
+
+#ifdef EVENT__HAVE_STRUCT_SOCKADDR_IN_SIN_LEN
+
+        sin.sin_len = sizeof(sin);
+
+#endif
+
+        sin.sin_family = AF_INET;
+
+        sin.sin_port = htons(port);
+
+        if (1 != evutil_inet_pton(AF_INET, addr_part, &sin.sin_addr))
+
+            return -1;
+
+        if ((int)sizeof(sin) > *outlen)
+
+            return -1;
+
+        memset(out, 0, *outlen);
+
+        memcpy(out, &sin, sizeof(sin));
+
+        *outlen = sizeof(sin);
+
+        return 0;
+
+    }
+
+}
+~~~
+### evutil_sockaddr_cmp()
+
+
+~~~c
+int
+
+evutil_sockaddr_cmp(const struct sockaddr *sa1, const struct sockaddr *sa2,
+
+    int include_port)
+
+{
+
+    int r;
+
+    if (0 != (r = (sa1->sa_family - sa2->sa_family)))
+
+        return r;
+
+  
+
+    if (sa1->sa_family == AF_INET) {
+
+        const struct sockaddr_in *sin1, *sin2;
+
+        sin1 = (const struct sockaddr_in *)sa1;
+
+        sin2 = (const struct sockaddr_in *)sa2;
+
+        if (sin1->sin_addr.s_addr < sin2->sin_addr.s_addr)
+
+            return -1;
+
+        else if (sin1->sin_addr.s_addr > sin2->sin_addr.s_addr)
+
+            return 1;
+
+        else if (include_port &&
+
+            (r = ((int)sin1->sin_port - (int)sin2->sin_port)))
+
+            return r;
+
+        else
+
+            return 0;
+
+    }
+
+#ifdef AF_INET6
+
+    else if (sa1->sa_family == AF_INET6) {
+
+        const struct sockaddr_in6 *sin1, *sin2;
+
+        sin1 = (const struct sockaddr_in6 *)sa1;
+
+        sin2 = (const struct sockaddr_in6 *)sa2;
+
+        if ((r = memcmp(sin1->sin6_addr.s6_addr, sin2->sin6_addr.s6_addr, 16)))
+
+            return r;
+
+        else if (include_port &&
+
+            (r = ((int)sin1->sin6_port - (int)sin2->sin6_port)))
+
+            return r;
+
+        else
+
+            return 0;
+
+    }
+
+#endif
+
+    return 1;
+
+}
+~~~
+
+# Struct Portability Functions

@@ -1161,3 +1161,4 @@ int evutil_ascii_strncasecmp(const char *s1, const char *s2, size_t n)
 }
 ~~~
 
+# IPv6 helper and compatibility functions

@@ -1,0 +1,3 @@
+每个bufferevent都有一个输入缓冲区和一个输出缓冲区，它们的类型都是“struct evbuffer”。有数据要写入到bufferevent时，添加数据到输出缓冲区；bufferevent中有数据供读取的时候，从输入缓冲区抽取（drain）数据。
+
+evbuffer接口支持很多种操作，后面的章节将讨论这些操作。

@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "TODO Lists.md",
+                "file": "aceld_notes/libevent_notes_aceld/4-libevent简单服务器.md",
                 "mode": "source",
                 "source": false
               }
@@ -61,7 +61,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TODO Lists.md"
+                "file": "aceld_notes/libevent_notes_aceld/4-libevent简单服务器.md"
               }
             }
           },
@@ -108,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TODO Lists.md",
+                "file": "aceld_notes/libevent_notes_aceld/4-libevent简单服务器.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -125,7 +125,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "TODO Lists.md",
+                "file": "aceld_notes/libevent_notes_aceld/4-libevent简单服务器.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -148,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TODO Lists.md"
+                "file": "aceld_notes/libevent_notes_aceld/4-libevent简单服务器.md"
               }
             }
           },
@@ -199,39 +199,50 @@
   },
   "active": "f0b1bcb40675c58f",
   "lastOpenFiles": [
-    "Bufferevent and evbuffer.md",
-    "libevent_structure.md",
-    "README.md",
-    "Build event.md",
-    "Event loop.md",
-    "Macro definition.md",
-    "event_base.md",
-    "Variadic function.md",
-    "Macro function.md",
-    "Memory management.md",
+    "aceld_notes/libevent_notes_aceld/102_hui_xian_fu_wu_qi.md",
+    "aceld_notes/libevent_notes_aceld/101_helloworld_fu_wu_qi.md",
+    "aceld_notes/libevent_notes_aceld/libevent-2-epoll触发模式01.png",
+    "aceld_notes/libevent_notes_aceld/chapter1.md",
+    "aceld_notes/libevent_notes_aceld/libevent-2-epoll触发模式02.png",
+    "aceld_notes/libevent_notes_aceld/libevent-2-epoll触发模式03.png",
+    "aceld_notes/libevent_notes_aceld/libevent-2-epoll触发模式04.png",
+    "aceld_notes/libevent_notes_aceld/libevent-3-反应堆模式02.png",
+    "aceld_notes/libevent_notes_aceld/libevent-6-事件状态图.png",
     "TODO Lists.md",
-    "Helper types and functions.md",
-    "images/Pasted image 20240904153810.png",
-    "images/Pasted image 20240904153038.png",
-    "images/Pasted image 20240904112623.png",
-    "images/Pasted image 20240904111332.png",
-    "images/Pasted image 20240904103007.png",
-    "images/Pasted image 20240904092708.png",
-    "images/Pasted image 20240904103355.png",
-    "Work with events.md",
+    "aceld_notes/libevent_notes_aceld/libevent-3-反应堆模式.png",
+    "aceld_notes/libevent_notes_aceld/libevent-2-解决阻塞04.png",
+    "aceld_notes/libevent_notes_aceld/libevent-2-解决阻塞03.png",
+    "aceld_notes/libevent_notes_aceld/assets/libevent深入浅出封面.jpg",
+    "aceld_notes/libevent_notes_aceld/assets",
+    "aceld_notes/libevent_notes_aceld/53_zhuan_chu_event_base_de_zhuang_tai.md",
+    "aceld_notes/libevent_notes_aceld/52_ting_zhi_xun_huan.md",
+    "aceld_notes/libevent_notes_aceld/51_yun_xing_xun_huan.md",
+    "aceld_notes/libevent_notes_aceld/5-libevent编程api.md",
+    "aceld_notes/libevent_notes_aceld/45_eventbase_he_fork.md",
+    "aceld_notes/libevent_notes_aceld/45_diao_shi_shi_jian_de_shi_yong.md",
+    "aceld_notes/libevent_notes_aceld/44_eventbase_you_xian_ji.md",
+    "aceld_notes/libevent_notes_aceld/43_suo_he_xian_cheng_de_she_zhi.md",
+    "aceld_notes/libevent_notes_aceld/43_shi_fang_event_base.md",
+    "aceld_notes/libevent_notes_aceld/43_nei_cun_guan_li_hui_diao_she_zhi.md",
+    "aceld_notes/libevent_notes_aceld/42_zhi_ming_cuo_wu_hui_diao_she_zhi.md",
+    "aceld_notes/libevent_notes_aceld/42_jian_cha_event_base_hou_duan.md",
+    "aceld_notes/libevent_notes_aceld/41_ri_zhi_xiao_xi_hui_diao_she_zhi.md",
+    "aceld_notes/libevent_notes_aceld/41_jian_li_mo_ren_de_event_base.md",
+    "aceld_notes/libevent_notes_aceld/4-libevent简单服务器.md",
+    "aceld_notes/libevent_notes_aceld/32_epollde_fan_ying_dui_mo_shi_shi_xian.md",
+    "aceld_notes/libevent_notes_aceld/31_reactorfan_ying_dui_mo_shi.md",
+    "aceld_notes/libevent_notes_aceld/3-epoll和reactor.md",
+    "aceld_notes/libevent_notes_aceld/26-简单的epoll服务器.md",
+    "aceld_notes/libevent_notes_aceld/25hong_fa_mo_5f0f_md.md",
+    "aceld_notes/libevent_notes_aceld/24-epollapi.md",
+    "aceld_notes/libevent_notes_aceld/23-什么是epoll.md",
+    "aceld_notes/libevent_notes_aceld",
+    "aceld_notes",
+    "新建文件夹",
     "未命名",
-    "images/Pasted.md",
-    "2024-09-04.md",
-    "images/libevent.png",
-    "images/Pasted image 20240829113803.png",
-    "images/Pasted image 20240830112652.png",
-    "imagse/20240829000720.png.md",
     "imagse",
-    "Pasted.md",
-    "可变参数.md",
     "images",
     "res",
-    "未命名.canvas",
-    "em.md"
+    "未命名.canvas"
   ]
 }

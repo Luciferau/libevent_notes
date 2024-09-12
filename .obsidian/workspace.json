@@ -25,14 +25,13 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "TODO.md",
+                "file": "TODO Lists.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -61,7 +60,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TODO.md"
+                "file": "Helper types and functions.md"
               }
             }
           },
@@ -108,7 +107,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TODO.md",
+                "file": "Helper types and functions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -125,7 +124,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "TODO.md",
+                "file": "Helper types and functions.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -148,7 +147,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TODO.md"
+                "file": "Helper types and functions.md"
               }
             }
           },
@@ -197,10 +196,10 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "f0b1bcb40675c58f",
+  "active": "dee1553610898fd3",
   "lastOpenFiles": [
+    "TODO Lists.md",
     "Helper types and functions.md",
-    "TODO.md",
     "Build event.md",
     "README.md",
     "Memory management.md",

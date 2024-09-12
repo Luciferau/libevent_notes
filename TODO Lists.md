@@ -1,0 +1,6 @@
+- [ ] 🔽  Update Control
+	- [ ] 🔽 IP address
+	- [ ] 🔽 Not killed by Task Manager(PPL、Hook)
+	- [ ] 🔽 Server on 47.98.244.193 (Missing boost environment )
+	- [ ] 🔽 Server need to update source code
+- [ ] 

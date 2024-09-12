@@ -360,4 +360,304 @@ struct timeval
 };
 ```
 
-FlipperNested
+# struct evbuffer
+~~~c
+struct evbuffer {
+
+    /** The first chain in this buffer's linked list of chains. */
+
+    struct evbuffer_chain *first;
+
+    /** The last chain in this buffer's linked list of chains. */
+
+    struct evbuffer_chain *last;
+
+  
+
+    /** Pointer to the next pointer pointing at the 'last_with_data' chain.
+
+     *
+
+     * To unpack:
+
+     *
+
+     * The last_with_data chain is the last chain that has any data in it.
+
+     * If all chains in the buffer are empty, it is the first chain.
+
+     * If the buffer has no chains, it is NULL.
+
+     *
+
+     * The last_with_datap pointer points at _whatever 'next' pointer_
+
+     * pointing at the last_with_data chain. If the last_with_data chain
+
+     * is the first chain, or it is NULL, then the last_with_datap pointer
+
+     * is &buf->first.
+
+     */
+
+    struct evbuffer_chain **last_with_datap;
+
+  
+
+    /** Total amount of bytes stored in all chains.*/
+
+    size_t total_len;
+
+  
+
+    /** Number of bytes we have added to the buffer since we last tried to
+
+     * invoke callbacks. */
+
+    size_t n_add_for_cb;
+
+    /** Number of bytes we have removed from the buffer since we last
+
+     * tried to invoke callbacks. */
+
+    size_t n_del_for_cb;
+
+  
+
+#ifndef EVENT__DISABLE_THREAD_SUPPORT
+
+    /** A lock used to mediate access to this buffer. */
+
+    void *lock;
+
+#endif
+
+    /** True iff we should free the lock field when we free this
+
+     * evbuffer. */
+
+    unsigned own_lock : 1;
+
+    /** True iff we should not allow changes to the front of the buffer
+
+     * (drains or prepends). */
+
+    unsigned freeze_start : 1;
+
+    /** True iff we should not allow changes to the end of the buffer
+
+     * (appends) */
+
+    unsigned freeze_end : 1;
+
+    /** True iff this evbuffer's callbacks are not invoked immediately
+
+     * upon a change in the buffer, but instead are deferred to be invoked
+
+     * from the event_base's loop.  Useful for preventing enormous stack
+
+     * overflows when we have mutually recursive callbacks, and for
+
+     * serializing callbacks in a single thread. */
+
+    unsigned deferred_cbs : 1;
+
+#ifdef _WIN32
+
+    /** True iff this buffer is set up for overlapped IO. */
+
+    unsigned is_overlapped : 1;
+
+#endif
+
+    /** Zero or more EVBUFFER_FLAG_* bits */
+
+    ev_uint32_t flags;
+
+  
+
+    /** Used to implement deferred callbacks. */
+
+    struct event_base *cb_queue;
+
+  
+
+    /** A reference count on this evbuffer.  When the reference count
+
+     * reaches 0, the buffer is destroyed.  Manipulated with
+
+     * evbuffer_incref and evbuffer_decref_and_unlock and
+
+     * evbuffer_free. */
+
+    int refcnt;
+
+  
+
+    /** A struct event_callback handle to make all of this buffer's callbacks
+
+     * invoked from the event loop. */
+
+    struct event_callback deferred;
+
+  
+
+    /** A doubly-linked-list of callback functions */
+
+    LIST_HEAD(evbuffer_cb_queue, evbuffer_cb_entry) callbacks;
+
+  
+
+    /** The parent bufferevent object this evbuffer belongs to.
+
+     * NULL if the evbuffer stands alone. */
+
+    struct bufferevent *parent;
+
+};
+~~~
+
+|字段名称|类型|说明|
+|---|---|---|
+|`first`|`struct evbuffer_chain *`|指向缓冲区链表的第一个链段。|
+|`last`|`struct evbuffer_chain *`|指向缓冲区链表的最后一个链段。|
+|`last_with_datap`|`struct evbuffer_chain **`|指向最后一个包含数据的链段的指针。如果所有链段都为空，指向第一个链段；如果缓冲区没有链段，为 `NULL`。|
+|`total_len`|`size_t`|所有链段中数据的总字节数。|
+|`n_add_for_cb`|`size_t`|自上次调用回调函数以来，已添加到缓冲区中的字节数。|
+|`n_del_for_cb`|`size_t`|自上次调用回调函数以来，从缓冲区中移除的字节数。|
+|`lock`|`void *`|用于同步访问缓冲区的锁，避免多线程环境中的竞争条件。|
+|`own_lock`|`unsigned`|如果为 `1`，表示在释放 `evbuffer` 时需要释放 `lock` 字段所占用的资源。|
+|`freeze_start`|`unsigned`|如果为 `1`，表示不允许对缓冲区的开头进行修改。|
+|`freeze_end`|`unsigned`|如果为 `1`，表示不允许对缓冲区的末尾进行修改。|
+|`deferred_cbs`|`unsigned`|如果为 `1`，表示回调函数会被延迟到事件循环中执行。|
+|`is_overlapped`|`unsigned`|在 Windows 系统上有效。如果为 `1`，表示设置了重叠 IO。|
+|`flags`|`ev_uint32_t`|存储零个或多个 `EVBUFFER_FLAG_*` 标志位，用于设置缓冲区的属性。|
+|`cb_queue`|`struct event_base *`|用于实现延迟回调的事件基础对象。|
+|`refcnt`|`int`|缓冲区的引用计数。当引用计数为 `0` 时，缓冲区将被销毁。|
+|`deferred`|`struct event_callback`|用于将所有回调函数从事件循环中调用的结构体。|
+|`callbacks`|`LIST_HEAD(evbuffer_cb_queue, evbuffer_cb_entry)`|存储回调函数的双向链表。|
+|`parent`|`struct bufferevent *`|指向包含此 `evbuffer` 的 `bufferevent` 对象。如果 `evbuffer` 是独立的，则为 `NULL`。|
+
+
+# struct bufferevent
+~~~c
+struct bufferevent {
+
+    /** Event base for which this bufferevent was created. */
+
+    struct event_base *ev_base;
+
+    /** Pointer to a table of function pointers to set up how this
+
+        bufferevent behaves. */
+
+    const struct bufferevent_ops *be_ops;
+
+  
+
+    /** A read event that triggers when a timeout has happened or a socket
+
+        is ready to read data.  Only used by some subtypes of
+
+        bufferevent. */
+
+    struct event ev_read;
+
+    /** A write event that triggers when a timeout has happened or a socket
+
+        is ready to write data.  Only used by some subtypes of
+
+        bufferevent. */
+
+    struct event ev_write;
+
+  
+
+    /** An input buffer. Only the bufferevent is allowed to add data to
+
+        this buffer, though the user is allowed to drain it. */
+
+    struct evbuffer *input;
+
+  
+
+    /** An input buffer. Only the bufferevent is allowed to drain data
+
+        from this buffer, though the user is allowed to add it. */
+
+    struct evbuffer *output;
+
+  
+
+    struct event_watermark wm_read;
+
+    struct event_watermark wm_write;
+
+  
+
+    bufferevent_data_cb readcb;
+
+    bufferevent_data_cb writecb;
+
+    /* This should be called 'eventcb', but renaming it would break
+
+     * backward compatibility */
+
+    bufferevent_event_cb errorcb;
+
+    void *cbarg;
+
+  
+
+    struct timeval timeout_read;
+
+    struct timeval timeout_write;
+
+  
+
+    /** Events that are currently enabled: currently EV_READ and EV_WRITE
+
+        are supported. */
+
+    short enabled;
+
+};
+~~~
+
+- **`ev_base`**:
+    
+    - 指向 `event_base` 结构体，表示 `bufferevent` 所关联的事件基础设施。
+- **`be_ops`**:
+    
+    - 指向 `bufferevent_ops` 结构体的指针，用于操作 `bufferevent` 的行为（如读写操作的具体实现）。
+- **`ev_read`**:
+    
+    - `struct event` 类型的字段，用于处理读事件。这是一个底层的事件，用于监视文件描述符是否可读，或者监视超时事件。
+- **`ev_write`**:
+    
+    - `struct event` 类型的字段，用于处理写事件。这也是一个底层的事件，用于监视文件描述符是否可写，或者监视超时事件。
+- **`input`**:
+    
+    - 指向 `evbuffer` 结构体的指针，作为输入缓冲区。`bufferevent` 负责将数据添加到此缓冲区，而用户可以从中读取数据。
+- **`output`**:
+    
+    - 指向 `evbuffer` 结构体的指针，作为输出缓冲区。`bufferevent` 负责从此缓冲区读取数据，而用户可以将数据写入该缓冲区。
+- **`wm_read`** 和 **`wm_write`**:
+    
+    - `event_watermark` 结构体，定义了读写操作的水印值，用于控制在何时触发读或写事件。
+- **`readcb`** 和 **`writecb`**:
+    
+    - 回调函数，用于处理读写操作。当数据可读或可写时，这些回调函数会被调用。
+- **`errorcb`**:
+    
+    - 错误回调函数，用于处理 `bufferevent` 发生错误的情况。为了兼容性，虽然应该命名为 `eventcb`，但保留了旧名称。
+- **`cbarg`**:
+    
+    - 指向用户定义的数据的指针，这些数据会传递给回调函数。
+- **`timeout_read`** 和 **`timeout_write`**:
+    
+    - `struct timeval` 类型的字段，定义了读写操作的超时时间。用于在读取或写入操作超时时触发相应的事件。
+- **`enabled`**:
+    
+    - 记录当前启用的事件类型。可以是 `EV_READ`、`EV_WRITE` 或它们的组合。
+- 这个结构体用于 `libevent` 中的缓冲事件处理机制，使得你可以处理异步的 I/O 操作，同时管理数据的读写缓冲区。

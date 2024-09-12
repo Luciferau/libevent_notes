@@ -8,18 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "dee1553610898fd3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Helper types and functions.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "5626e1c25fbc883d",
             "type": "leaf",
             "state": {
@@ -43,8 +31,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -211,17 +198,17 @@
   },
   "active": "5626e1c25fbc883d",
   "lastOpenFiles": [
-    "Helper types and functions.md",
-    "Bufferevent and evbuffer.md",
+    "libevent_structure.md",
     "TODO Lists.md",
+    "Bufferevent and evbuffer.md",
+    "Helper types and functions.md",
+    "Macro function.md",
+    "event_base.md",
     "Build event.md",
     "README.md",
     "Memory management.md",
-    "Macro function.md",
     "Variadic function.md",
-    "event_base.md",
     "Event loop.md",
-    "libevent_structure.md",
     "Macro definition.md",
     "images/Pasted image 20240904153810.png",
     "images/Pasted image 20240904153038.png",

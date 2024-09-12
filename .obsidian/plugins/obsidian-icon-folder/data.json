@@ -6,11 +6,11 @@
     "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
+      "LiListTodo",
       "LiStickyNote",
       "LiCode",
       "LiImage",
-      "📓",
-      "LiLibrary"
+      "📓"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -57,5 +57,6 @@
   "images/Pasted image 20240904111332.png": "LiImage",
   "images/Pasted image 20240904112623.png": "LiImage",
   "images/Pasted image 20240904153038.png": "LiImage",
-  "images/Pasted image 20240904153810.png": "LiImage"
+  "images/Pasted image 20240904153810.png": "LiImage",
+  "TODO.md": "LiListTodo"
 }

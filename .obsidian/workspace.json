@@ -199,6 +199,8 @@
   },
   "active": "31ba3cbf905aa9ad",
   "lastOpenFiles": [
+    "images/Pasted image 20240913182621.png",
+    "images/Pasted image 20240913182459.png",
     "event_base.md",
     "epoll API.md",
     "Helper types and functions.md",
@@ -234,7 +236,6 @@
     "aceld_notes/libevent_notes_aceld/libevent-3-反应堆模式02.png",
     "aceld_notes/libevent_notes_aceld/libevent-6-事件状态图.png",
     "aceld_notes/libevent_notes_aceld/libevent-3-反应堆模式.png",
-    "aceld_notes/libevent_notes_aceld/libevent-2-解决阻塞04.png",
     "aceld_notes/libevent_notes_aceld/53_zhuan_chu_event_base_de_zhuang_tai.md",
     "aceld_notes/libevent_notes_aceld/52_ting_zhi_xun_huan.md",
     "aceld_notes/libevent_notes_aceld/51_yun_xing_xun_huan.md",
@@ -244,7 +245,6 @@
     "aceld_notes/libevent_notes_aceld/44_eventbase_you_xian_ji.md",
     "aceld_notes/libevent_notes_aceld/43_suo_he_xian_cheng_de_she_zhi.md",
     "aceld_notes/libevent_notes_aceld/43_shi_fang_event_base.md",
-    "aceld_notes/libevent_notes_aceld/43_nei_cun_guan_li_hui_diao_she_zhi.md",
     "未命名.canvas"
   ]
 }

@@ -30,3 +30,5 @@ bufferevent也有“错误”或者“事件”回调，用于向应用通知非
 - **<font color="#8064a2">BEV_EVENT_CONNECTED</font>**：请求的连接过程已经完成。
 
 上述标志由2.0.2-alpha版新引入。
+
+# Delayed callback

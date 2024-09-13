@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "epoll API.md",
+                "file": "Bufferevent and evbuffer.md",
                 "mode": "source",
                 "source": false
               }
@@ -61,7 +61,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "epoll API.md"
+                "file": "Bufferevent and evbuffer.md"
               }
             }
           },
@@ -88,7 +88,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -108,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "epoll API.md",
+                "file": "Bufferevent and evbuffer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -125,7 +126,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "epoll API.md",
+                "file": "Bufferevent and evbuffer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -148,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "epoll API.md"
+                "file": "Bufferevent and evbuffer.md"
               }
             }
           },
@@ -197,8 +198,9 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "31ba3cbf905aa9ad",
+  "active": "db730313e0ffb1b4",
   "lastOpenFiles": [
+    "epoll API.md",
     "aceld_notes/libevent_notes_aceld/8_lian_jie_jian_ting_qi_evconnlistener.md",
     "aceld_notes/libevent_notes_aceld/8_evbuffer.md",
     "aceld_notes/libevent_notes_aceld/86_tian_jia_shu_ju_dao_evbuffer_qian.md",
@@ -224,7 +226,6 @@
     "aceld_notes/libevent_notes_aceld/752_cao_zuo_hui_diao_3001_shui_wei_he_qi_7528_jin_.md",
     "aceld_notes/libevent_notes_aceld/74_shi_yong_bufferevent.md",
     "aceld_notes/libevent_notes_aceld/73_bufferevent_xuan_xiang_biao_zhi.md",
-    "aceld_notes/libevent_notes_aceld/72_yan_chi_hui_diao.md",
     "images/Pasted image 20240913182621.png",
     "images/Pasted image 20240913182459.png",
     "libevent-book/event_states.png",

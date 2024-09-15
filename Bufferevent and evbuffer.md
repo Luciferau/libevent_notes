@@ -398,69 +398,61 @@ int bufferevent_socket_connect_hostname(struct bufferevent *bev,
 int bufferevent_socket_get_dns_error(struct bufferevent *bev);    
 ~~~
 
+这个函数解析名字hostname，查找其family类型的地址（允许的地址族类型有AF_INET,AF_INET6和AF_UNSPEC）。如果名字解析失败，函数将调用事件回调，报告错误事件。如果解析成功，函数将启动连接请求，就像bufferevent_socket_connect()一样。
+
+dns_base参数是可选的：如果为NULL，等待名字查找完成期间调用线程将被阻塞，而这通常不是期望的行为；如果提供dns_base参数，libevent将使用它来异步地查询主机名。关于DNS的更多信息，请看第九章。
+
+跟bufferevent_socket_connect()一样，函数告知libevent，bufferevent上现存的套接字还没有连接，在名字解析和连接操作成功完成之前，不应该对套接字进行读取或者写入操作。
+
+函数返回的错误可能是DNS主机名查询错误，可以调用<font color="#8064a2">bufferevent_socket_get_dns_error()</font>来获取最近的错误。返回值0表示没有检测到DNS错误。
+
+## example
+
+
+
 ## source code
 ~~~c  
 int bufferevent_socket_connect_hostname(struct bufferevent *bev,
-
     struct evdns_base *evdns_base, int family, const char *hostname, int port)
-
 {
-
     char portbuf[10];
-
     struct evutil_addrinfo hint;
-
-    struct bufferevent_private *bev_p = BEV_UPCAST(bev);
-
-  
-
+    struct bufferevent_private *bev_p = BEV_UPCAST(bev);  
     if (family != AF_INET && family != AF_INET6 && family != AF_UNSPEC)
-
         return -1;
-
     if (port < 1 || port > 65535)
-
-        return -1;
-
-  
+        return -1;  
 
     memset(&hint, 0, sizeof(hint));
-
     hint.ai_family = family;
-
     hint.ai_protocol = IPPROTO_TCP;
-
     hint.ai_socktype = SOCK_STREAM;
-
   
-
-    evutil_snprintf(portbuf, sizeof(portbuf), "%d", port);
-
-  
-
+    evutil_snprintf(portbuf, sizeof(portbuf), "%d", port);  
     BEV_LOCK(bev);
-
-    bev_p->dns_error = 0;
-
-  
-
-    bufferevent_suspend_write_(bev, BEV_SUSPEND_LOOKUP);
-
-    bufferevent_suspend_read_(bev, BEV_SUSPEND_LOOKUP);
-
-  
-
+    bev_p->dns_error = 0;  
+    bufferevent_suspend_write_(bev, BEV_SUSPEND_LOOKUP)
+    bufferevent_suspend_read_(bev, BEV_SUSPEND_LOOKUP);  
     bufferevent_incref_(bev);
-
     bev_p->dns_request = evutil_getaddrinfo_async_(evdns_base, hostname,
-
         portbuf, &hint, bufferevent_connect_getaddrinfo_cb, bev);
 
     BEV_UNLOCK(bev);
-
   
-
     return 0;
+
+}
+~~~
+
+~~~c   
+int bufferevent_socket_get_dns_error(struct bufferevent *bev)
+{
+    int rv;
+    struct bufferevent_private *bev_p = BEV_UPCAST(bev);  
+    BEV_LOCK(bev);
+    rv = bev_p->dns_error;
+    BEV_UNLOCK(bev);
+    return rv;
 
 }
 ~~~

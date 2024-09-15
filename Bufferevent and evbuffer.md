@@ -310,3 +310,81 @@ done:
 
 ~~~
 ### example
+~~~c
+#include <event2/event.h>
+
+#include <event2/event_struct.h>
+
+#include <event2/bufferevent.h>
+
+#include <sys/socket.h>
+
+#include <arpa/inet.h>
+
+#include <string.h>
+
+  
+
+void event_cb(struct bufferevent *bev,short events,void *ptr)
+
+{
+
+    if(events & BEV_EVENT_CONNECTED){
+
+        /** We're connected to 127.0.0.1:8080.  
+
+         * Ordinarily we'd do somethings here,like start reading or writing */
+
+    }
+
+    else if (events & BEV_EVENT_ERROR) {
+
+        /** An error occured while connecting. */
+
+    }
+
+}
+
+  
+
+int main_loop(void)
+
+{
+
+    struct event_base *base = event_base_new();
+
+    struct bufferevent *bev = bufferevent_socket_new(base,-1,BEV_OPT_CLOSE_ON_FREE);
+
+    struct sockaddr_in sin ;
+
+    memset(&sin,0,sizeof(sin));
+
+    sin.sin_addr.s_addr = htonl(0x0100007F);//INADDR_LOOPBACK
+
+    sin.sin_port = htons(8080);
+
+    bufferevent_setcb(bev,NULL,NULL,event_cb,NULL);
+
+
+
+    if(bufferevent_socket_connect(bev,(struct sockaddr *)&sin,sizeof(sin)) < 0){
+
+        /**Error starting connection */
+
+        bufferevent_free(bev);
+
+        return -1;
+
+    }
+
+    event_base_dispatch(base);
+
+    event_base_free(base);
+
+    return 0;
+~~~
+bufferevent_socket_connect()函数由2.0.2-alpha版引入。在此之前，必须自己手动在套接字上调用connect()，连接完成时，bufferevent将报告写入事件。
+
+**注意：如果使用bufferevent_socket_connect()发起连接，将只会收到BEV_EVENT_CONNECTED事件。如果自己调用connect()，则连接上将被报告为写入事件。**
+
+这个函数在2.0.2-alpha版引入。

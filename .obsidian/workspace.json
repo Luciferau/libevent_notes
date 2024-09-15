@@ -92,7 +92,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 318.5026054382324
+    "width": 329.5026054382324
   },
   "right": {
     "id": "89888e66bdb231a4",
@@ -197,7 +197,7 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "db730313e0ffb1b4",
+  "active": "5626e1c25fbc883d",
   "lastOpenFiles": [
     "Memory management.md",
     "TODO Lists.md",

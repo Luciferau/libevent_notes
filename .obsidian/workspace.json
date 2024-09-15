@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Helper types and functions.md",
+                "file": "TODO Lists.md",
                 "mode": "source",
                 "source": false
               }
@@ -60,7 +60,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Helper types and functions.md"
+                "file": "TODO Lists.md"
               }
             }
           },
@@ -107,7 +107,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Helper types and functions.md",
+                "file": "TODO Lists.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -124,7 +124,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Helper types and functions.md",
+                "file": "TODO Lists.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -147,7 +147,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Helper types and functions.md"
+                "file": "TODO Lists.md"
               }
             }
           },
@@ -198,6 +198,7 @@
   },
   "active": "5626e1c25fbc883d",
   "lastOpenFiles": [
+    "Helper types and functions.md",
     "TODO Lists.md",
     "Bufferevent and evbuffer.md",
     "epoll API.md",
@@ -223,7 +224,6 @@
     "aceld_notes/libevent_notes_aceld/7_bufferevent.md",
     "aceld_notes/libevent_notes_aceld/755_buffereventde_qing_kong_cao_zuo.md",
     "aceld_notes/libevent_notes_aceld/753_cao_zuo_bufferevent_zhong_de_shu_ju.md",
-    "aceld_notes/libevent_notes_aceld/752_cao_zuo_hui_diao_3001_shui_wei_he_qi_7528_jin_.md",
     "images/Pasted image 20240913182621.png",
     "images/Pasted image 20240913182459.png",
     "libevent-book/event_states.png",

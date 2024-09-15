@@ -39,3 +39,273 @@ bufferevent也有“错误”或者“事件”回调，用于向应用通知非
 （延迟回调由 libevent 2.0.1-alpha 版引入）
 
 # Bufferevent option flags
+创建 bufferevent 时可以使用一个或者多个标志修改其行为。可识别的标志有：
+
+- <font color="#8064a2">BEV_OPT_CLOSE_ON_FREE</font>：释放 bufferevent 时关闭底层传输端口。这将关闭底层套接字，释放底层 bufferevent 等。
+
+- <font color="#8064a2">BEV_OPT_THREADSAFE</font>：自动为 bufferevent 分配锁，这样就可以安全地在多个线程中使用bufferevent。
+
+- <font color="#7030a0">BEV_OPT_DEFER_CALLBACKS</font>：设置这个标志时，bufferevent 延迟所有回调，如上所述。
+
+- <font color="#7030a0">BEV_OPT_UNLOCK_CALLBACKS</font>：默认情况下，如果设置 bufferevent 为线程安全的，则bufferevent 会在调用用户提供的回调时进行锁定。设置这个选项会让 libevent 在执行回调的时候不进行锁定。
+
+（<font color="#7030a0">BEV_OPT_UNLOCK_CALLBACKS</font> 由 2.0.5-beta 版引入，其他选项由 2.0.1-alpha 版引入）
+
+# Working with socket-based bufferevents
+基于套接字的 bufferevent 是最简单的，它使用 libevent 的底层事件机制来检测底层网络套接字是否已经就绪，可以进行读写操作，并且使用底层网络调用（如 readv、writev、WSASend、WSARecv）来发送和接收数据。
+
+## Creating a socket-based bufferevent
+
+可以使用 bufferevent_socket_new()创建基于套接字的 bufferevent
+
+~~~c  
+struct bufferevent * bufferevent_socket_new(struct event_base *base, evutil_socket_t fd,int options)
+~~~
+
+### source code
+~~~c  
+struct bufferevent *
+
+bufferevent_socket_new(struct event_base *base, evutil_socket_t fd,
+
+    int options)
+
+{
+
+    struct bufferevent_private *bufev_p;
+
+    struct bufferevent *bufev;
+
+  
+
+#ifdef _WIN32
+
+    if (base && event_base_get_iocp_(base))
+
+        return bufferevent_async_new_(base, fd, options);
+
+#endif
+
+  
+
+    if ((bufev_p = mm_calloc(1, sizeof(struct bufferevent_private)))== NULL)
+
+        return NULL;
+
+  
+
+    if (bufferevent_init_common_(bufev_p, base, &bufferevent_ops_socket,
+
+                    options) < 0) {
+
+        mm_free(bufev_p);
+
+        return NULL;
+
+    }
+
+    bufev = &bufev_p->bev;
+
+    evbuffer_set_flags(bufev->output, EVBUFFER_FLAG_DRAINS_TO_FD);
+
+  
+
+    event_assign(&bufev->ev_read, bufev->ev_base, fd,
+
+        EV_READ|EV_PERSIST|EV_FINALIZE, bufferevent_readcb, bufev);
+
+    event_assign(&bufev->ev_write, bufev->ev_base, fd,
+
+        EV_WRITE|EV_PERSIST|EV_FINALIZE, bufferevent_writecb, bufev);
+
+  
+
+    evbuffer_add_cb(bufev->output, bufferevent_socket_outbuf_cb, bufev);
+
+  
+
+    evbuffer_freeze(bufev->input, 0);
+
+    evbuffer_freeze(bufev->output, 1);
+
+  
+
+    return bufev;
+
+}
+~~~
+
+base 是 event_base，options 是表示 bufferevent 选项（BEV_OPT_CLOSE_ON_FREE 等）的位掩码，fd 是一个可选的表示套接字的文件描述符。如果想以后设置文件描述符，可以设置 fd 为-1。成功时函数返回一个 bufferevent，失败则返回 NULL。
+
+bufferevent_socket_new()函数由 2.0.1-alpha 版新引入
+
+## Start a connection on a socket-based bufferevent
+如果 bufferevent 的套接字还没有连接上，可以启动新的连接
+~~~c
+int bufferevent_socket_connect(struct bufferevent *bev,const struct sockaddr *sa, int socklen);
+~~~
+
+address 和 addrlen 参数跟标准调用 connect()的参数相同。如果还没有为 bufferevent设置套接字，调用函数将为其分配一个新的流套接字，并且设置为非阻塞的。
+标准调用
+~~~c
+extern int connect (int __fd, __CONST_SOCKADDR_ARG __addr, socklen_t __len);
+~~~
+
+如果已经为 bufferevent 设置套接字，调用 bufferevent_socket_connect()将告知libevent 套接字还未连接，直到连接成功之前不应该对其进行读取或者写入操作。连接完成之前可以向输出缓冲区添加数据。
+
+如果连接成功启动，函数返回 0；如果发生错误则返回-1。
+
+### source code
+~~~c    
+int bufferevent_socket_connect(struct bufferevent *bev,
+
+    const struct sockaddr *sa, int socklen)
+
+{
+
+    struct bufferevent_private *bufev_p = BEV_UPCAST(bev);
+
+  
+
+    evutil_socket_t fd;
+
+    int r = 0;
+
+    int result=-1;
+
+    int ownfd = 0;
+
+  
+
+    bufferevent_incref_and_lock_(bev);
+
+  
+
+    fd = bufferevent_getfd(bev);
+
+    if (fd < 0) {
+
+        if (!sa)
+
+            goto done;
+
+        fd = evutil_socket_(sa->sa_family,
+
+            SOCK_STREAM|EVUTIL_SOCK_NONBLOCK, 0);
+
+        if (fd < 0)
+
+            goto freesock;
+
+        ownfd = 1;
+
+    }
+
+    if (sa) {
+
+#ifdef _WIN32
+
+        if (bufferevent_async_can_connect_(bev)) {
+
+            bufferevent_setfd(bev, fd);
+
+            r = bufferevent_async_connect_(bev, fd, sa, socklen);
+
+            if (r < 0)
+
+                goto freesock;
+
+            bufev_p->connecting = 1;
+
+            result = 0;
+
+            goto done;
+
+        } else
+
+#endif
+
+        r = evutil_socket_connect_(&fd, sa, socklen);
+
+        if (r < 0)
+
+            goto freesock;
+
+    }
+
+#ifdef _WIN32
+
+    /* ConnectEx() isn't always around, even when IOCP is enabled.
+
+     * Here, we borrow the socket object's write handler to fall back
+
+     * on a non-blocking connect() when ConnectEx() is unavailable. */
+
+    if (BEV_IS_ASYNC(bev)) {
+
+        event_assign(&bev->ev_write, bev->ev_base, fd,
+
+            EV_WRITE|EV_PERSIST|EV_FINALIZE, bufferevent_writecb, bev);
+
+    }
+
+#endif
+
+    bufferevent_setfd(bev, fd);
+
+    if (r == 0) {
+
+        if (! be_socket_enable(bev, EV_WRITE)) {
+
+            bufev_p->connecting = 1;
+
+            result = 0;
+
+            goto done;
+
+        }
+
+    } else if (r == 1) {
+
+        /* The connect succeeded already. How very BSD of it. */
+
+        result = 0;
+
+        bufev_p->connecting = 1;
+
+        bufferevent_trigger_nolock_(bev, EV_WRITE, BEV_OPT_DEFER_CALLBACKS);
+
+    } else {
+
+        /* The connect failed already.  How very BSD of it. */
+
+        result = 0;
+
+        bufferevent_run_eventcb_(bev, BEV_EVENT_ERROR, BEV_OPT_DEFER_CALLBACKS);
+
+        bufferevent_disable(bev, EV_WRITE|EV_READ);
+
+    }
+
+  
+
+    goto done;
+
+  
+
+freesock:
+
+    if (ownfd)
+
+        evutil_closesocket(fd);
+
+done:
+
+    bufferevent_decref_and_unlock_(bev);
+
+    return result;
+
+}
+
+~~~
+### example

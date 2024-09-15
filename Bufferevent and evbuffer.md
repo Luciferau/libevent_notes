@@ -388,3 +388,7 @@ bufferevent_socket_connect()函数由2.0.2-alpha版引入。在此之前，必�
 **注意：如果使用bufferevent_socket_connect()发起连接，将只会收到BEV_EVENT_CONNECTED事件。如果自己调用connect()，则连接上将被报告为写入事件。**
 
 这个函数在2.0.2-alpha版引入。
+
+# Initiate connection by hostname
+常常需要将解析主机名和连接到主机合并成单个操作，libevent为此提供了：
+## 

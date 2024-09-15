@@ -389,9 +389,9 @@ bufferevent_socket_connect()函数由2.0.2-alpha版引入。在此之前，必�
 
 这个函数在2.0.2-alpha版引入。
 
-# Initiate connection by hostname
+## Initiate connection by hostname
 常常需要将解析主机名和连接到主机合并成单个操作，libevent为此提供了：
-## bufferevent_socket_connect_hostname()
+### bufferevent_socket_connect_hostname()
 ~~~c
 int bufferevent_socket_connect_hostname(struct bufferevent *bev,
     struct evdns_base *evdns_base, int family, const char *hostname, int port);
@@ -406,11 +406,138 @@ dns_base参数是可选的：如果为NULL，等待名字查找完成期间调�
 
 函数返回的错误可能是DNS主机名查询错误，可以调用<font color="#8064a2">bufferevent_socket_get_dns_error()</font>来获取最近的错误。返回值0表示没有检测到DNS错误。
 
-## example
+### Simple HTTP v0 client
 
+~~~c
+#include <event2/dns.h>
 
+#include <event2/bufferevent.h>
 
-## source code
+#include <event2/buffer.h>
+
+#include <event2/util.h>
+
+#include <event2/event.h>
+
+  
+
+#include <stdio.h>
+
+  
+
+void readcb(struct bufferevent *bev, void *ctx) {
+
+  
+
+    char buf[1024];
+
+    int n;
+
+    struct evbuffer * input = bufferevent_get_input(bev);
+
+    while((n = evbuffer_remove(input, buf, sizeof(buf))) > 0) {
+
+        fwrite(buf, 1, n, stdout); //printf("%s", buf);
+
+    }
+
+}
+
+  
+
+void eventcb(struct bufferevent *bev, short events, void *ctx) {
+
+    if (events & BEV_EVENT_CONNECTED){
+
+        printf("connect success\n");
+
+    }else if(events & (BEV_EVENT_ERROR | BEV_EVENT_EOF)){
+
+        struct event_base *base = (event_base*)ctx;
+
+        if(events& BEV_EVENT_ERROR){
+
+            int err = bufferevent_socket_get_dns_error(bev);
+
+            if(err){
+
+                printf("DNS error %d\n", err);
+
+            }
+
+        }
+
+  
+
+        printf("Closing connection\n");
+
+        bufferevent_free(bev);
+
+        event_base_loopexit(base, NULL);
+
+  
+
+    }
+
+}
+
+  
+  
+
+int main(int argc, char **argv) {
+
+  
+
+    struct event_base   *base;
+
+    struct evdns_base   *dns_base;
+
+    struct bufferevent  *bev;
+
+  
+
+    if(argc != 3){
+
+       printf("Trival HTTP 0.x client\n"
+
+                "Syntax: %s [hostname] [resource]\n"
+
+                "Example: %s www.google.com /\n", argv[0], argv[0]);
+
+        return 1;
+
+    }
+
+  
+
+    base = event_base_new();
+
+    dns_base = evdns_base_new(base, 1);
+
+  
+
+    bev = bufferevent_socket_new(base, -1, BEV_OPT_CLOSE_ON_FREE);
+
+    bufferevent_setcb(bev, readcb, NULL, eventcb, base);
+
+    bufferevent_enable(bev,EV_READ|EV_WRITE);
+
+  
+
+    evbuffer_add_printf(bufferevent_get_output(bev), "GET %s HTTP/1.0\r\nHost: %s\r\n\r\n", argv[2], argv[1]);
+
+    bufferevent_socket_connect_hostname(bev, dns_base, AF_UNSPEC, argv[1], 80);
+
+    event_base_dispatch(base);
+
+    return 0;
+
+  
+
+}
+~~~
+
+### source code
 ~~~c  
 int bufferevent_socket_connect_hostname(struct bufferevent *bev,
     struct evdns_base *evdns_base, int family, const char *hostname, int port)

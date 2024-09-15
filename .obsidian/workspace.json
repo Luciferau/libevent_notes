@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "TODO Lists.md",
+                "file": "Bufferevent and evbuffer.md",
                 "mode": "source",
                 "source": false
               }
@@ -60,7 +60,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TODO Lists.md"
+                "file": "Bufferevent and evbuffer.md"
               }
             }
           },
@@ -87,7 +87,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -107,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TODO Lists.md",
+                "file": "Bufferevent and evbuffer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -124,7 +125,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "TODO Lists.md",
+                "file": "Bufferevent and evbuffer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -147,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TODO Lists.md"
+                "file": "Bufferevent and evbuffer.md"
               }
             }
           },
@@ -196,10 +197,11 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "5626e1c25fbc883d",
+  "active": "db730313e0ffb1b4",
   "lastOpenFiles": [
-    "Helper types and functions.md",
+    "Memory management.md",
     "TODO Lists.md",
+    "Helper types and functions.md",
     "Bufferevent and evbuffer.md",
     "epoll API.md",
     "aceld_notes/libevent_notes_aceld/8_lian_jie_jian_ting_qi_evconnlistener.md",
@@ -223,7 +225,6 @@
     "aceld_notes/libevent_notes_aceld/81_chuang_jianhe_shi_fang_evconnlistener.md",
     "aceld_notes/libevent_notes_aceld/7_bufferevent.md",
     "aceld_notes/libevent_notes_aceld/755_buffereventde_qing_kong_cao_zuo.md",
-    "aceld_notes/libevent_notes_aceld/753_cao_zuo_bufferevent_zhong_de_shu_ju.md",
     "images/Pasted image 20240913182621.png",
     "images/Pasted image 20240913182459.png",
     "libevent-book/event_states.png",

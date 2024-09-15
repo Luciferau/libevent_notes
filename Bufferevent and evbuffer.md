@@ -391,4 +391,11 @@ bufferevent_socket_connect()函数由2.0.2-alpha版引入。在此之前，必�
 
 # Initiate connection by hostname
 常常需要将解析主机名和连接到主机合并成单个操作，libevent为此提供了：
-## 
+## bufferevent_socket_connect_hostname()
+~~~c
+int bufferevent_socket_connect_hostname(struct bufferevent *bev,
+    struct evdns_base *evdns_base, int family, const char *hostname, int port);
+int bufferevent_socket_get_dns_error(struct bufferevent *bev);    
+~~~
+
+## source code

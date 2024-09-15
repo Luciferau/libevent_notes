@@ -156,6 +156,7 @@ extern int connect (int __fd, __CONST_SOCKADDR_ARG __addr, socklen_t __len);
 如果连接成功启动，函数返回 0；如果发生错误则返回-1。
 
 ### source code
+#### bufferevent_socket_connect()
 ~~~c    
 int bufferevent_socket_connect(struct bufferevent *bev,
 

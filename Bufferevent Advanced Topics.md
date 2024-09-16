@@ -525,3 +525,25 @@ int main() {
 为解决此问题，速率限制组有一个“**最小共享（minimum share）**”的概念。在上述情况下，不是允许每个bufferevent在每个滴答中写入1字节，而是在每个滴答中允许某个bufferevent写入一些（最小共享）字节，而其余的bufferevent将不允许写入。允许哪个bufferevent写入将在每个滴答中随机选择。
 
 默认的最小共享值具有较好的性能，当前（2.0.6-rc版本）其值为64。可以通过这个函数调整最小共享值：
+
+~~~c
+int bufferevent_rate_limit_group_set_min_share(
+    struct bufferevent_rate_limit_group *g,size_t share);
+~~~
+
+# Limitations of rate limiting implementation
+2.0版本的libevent的速率限制具有一些实现上的限制：
+
+- 不是每种bufferevent类型都良好地或者说完整地支持速率限制。
+
+- bufferevent速率限制组不能嵌套，一个bufferevent在某时刻只能属于一个速率限制组。
+
+- 速率限制实现仅计算TCP分组传输的数据，不包括TCP头部。
+
+- 读速率限制实现依赖于TCP栈通知应用程序仅仅以某速率消费数据，并且在其缓冲区满的时候将数据推送到TCP连接的另一端。
+
+- 某些bufferevent实现（特别是Windows中的IOCP实现）可能调拨过度。
+
+- 存储器开始于一个滴答的通信量。这意味着bufferevent可以立即开始读取或者写入，而不用等待一个滴答的时间。但是这也意味着速率被限制为N.1个滴答的bufferevent可能传输N+1个滴答的通信量。
+
+- 滴答不能小于1毫秒，毫秒的小数部分都被忽略。

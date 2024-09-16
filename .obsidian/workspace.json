@@ -30,9 +30,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "c8ffd50713a0298d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "未命名.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -61,7 +73,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Bufferevent Advanced Topics.md"
+                "file": "未命名.md"
               }
             }
           },
@@ -88,8 +100,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -109,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Bufferevent Advanced Topics.md",
+                "file": "未命名.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -126,7 +137,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Bufferevent Advanced Topics.md",
+                "file": "未命名.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,7 +160,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Bufferevent Advanced Topics.md"
+                "file": "未命名.md"
               }
             }
           },
@@ -198,10 +209,11 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "8811b88582a06f90",
+  "active": "c8ffd50713a0298d",
   "lastOpenFiles": [
-    "Bufferevent and evbuffer.md",
     "Bufferevent Advanced Topics.md",
+    "未命名.md",
+    "Bufferevent and evbuffer.md",
     "libevent_structure.md",
     "aceld_notes/libevent_notes_aceld/45_eventbase_he_fork.md",
     "TODO Lists.md",
@@ -235,7 +247,6 @@
     "aceld_notes/libevent_notes_aceld/82_qi_yong_he_jin_yong_evconnlistener.md",
     "aceld_notes/libevent_notes_aceld/81_chuang_jian_he_shi_fang_evbuffer.md",
     "aceld_notes/libevent_notes_aceld/75_tong_yong_bufferevent_cao_zuo.md",
-    "aceld_notes/libevent_notes_aceld/751_shi_fang_bufferevent_cao_zuo.md",
     "libevent-book/notes/identifier-list",
     "libevent-book/notes",
     "libevent-book/license_bsd.txt",

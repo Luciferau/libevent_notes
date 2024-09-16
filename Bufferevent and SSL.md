@@ -14,4 +14,19 @@ OpenSSL功能在2.0.3-alpha版本引入，然而直到2.0.5-beta和2.0.6-rc版�
         BUFFEREVENT_SSL_ACCEPTING = 2
 
     };
+  
 ~~~    
+
+~~~c
+struct bufferevent *
+
+bufferevent_openssl_filter_new(struct event_base *base,
+
+    struct bufferevent *underlying,
+
+    SSL *ssl,
+
+    enum bufferevent_ssl_state state,
+
+    int options)
+~~~

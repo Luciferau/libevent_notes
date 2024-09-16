@@ -1081,3 +1081,40 @@ struct bufferevent * setup_bufferevent(void){
 ## Operate the data in buffevent
 如果只是通过网络读取或者写入数据，而不能观察操作过程，是没什么好处的。bufferevent提供了下列函数用于观察要写入或者读取的数据。
 (Reading and writing data from the network does you no good if you can't look at it.Bufferevents give you these methods to give them data to write,and to get the data to read.)
+### bufferevent_get_input bufferevent_get_output
+
+~~~c
+struct evbuffer * bufferevent_get_input(struct bufferevent *bufev);
+struct evbuffer * bufferevent_get_output(struct bufferevent *bufev);
+~~~
+
+~~~c
+  
+
+struct evbuffer *
+
+bufferevent_get_input(struct bufferevent *bufev)
+
+{
+
+    return bufev->input;
+
+}
+
+  
+
+struct evbuffer *
+
+bufferevent_get_output(struct bufferevent *bufev)
+
+{
+
+    return bufev->output;
+
+}
+~~~
+这两个函数提供了非常强大的基础：它们分别返回输入和输出缓冲区。关于可以对evbuffer类型进行的所有操作的完整信息，请看下一章。
+
+<font color="#c0504d">如果写入操作因为数据量太少而停止（或者读取操作因为太多数据而停止），则向输出缓冲区添加数据（或者从输入缓冲区移除数据）将自动重启操作。</font>
+
+这些函数由2.0.1-alpha版引入。

@@ -1564,3 +1564,7 @@ done:
 
 }
 ~~~
+
+这些函数设置或者返回基于fd的事件的文件描述符。只有基于套接字的bufferevent支持setfd()。两个函数都在失败时返回-1；setfd()成功时返回0。
+
+bufferevent_setfd()函数由1.4.4版引入；bufferevent_getfd()函数由2.0.2-alpha版引入。

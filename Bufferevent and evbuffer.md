@@ -1515,6 +1515,7 @@ iotype参数应该是EV_READ、EV_WRITE或者EV_READ | EV_WRITE，用于指示�
 
 当前（2.0.5-beta版）仅有一些bufferevent类型实现了bufferevent_flush()。特别是，基于套接字的bufferevent没有实现。
 # Type-specific bufferevent functions
+## bufferevent_priority_set
 
 	这些bufferevent函数不能支持所有bufferevent类型。
 ~~~c
@@ -1565,6 +1566,68 @@ done:
 }
 ~~~
 
-这些函数设置或者返回基于fd的事件的文件描述符。只有基于套接字的bufferevent支持setfd()。两个函数都在失败时返回-1；setfd()成功时返回0。
+ 这个函数调整bufev的优先级为pri。关于优先级的更多信息请看event_priority_set()。 
 
-bufferevent_setfd()函数由1.4.4版引入；bufferevent_getfd()函数由2.0.2-alpha版引入。
+成功时函数返回0，失败时返回-1。这个函数仅能用于基于套接字的bufferevent。
+
+这个函数由1.0版引入
+
+## <font color="#4bacc6">bufferevent_getfd</font> <font color="#4bacc6">bufferevent_setfd</font>
+~~~c
+evutil_socket_t
+
+bufferevent_getfd(struct bufferevent *bev)
+
+{
+
+    union bufferevent_ctrl_data d;
+
+    int res = -1;
+
+    d.fd = -1;
+
+    BEV_LOCK(bev);
+
+    if (bev->be_ops->ctrl)
+
+        res = bev->be_ops->ctrl(bev, BEV_CTRL_GET_FD, &d);
+
+    if (res)
+
+        event_debug(("%s: cannot get fd for %p", __func__, bev));
+
+    BEV_UNLOCK(bev);
+
+    return (res<0) ? -1 : d.fd;
+
+}
+
+  
+
+int
+
+bufferevent_setfd(struct bufferevent *bev, evutil_socket_t fd)
+
+{
+
+    union bufferevent_ctrl_data d;
+
+    int res = -1;
+
+    d.fd = fd;
+
+    BEV_LOCK(bev);
+
+    if (bev->be_ops->ctrl)
+
+        res = bev->be_ops->ctrl(bev, BEV_CTRL_SET_FD, &d);
+
+    if (res)
+
+        event_debug(("%s: cannot set fd for %p to "EV_SOCK_FMT, __func__, bev, fd));
+
+    BEV_UNLOCK(bev);
+    return res;
+}
+~~~
+

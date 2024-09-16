@@ -58,9 +58,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "f206ba89a1516c22",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Helper types and functions.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -89,7 +101,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Bufferevent and evbuffer.md"
+                "file": "Helper types and functions.md"
               }
             }
           },
@@ -137,7 +149,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Bufferevent and evbuffer.md",
+                "file": "Helper types and functions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -154,7 +166,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Bufferevent and evbuffer.md",
+                "file": "Helper types and functions.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -177,7 +189,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Bufferevent and evbuffer.md"
+                "file": "Helper types and functions.md"
               }
             }
           },
@@ -226,11 +238,11 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "9e5538ed7e176c8b",
+  "active": "f206ba89a1516c22",
   "lastOpenFiles": [
     "libevent_structure.md",
-    "Macro definition.md",
     "Bufferevent and evbuffer.md",
+    "Macro definition.md",
     "Variadic function.md",
     "Macro function.md",
     "epoll API.md",

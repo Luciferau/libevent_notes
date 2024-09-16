@@ -306,3 +306,14 @@ These definitions are used when locking is not enabled. `EVUTIL_NIL_STMT_` is ty
     - `b` 也是一个指向 `bufferevent` 结构体的指针。
     - 同样，`BEV_UPCAST(b)` 将 `b` 转换为 `bufferevent_private` 结构体的指针，并赋值给 `locking`。
     - `EVLOCK_UNLOCK(locking->lock, 0)` 用于对 `locking` 中的 `lock` 进行解锁操作。这里的 `0` 与加锁时的标志或选项相同。
+
+# <font color="#8064a2">BEV_UPCAST</font>
+
+	/** 给定一个 bufferevent，返回其对应的 bufferevent_private。*/
+~~~c
+/** Internal: Given a bufferevent, return its corresponding
+
+ * bufferevent_private. */
+
+#define BEV_UPCAST(b) EVUTIL_UPCAST((b), struct bufferevent_private, bev)
+~~~

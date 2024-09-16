@@ -827,7 +827,7 @@ void bufferevent_setwatermark(struct bufferevent *bufev, short events,size_t low
 bufferevent_setwatermark()函数调整单个bufferevent的读取水位、写入水位，或者同时调整二者。（如果events参数设置了EV_READ，调整读取水位。如果events设置了<font color="#8064a2">EV_WRITE</font>标志，调整写入水位）
 
 对于高水位，0表示“无限”。
-## source code
+### source code
 
 ~~~c
   
@@ -926,3 +926,158 @@ void bufferevent_setwatermark(struct bufferevent *bufev, short events,
 
 }
 ~~~
+
+#### example
+~~~c
+#include <cstddef>
+
+#include <cstdlib>
+
+#include <event2/bufferevent.h>
+
+#include <event2/event.h>
+
+#include <event2/buffer.h>
+
+#include <event2/event_struct.h>
+
+#include <event2/listener.h>
+
+#include <event2/util.h>
+
+  
+
+#include <stdio.h>
+
+#include <errno.h>
+
+#include <string.h>
+
+  
+
+typedef struct info_{
+
+    const char * name;
+
+    size_t total_drained;
+
+}info;
+
+  
+
+void read_callback(struct bufferevent *bev, void *ctx){
+
+    struct info_ * inf = static_cast<info_*>(ctx);
+
+    struct evbuffer *input = bufferevent_get_input(bev);
+
+    size_t len = evbuffer_get_length(input);
+
+    if(!len){
+
+        inf->total_drained += len;
+
+        evbuffer_drain(input, len);
+
+        printf("drained %lu bytes from %s \n",(unsigned long )len,inf->name);
+
+  
+
+    }
+
+}
+
+  
+
+void event_callback(struct bufferevent *bev, short events, void *ctx){
+
+    struct info_ * inf = static_cast<info_*>(ctx);
+
+    struct evbuffer *input = bufferevent_get_input(bev);
+
+    size_t len = evbuffer_get_length(input);
+
+    int finished = 0;
+
+    if(events & BEV_EVENT_EOF){
+
+        size_t len = evbuffer_get_length(input);
+
+        printf("Got a close from %s, drained %lu bytes from it\n",
+
+        inf->name, (unsigned long)len);
+
+        finished = 1;
+
+    }
+
+    if(events & BEV_EVENT_ERROR){
+
+        size_t len = evbuffer_get_length(input);
+
+        printf("Got an error from %s : %s\n",inf->name,EVUTIL_SOCKET_ERROR());
+
+        finished =1  ;
+
+    }
+
+  
+
+    if(finished){
+
+        free(ctx);
+
+        bufferevent_free(bev);
+
+    }
+
+  
+
+}
+
+  
+
+struct bufferevent * setup_bufferevent(void){
+
+    struct bufferevent *bev =  nullptr;
+
+    struct info_ * infol;
+
+  
+
+    infol = (info_*)malloc(sizeof(info_));
+
+    infol->name = "buffer one";
+
+    infol->total_drained = 0;
+
+  
+
+    /** Here we should get set up the bufferevent and make sure it gets connected.. */
+
+  
+
+    /**Trigger the read callback  only whenever there is at least 128 bytes
+
+     * of data in the buffer
+
+     */
+
+  
+
+    bufferevent_setwatermark(bev, EV_READ, 128, 0);
+
+    bufferevent_setcb(bev, read_callback, nullptr, event_callback, infol);
+
+  
+
+    bufferevent_enable(bev, EV_READ);
+
+    return bev;
+
+}
+~~~
+
+## Operate the data in buffevent
+如果只是通过网络读取或者写入数据，而不能观察操作过程，是没什么好处的。bufferevent提供了下列函数用于观察要写入或者读取的数据。
+(Reading and writing data from the network does you no good if you can't look at it.Bufferevents give you these methods to give them data to write,and to get the data to read.)

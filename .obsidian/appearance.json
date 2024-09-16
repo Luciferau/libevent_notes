@@ -1,10 +1,10 @@
 {
-  "theme": "obsidian",
+  "theme": "moonstone",
   "accentColor": "#f55ce0",
   "interfaceFontFamily": "JetBrains Mono,JetBrains Mono NL",
   "textFontFamily": "JetBrains Mono",
   "monospaceFontFamily": "JetBrains Mono",
   "nativeMenus": false,
-  "baseFontSize": 18,
+  "baseFontSize": 16,
   "baseFontSizeAction": true
 }

@@ -34,21 +34,9 @@
               },
               "pinned": true
             }
-          },
-          {
-            "id": "8fd69e41bfb9acdf",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "aceld_notes/libevent_notes_aceld/82_evbufferyu_xian_cheng_an_quan.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -77,7 +65,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "aceld_notes/libevent_notes_aceld/82_evbufferyu_xian_cheng_an_quan.md"
+                "file": "Bufferevent and evbuffer.md"
               }
             }
           },
@@ -104,7 +92,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -124,7 +113,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "aceld_notes/libevent_notes_aceld/82_evbufferyu_xian_cheng_an_quan.md",
+                "file": "Bufferevent and evbuffer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -141,7 +130,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "aceld_notes/libevent_notes_aceld/82_evbufferyu_xian_cheng_an_quan.md",
+                "file": "Bufferevent and evbuffer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -164,7 +153,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "aceld_notes/libevent_notes_aceld/82_evbufferyu_xian_cheng_an_quan.md"
+                "file": "Bufferevent and evbuffer.md"
               }
             }
           },
@@ -213,8 +202,9 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "8fd69e41bfb9acdf",
+  "active": "db730313e0ffb1b4",
   "lastOpenFiles": [
+    "aceld_notes/libevent_notes_aceld/82_evbufferyu_xian_cheng_an_quan.md",
     "aceld_notes/libevent_notes_aceld/libevent-2-解决阻塞04.png",
     "aceld_notes/libevent_notes_aceld/libevent-2-epoll触发模式03.png",
     "aceld_notes/libevent_notes_aceld/libevent-2-epoll触发模式04.png",
@@ -229,7 +219,6 @@
     "images/Pasted image 20240904092035.png",
     "images/Pasted image 20240904092708.png",
     "images/Pasted image 20240904103007.png",
-    "images/Pasted image 20240904103355.png",
     "libevent_structure.md",
     "Memory management.md",
     "Helper types and functions.md",

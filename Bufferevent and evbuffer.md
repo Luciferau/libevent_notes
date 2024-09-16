@@ -1011,15 +1011,15 @@ void event_callback(struct bufferevent *bev, short events, void *ctx){
 
     }
 
-    if(events & BEV_EVENT_ERROR){
+    if(events & BEV_EVENT_ERROR){
 
         size_t len = evbuffer_get_length(input);
 
-        printf("Got an error from %s : %s\n",inf->name,EVUTIL_SOCKET_ERROR());
+	printf("Got an error from %s           %s\n",inf>name,evutil_socket_error_to_string(EVUTIL_SOCKET_ERROR()));
 
         finished =1  ;
 
-    }
+    }}
 
   
 
@@ -1273,3 +1273,151 @@ done:
 
 }
 ~~~
+##### example
+~~~c
+#include <event2/event.h>
+
+#include <event2/bufferevent.h>
+
+#include <event2/buffer.h>
+
+#include <event2/util.h>
+
+  
+
+#include <stdio.h>
+
+#include <string.h>
+
+#include <error.h>
+
+#include <cstdlib>
+
+  
+
+struct info{
+
+    const char * name;
+
+    size_t total_drained;
+
+};
+
+  
+
+void read_callback(struct bufferevent *bev, void *ctx){
+
+    struct info * inf = static_cast<info*>(ctx);
+
+    struct evbuffer *input = bufferevent_get_input(bev);
+
+    size_t len = evbuffer_get_length(input);
+
+    if(!len){
+
+        inf->total_drained += len;
+
+        evbuffer_drain(input, len);
+
+        printf("drained %lu bytes from %s \n",(unsigned long )len,inf->name);
+
+  
+
+    }
+
+}
+
+  
+
+void event_callback(struct bufferevent *bev, short events, void *ctx){
+
+    struct info * inf = static_cast<info*>(ctx);
+
+    struct evbuffer *input = bufferevent_get_input(bev);
+
+    size_t len = evbuffer_get_length(input);
+
+    int finished = 0;
+
+    if(events & BEV_EVENT_EOF){
+
+        size_t len = evbuffer_get_length(input);
+
+        printf("Got a close from %s, drained %lu bytes from it\n",
+
+        inf->name, (unsigned long)len);
+
+        finished = 1;
+
+    }
+
+    if(events & BEV_EVENT_ERROR){
+
+        size_t len = evbuffer_get_length(input);
+
+        printf("Got an error from %s : %s\n",inf->name,evutil_socket_error_to_string(EVUTIL_SOCKET_ERROR()));
+
+        finished =1  ;
+
+    }
+
+  
+
+    if(finished){
+
+        free(ctx);
+
+        bufferevent_free(bev);
+
+    }
+
+  
+
+}
+
+  
+
+struct bufferevent * setup_bufferevent(void){
+
+    struct bufferevent *bev =  nullptr;
+
+    struct info * infol;
+
+  
+
+    infol = (info*)malloc(sizeof(info));
+
+    infol->name = "buffer one";
+
+    infol->total_drained = 0;
+
+  
+
+    /** Here we should get set up the bufferevent and make sure it gets connected.. */
+
+  
+
+    /**Trigger the read callback  only whenever there is at least 128 bytes
+
+     * of data in the buffer
+
+     */
+
+  
+
+    bufferevent_setwatermark(bev, EV_READ, 128, 0);
+
+    bufferevent_setcb(bev, read_callback, nullptr, event_callback, infol);
+
+  
+
+    bufferevent_enable(bev, EV_READ);
+
+    return bev;
+
+}
+~~~
+
+
+### Read and write timeout
+跟其他事件一样，可以要求在一定量的时间已经流逝，而没有成功写入或者读取数据的时候调用一个超时回调。

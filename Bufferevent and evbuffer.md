@@ -1631,3 +1631,21 @@ bufferevent_setfd(struct bufferevent *bev, evutil_socket_t fd)
 }
 ~~~
 
+这些函数设置或者返回基于fd的事件的文件描述符。只有基于套接字的bufferevent支持setfd()。两个函数都在失败时返回-1；setfd()成功时返回0。
+
+<font color="#4bacc6">bufferevent_setfd()</font>函数由1.4.4版引入；<font color="#4bacc6">bufferevent_getfd()</font>函数由2.0.2-alpha版引入。
+
+## bufferevent_get_base
+~~~c
+struct event_base *
+
+bufferevent_get_base(struct bufferevent *bufev)
+
+{
+
+    return bufev->ev_base;
+
+}
+~~~
+
+这个函数返回bufferevent的event_base，由2.0.9-rc版引入。

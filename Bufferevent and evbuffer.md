@@ -1682,4 +1682,8 @@ bufferevent_get_underlying(struct bufferevent *bev)
 - **加锁**：使用 `BEV_LOCK` 宏对 `bufferevent` 进行加锁，确保线程安全。
 - **检查和调用**：检查 `ctrl` 函数指针是否存在，如果存在，则调用它以获取底层 `bufferevent`。
 - **解锁**：使用 `BEV_UNLOCK` 宏解锁 `bufferevent`。
-- **返回结果**：根据控制操作的结果返回底层 `bufferevent` 的指针或
+- **返回结果**：根据控制操作的结果返回底层 `bufferevent` 的指针或 `NULL`
+
+这个函数返回作为bufferevent底层传输端口的另一个bufferevent。关于这种情况，请看关于过滤型bufferevent的介绍。
+
+这个函数由2.0.2-alpha版引入。

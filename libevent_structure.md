@@ -998,3 +998,52 @@ extern const struct bufferevent_ops bufferevent_ops_pair;
 
 这些宏利用了 `bufferevent` 的操作表指针 `be_ops`，根据其是否匹配已知的类型操作表来判断 `bufferevent` 的类型。
 
+
+
+# union <font color="#4bacc6">bufferevent_ctrl_data</font>
+## bufferevent_ctrl_op
+~~~c
+/** Possible operations for a control callback. */
+
+enum bufferevent_ctrl_op {
+    BEV_CTRL_SET_FD,       // 设置底层的文件描述符
+    BEV_CTRL_GET_FD,       // 获取底层的文件描述符
+    BEV_CTRL_GET_UNDERLYING, // 获取底层的 bufferevent
+    BEV_CTRL_CANCEL_ALL    // 取消所有的回调
+};
+  
+
+/** Possible data types for a control callback */
+
+
+~~~
+
+#### 1. **`BEV_CTRL_SET_FD`**
+
+- **描述**：设置底层 `bufferevent` 的文件描述符。
+- **用途**：在某些实现中，底层的 `bufferevent` 可能需要设置一个新的文件描述符。此操作允许用户提供新的文件描述符。
+
+#### 2. **`BEV_CTRL_GET_FD`**
+
+- **描述**：获取底层 `bufferevent` 的文件描述符。
+- **用途**：用于检索底层 `bufferevent` 的文件描述符，通常用于获取当前 `bufferevent` 关联的套接字描述符。
+
+#### 3. **`BEV_CTRL_GET_UNDERLYING`**
+
+- **描述**：获取底层的 `bufferevent` 结构体。
+- **用途**：在实现中，`bufferevent` 可能会有多个层次的抽象或包装。此操作允许获取底层的实际 `bufferevent` 实现，从而进行更底层的操作或访问。
+
+#### 4. **`BEV_CTRL_CANCEL_ALL`**
+
+- **描述**：取消所有注册的回调。
+- **用途**：用于取消所有待处理的回调函数。此操作通常用于在某些情况下需要清除所有挂起的回调，以防止它们在未来被执行。
+## bufferevent_ctrl_data
+~~~c
+union bufferevent_ctrl_data {
+
+    void *ptr;
+
+    evutil_socket_t fd;
+
+};
+~~~

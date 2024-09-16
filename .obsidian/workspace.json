@@ -8,71 +8,18 @@
         "type": "tabs",
         "children": [
           {
-            "id": "31ba3cbf905aa9ad",
+            "id": "f206ba89a1516c22",
             "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Macro definition.md",
-                "mode": "source",
-                "source": false
-              },
-              "pinned": true
-            }
-          },
-          {
-            "id": "9e5538ed7e176c8b",
-            "type": "leaf",
-            "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
                 "file": "Bufferevent and evbuffer.md",
                 "mode": "source",
                 "source": false
-              },
-              "pinned": true
-            }
-          },
-          {
-            "id": "85dca9c99d1ce1ab",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "libevent_structure.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b62165d9f8d43130",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Macro definition.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f206ba89a1516c22",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Helper types and functions.md",
-                "mode": "source",
-                "source": false
               }
             }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "vertical"
@@ -101,7 +48,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Helper types and functions.md"
+                "file": "Bufferevent and evbuffer.md"
               }
             }
           },
@@ -133,7 +80,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 290.51103591918945
+    "width": 359.51103591918945
   },
   "right": {
     "id": "89888e66bdb231a4",
@@ -149,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Helper types and functions.md",
+                "file": "Bufferevent and evbuffer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -166,7 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Helper types and functions.md",
+                "file": "Bufferevent and evbuffer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -189,7 +136,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Helper types and functions.md"
+                "file": "Bufferevent and evbuffer.md"
               }
             }
           },
@@ -238,15 +185,17 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "f206ba89a1516c22",
+  "active": "db730313e0ffb1b4",
   "lastOpenFiles": [
-    "libevent_structure.md",
+    "README.md",
+    "epoll API.md",
+    "TODO Lists.md",
+    "Helper types and functions.md",
     "Bufferevent and evbuffer.md",
+    "libevent_structure.md",
     "Macro definition.md",
     "Variadic function.md",
     "Macro function.md",
-    "epoll API.md",
-    "TODO Lists.md",
     "Memory management.md",
     "Build event.md",
     "Event loop.md",
@@ -261,7 +210,6 @@
     "images/Pasted image 20240904092035.png",
     "images/Pasted image 20240904092708.png",
     "images/Pasted image 20240904103007.png",
-    "Helper types and functions.md",
     "aceld_notes/libevent_notes_aceld/8_lian_jie_jian_ting_qi_evconnlistener.md",
     "aceld_notes/libevent_notes_aceld/8_evbuffer.md",
     "aceld_notes/libevent_notes_aceld/86_tian_jia_shu_ju_dao_evbuffer_qian.md",
@@ -275,7 +223,6 @@
     "aceld_notes/libevent_notes_aceld/67_shi_jian_zhuang_tai_zhi_jian_de_zhuan_huan.md",
     "aceld_notes/libevent_notes_aceld/66_shou_dong_ji_huo_shi_jian.md",
     "aceld_notes/libevent_notes_aceld/5_eventloop_shi_jian_xun_huan.md",
-    "aceld_notes/libevent_notes_aceld/SUMMARY.md",
     "libevent-book/notes/identifier-list",
     "libevent-book/notes",
     "libevent-book/license_bsd.txt",

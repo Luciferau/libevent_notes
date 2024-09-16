@@ -1687,3 +1687,6 @@ bufferevent_get_underlying(struct bufferevent *bev)
 这个函数返回作为bufferevent底层传输端口的另一个bufferevent。关于这种情况，请看关于过滤型bufferevent的介绍。
 
 这个函数由2.0.2-alpha版引入。
+
+# Manual locking and unlocking
+有时候需要确保对bufferevent的一些操作是原子地执行的。为此，libevent提供了手动锁定和解锁bufferevent的函数。

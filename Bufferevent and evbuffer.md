@@ -1480,7 +1480,7 @@ bufferevent_set_timeouts(struct bufferevent *bufev,
 读取或者写入超时发生时，相应的读取或者写入操作被禁止，然后超时事件回调被调用，带有标志<font color="#8064a2">BEV_EVENT_TIMEOUT | BEV_EVENT_READING</font>或者<font color="#8064a2">BEV_EVENT_TIMEOUT | BEV_EVENT_WRITING</font>。
 
 这个函数从2.0.1-alpha版就存在了，但是直到2.0.4-alpha版才对于各种bufferevent类型行为一致。
-## clean bufferevent
+### clean bufferevent
 ~~~c
 int
 
@@ -1506,3 +1506,12 @@ bufferevent_flush(struct bufferevent *bufev,
 
 }
 ~~~
+	
+清空bufferevent要求bufferevent强制从底层传输端口读取或者写入尽可能多的数据，而忽略其他可能保持数据不被写入的限制条件。函数的细节功能依赖于bufferevent的具体类型。
+
+iotype参数应该是EV_READ、EV_WRITE或者EV_READ | EV_WRITE，用于指示应该处理读取、写入，还是二者都处理。state参数可以是BEV_NORMAL、BEV_FLUSH或者BEV_FINISHED。BEV_FINISHED指示应该告知另一端，没有更多数据需要发送了；而BEV_NORMAL和BEV_FLUSH的区别依赖于具体的bufferevent类型。
+
+失败时bufferevent_flush()返回-1，如果没有数据被清空则返回0，有数据被清空则返回1。
+
+当前（2.0.5-beta版）仅有一些bufferevent类型实现了bufferevent_flush()。特别是，基于套接字的bufferevent没有实现。
+# Type-specific bufferevent functions

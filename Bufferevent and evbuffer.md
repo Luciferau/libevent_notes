@@ -1145,3 +1145,125 @@ bufferevent_write_buffer(struct bufferevent *bufev, struct evbuffer *buf)
 这些函数向<font color="#8064a2">bufferevent</font>的输出缓冲区添加数据。<font color="#4bacc6">bufferevent_write</font>()将内存中从data处开始的size字节数据添加到输出缓冲区的末尾。bufferevent_write_buffer()移除buf的所有内容，将其放置到输出缓冲区的末尾。成功时这些函数都返回0，发生错误时则返回-1。
 
 这些函数从0.8版就存在了。
+
+### <font color="#4bacc6">bufferevent_read</font> <font color="#4bacc6">bufferevent_read_buffer</font> 
+
+~~~c
+size_t
+
+bufferevent_read(struct bufferevent *bufev, void *data, size_t size)
+
+{
+
+    return (evbuffer_remove(bufev->input, data, size));
+
+}
+
+  
+
+int
+
+bufferevent_read_buffer(struct bufferevent *bufev, struct evbuffer *buf)
+
+{
+
+    return (evbuffer_add_buffer(buf, bufev->input));
+
+}
+
+~~~
+### <font color="#4bacc6">evbuffer_add_buffer</font>
+
+~~~c
+  
+
+int
+
+evbuffer_add_buffer(struct evbuffer *outbuf, struct evbuffer *inbuf)
+
+{
+
+    struct evbuffer_chain *pinned, *last;
+
+    size_t in_total_len, out_total_len;
+
+    int result = 0;
+
+  
+
+    EVBUFFER_LOCK2(inbuf, outbuf);
+
+    in_total_len = inbuf->total_len;
+
+    out_total_len = outbuf->total_len;
+
+  
+
+    if (in_total_len == 0 || outbuf == inbuf)
+
+        goto done;
+
+  
+
+    if (outbuf->freeze_end || inbuf->freeze_start) {
+
+        result = -1;
+
+        goto done;
+
+    }
+
+  
+
+    if (PRESERVE_PINNED(inbuf, &pinned, &last) < 0) {
+
+        result = -1;
+
+        goto done;
+
+    }
+
+  
+
+    if (out_total_len == 0) {
+
+        /* There might be an empty chain at the start of outbuf; free
+
+         * it. */
+
+        evbuffer_free_all_chains(outbuf->first);
+
+        COPY_CHAIN(outbuf, inbuf);
+
+    } else {
+
+        APPEND_CHAIN(outbuf, inbuf);
+
+    }
+
+  
+
+    RESTORE_PINNED(inbuf, pinned, last);
+
+  
+
+    inbuf->n_del_for_cb += in_total_len;
+
+    outbuf->n_add_for_cb += in_total_len;
+
+  
+
+    evbuffer_invoke_callbacks_(inbuf);
+
+    evbuffer_invoke_callbacks_(outbuf);
+
+  
+
+done:
+
+    EVBUFFER_UNLOCK2(inbuf, outbuf);
+
+    return result;
+
+}
+~~~

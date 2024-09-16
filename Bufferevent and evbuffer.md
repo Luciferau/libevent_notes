@@ -1421,3 +1421,52 @@ struct bufferevent * setup_bufferevent(void){
 
 ### Read and write timeout
 跟其他事件一样，可以要求在一定量的时间已经流逝，而没有成功写入或者读取数据的时候调用一个超时回调。
+~~~c
+int
+
+bufferevent_set_timeouts(struct bufferevent *bufev,
+
+             const struct timeval *tv_read,
+
+             const struct timeval *tv_write)
+
+{
+
+    int r = 0;
+
+    BEV_LOCK(bufev);
+
+    if (tv_read) {
+
+        bufev->timeout_read = *tv_read;
+
+    } else {
+
+        evutil_timerclear(&bufev->timeout_read);
+
+    }
+
+    if (tv_write) {
+
+        bufev->timeout_write = *tv_write;
+
+    } else {
+
+        evutil_timerclear(&bufev->timeout_write);
+
+    }
+
+  
+
+    if (bufev->be_ops->adj_timeouts)
+
+        r = bufev->be_ops->adj_timeouts(bufev);
+
+    BEV_UNLOCK(bufev);
+
+  
+
+    return r;
+
+}
+~~~

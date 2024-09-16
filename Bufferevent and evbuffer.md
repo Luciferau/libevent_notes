@@ -1506,7 +1506,7 @@ bufferevent_flush(struct bufferevent *bufev,
 
 }
 ~~~
-	
+
 清空bufferevent要求bufferevent强制从底层传输端口读取或者写入尽可能多的数据，而忽略其他可能保持数据不被写入的限制条件。函数的细节功能依赖于bufferevent的具体类型。
 
 iotype参数应该是EV_READ、EV_WRITE或者EV_READ | EV_WRITE，用于指示应该处理读取、写入，还是二者都处理。state参数可以是BEV_NORMAL、BEV_FLUSH或者BEV_FINISHED。BEV_FINISHED指示应该告知另一端，没有更多数据需要发送了；而BEV_NORMAL和BEV_FLUSH的区别依赖于具体的bufferevent类型。
@@ -1690,3 +1690,212 @@ bufferevent_get_underlying(struct bufferevent *bev)
 
 # Manual locking and unlocking
 有时候需要确保对bufferevent的一些操作是原子地执行的。为此，libevent提供了手动锁定和解锁bufferevent的函数。
+## bufferevent_lock bufferevent_unlock  bufferevent_incref_and_lock_
+~~~c
+/* For use by user programs only; internally, we should be calling
+
+   either bufferevent_incref_and_lock_(), or BEV_LOCK. */
+
+void
+
+bufferevent_lock(struct bufferevent *bev)
+
+{
+
+    bufferevent_incref_and_lock_(bev);
+
+}
+
+  
+
+void
+
+bufferevent_unlock(struct bufferevent *bev)
+
+{
+
+    bufferevent_decref_and_unlock_(bev);
+
+}
+
+
+
+~~~
+
+~~~c
+void
+
+bufferevent_incref_and_lock_(struct bufferevent *bufev)
+
+{
+
+    struct bufferevent_private *bufev_private = BEV_UPCAST(bufev);
+
+    BEV_LOCK(bufev);
+
+    ++bufev_private->refcnt;
+
+}
+~~~
+
+这个函数 `bufferevent_incref_and_lock_` 的作用是增加 `bufferevent` 对象的引用计数，并在操作期间对该对象加锁。
+
+1. **获取私有数据**：首先，函数通过 `BEV_UPCAST` 宏将传入的 `bufferevent` 对象转换为 `bufferevent_private` 类型。这个宏通常是用来从通用的 `bufferevent` 结构体获取到私有的实现细节。
+   
+2. **加锁**：然后，函数调用 `BEV_LOCK` 宏对 `bufferevent` 对象进行加锁。这确保了在修改 `bufferevent` 对象时的线程安全性。
+   
+3. **增加引用计数**：在加锁的保护下，函数增加 `bufferevent_private` 结构体中的 `refcnt`（引用计数）值。这表明有一个新的引用指向该 `bufferevent` 对象。
+   
+
+该函数的作用是确保在增加引用计数时的线程安全，防止其他线程在此期间修改 `bufferevent` 对象的状态。
+
+<font color="#c0504d">**注意：如果创建bufferevent时没有指定BEV_OPT_THREADSAFE标志，或者没有激活libevent的线程支持，则锁定操作是没有效果的。**</font>
+
+用这个函数锁定bufferevent将自动同时锁定相关联的evbuffer。这些函数是递归的：锁定已经持有锁的bufferevent是安全的。当然，对于每次锁定都必须进行一次解锁。
+# Deprecated bufferevent functionality
+从1.4到2.0版，bufferevent的后端代码一直在进行修订。在老的接口中，访问bufferevent结构体的内部是很平常的，并且还会使用依赖于这种访问的宏。
+
+更复杂的是，老的代码有时候将“evbuffer”前缀用于bufferevent功能。
+
+这里有一个在2.0版之前使用过的东西的概要：
+
+| 当前名称                        | 旧名称                 |
+| --------------------------- | ------------------- |
+| `bufferevent_data_cb`       | `evbuffercb`        |
+| `bufferevent_event_cb`      | `everrorcb`         |
+| `BEV_EVENT_READING`         | `EVBUFFER_READ`     |
+| `BEV_EVENT_WRITE`           | `EVBUFFER_WRITE`    |
+| `BEV_EVENT_EOF`             | `EVBUFFER_EOF`      |
+| `BEV_EVENT_ERROR`           | `EVBUFFER_ERROR`    |
+| `BEV_EVENT_TIMEOUT`         | `EVBUFFER_TIMEOUT`  |
+| `bufferevent_get_input(b)`  | `EVBUFFER_INPUT(b)` |
+| `bufferevent_get_output(b)` | `EVBUFFER_OUTPUT()` |
+老的函数定义在event.h中，而不是在event2/bufferevent.h中。
+
+如果仍然需要访问bufferevent结构体内部的某些公有部分，可以包含event2/bufferevent_struct.h。但是不建议这么做：不同版本的Libevent中bufferevent结构体的内容可能会改变。本节描述的宏和名字只有在包含了event2/bufferevent_compat.h时才能使用。
+## bufferevent_new
+较老版本中用于设置bufferevent的接口有所不同：
+~~~c
+struct bufferevent *
+
+bufferevent_new(evutil_socket_t fd,
+
+    bufferevent_data_cb readcb, bufferevent_data_cb writecb,
+
+    bufferevent_event_cb eventcb, void *cbarg)
+
+{
+
+    struct bufferevent *bufev;
+
+  
+
+    if (!(bufev = bufferevent_socket_new(NULL, fd, 0)))
+
+        return NULL;
+
+  
+
+    bufferevent_setcb(bufev, readcb, writecb, eventcb, cbarg);
+
+  
+
+    return bufev;
+
+}
+~~~
+## bufferevent_base_set
+~~~c
+int
+
+bufferevent_base_set(struct event_base *base, struct bufferevent *bufev)
+
+{
+
+    int res = -1;
+
+  
+
+    BEV_LOCK(bufev);
+
+    if (!BEV_IS_SOCKET(bufev))
+
+        goto done;
+
+  
+
+    bufev->ev_base = base;
+
+  
+
+    res = event_base_set(base, &bufev->ev_read);
+
+    if (res == -1)
+
+        goto done;
+
+  
+
+    res = event_base_set(base, &bufev->ev_write);
+
+done:
+
+    BEV_UNLOCK(bufev);
+
+    return res;
+
+}
+~~~
+bufferevent_new()函数仅仅在已经废弃的“默认”event_base上创建一个套接字bufferevent。调用bufferevent_base_set()可以调整套接字bufferevent的event_base。
+
+较老版本不使用timeval结构体设置超时，而是使用秒数：
+## bufferevent_settimeout
+~~~c
+  
+
+/* Obsolete; use bufferevent_set_timeouts */
+
+void
+
+bufferevent_settimeout(struct bufferevent *bufev,
+
+               int timeout_read, int timeout_write)
+
+{
+
+    struct timeval tv_read, tv_write;
+
+    struct timeval *ptv_read = NULL, *ptv_write = NULL;
+
+  
+
+    memset(&tv_read, 0, sizeof(tv_read));
+
+    memset(&tv_write, 0, sizeof(tv_write));
+
+  
+
+    if (timeout_read) {
+
+        tv_read.tv_sec = timeout_read;
+
+        ptv_read = &tv_read;
+
+    }
+
+    if (timeout_write) {
+
+        tv_write.tv_sec = timeout_write;
+
+        ptv_write = &tv_write;
+
+    }
+
+  
+
+    bufferevent_set_timeouts(bufev, ptv_read, ptv_write);
+
+}
+~~~
+
+最后要指出的是，2.0之前版本中的evbuffer实现是极其低效的，这对将bufferevent用于高性能应用是一个问题。

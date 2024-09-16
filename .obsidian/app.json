@@ -3,7 +3,7 @@
   "showLineNumber": false,
   "attachmentFolderPath": "./images",
   "readableLineLength": false,
-  "strictLineBreaks": true,
+  "strictLineBreaks": false,
   "alwaysUpdateLinks": true,
   "trashOption": "local",
   "newLinkFormat": "relative",

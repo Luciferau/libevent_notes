@@ -1172,8 +1172,14 @@ bufferevent_read_buffer(struct bufferevent *bufev, struct evbuffer *buf)
 }
 
 ~~~
-### <font color="#4bacc6">evbuffer_add_buffer</font>
 
+这些函数从bufferevent的输入缓冲区移除数据。bufferevent_read()至多从输入缓冲区移除size字节的数据，将其存储到内存中data处。函数返回实际移除的字节数。bufferevent_read_buffer()函数抽空输入缓冲区的所有内容，将其放置到buf中，成功时返回0，失败时返回-1。
+
+注意，对于bufferevent_read()，data处的内存块必须有足够的空间容纳size字节数据。
+
+<font color="#4bacc6">bufferevent_read</font>()函数从0.8版就存在了；bufferevnet_read_buffer()由2.0.1-alpha版引入。
+
+### <font color="#4bacc6">evbuffer_add_buffer</font>
 ~~~c
   
 

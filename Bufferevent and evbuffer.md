@@ -1515,3 +1515,5 @@ iotype参数应该是EV_READ、EV_WRITE或者EV_READ | EV_WRITE，用于指示�
 
 当前（2.0.5-beta版）仅有一些bufferevent类型实现了bufferevent_flush()。特别是，基于套接字的bufferevent没有实现。
 # Type-specific bufferevent functions
+
+	这些bufferevent函数不能支持所有bufferevent类型。

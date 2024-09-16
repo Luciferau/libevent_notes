@@ -818,3 +818,111 @@ bufferevent_disable(struct bufferevent *bufev, short event)
 
 }
 ~~~
+
+## bufferevent_setwatermark
+~~~c  
+void bufferevent_setwatermark(struct bufferevent *bufev, short events,size_t lowmark, size_t highmark);   
+~~~
+
+bufferevent_setwatermark()函数调整单个bufferevent的读取水位、写入水位，或者同时调整二者。（如果events参数设置了EV_READ，调整读取水位。如果events设置了<font color="#8064a2">EV_WRITE</font>标志，调整写入水位）
+
+对于高水位，0表示“无限”。
+## source code
+
+~~~c
+  
+/*
+
+ * Sets the water marks
+
+ */
+void bufferevent_setwatermark(struct bufferevent *bufev, short events,
+
+    size_t lowmark, size_t highmark)
+
+{
+
+    struct bufferevent_private *bufev_private = BEV_UPCAST(bufev);
+
+  
+
+    BEV_LOCK(bufev);
+
+    if (events & EV_WRITE) {
+
+        bufev->wm_write.low = lowmark;
+
+        bufev->wm_write.high = highmark;
+
+    }
+
+  
+
+    if (events & EV_READ) {
+
+        bufev->wm_read.low = lowmark;
+
+        bufev->wm_read.high = highmark;
+
+  
+
+        if (highmark) {
+
+            /* There is now a new high-water mark for read.
+
+               enable the callback if needed, and see if we should
+
+               suspend/bufferevent_wm_unsuspend. */
+
+  
+
+            if (bufev_private->read_watermarks_cb == NULL) {
+
+                bufev_private->read_watermarks_cb =
+
+                    evbuffer_add_cb(bufev->input,
+
+                            bufferevent_inbuf_wm_cb,
+
+                            bufev);
+
+            }
+
+            evbuffer_cb_set_flags(bufev->input,
+
+                      bufev_private->read_watermarks_cb,
+
+                      EVBUFFER_CB_ENABLED|EVBUFFER_CB_NODEFER);
+
+  
+
+            if (evbuffer_get_length(bufev->input) >= highmark)
+
+                bufferevent_wm_suspend_read(bufev);
+
+            else if (evbuffer_get_length(bufev->input) < highmark)
+
+                bufferevent_wm_unsuspend_read(bufev);
+
+        } else {
+
+            /* There is now no high-water mark for read. */
+
+            if (bufev_private->read_watermarks_cb)
+
+                evbuffer_cb_clear_flags(bufev->input,
+
+                    bufev_private->read_watermarks_cb,
+
+                    EVBUFFER_CB_ENABLED);
+
+            bufferevent_wm_unsuspend_read(bufev);
+
+        }
+
+    }
+
+    BEV_UNLOCK(bufev);
+
+}
+~~~

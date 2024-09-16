@@ -1649,3 +1649,31 @@ bufferevent_get_base(struct bufferevent *bufev)
 ~~~
 
 这个函数返回bufferevent的event_base，由2.0.9-rc版引入。
+## bufferevent_get_underlying
+~~~c
+  
+
+struct bufferevent *
+
+bufferevent_get_underlying(struct bufferevent *bev)
+
+{
+
+    union bufferevent_ctrl_data d;
+
+    int res = -1;
+
+    d.ptr = NULL;
+
+    BEV_LOCK(bev);
+
+    if (bev->be_ops->ctrl)
+
+        res = bev->be_ops->ctrl(bev, BEV_CTRL_GET_UNDERLYING, &d);
+
+    BEV_UNLOCK(bev);
+
+    return (res<0) ? NULL : d.ptr;
+
+}
+~~~

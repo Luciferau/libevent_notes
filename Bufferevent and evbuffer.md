@@ -1517,3 +1517,50 @@ iotype参数应该是EV_READ、EV_WRITE或者EV_READ | EV_WRITE，用于指示�
 # Type-specific bufferevent functions
 
 	这些bufferevent函数不能支持所有bufferevent类型。
+~~~c
+/* XXXX Should non-socket bufferevents support this? */
+
+int
+
+bufferevent_priority_set(struct bufferevent *bufev, int priority)
+
+{
+
+    int r = -1;
+
+    struct bufferevent_private *bufev_p = BEV_UPCAST(bufev);
+
+  
+
+    BEV_LOCK(bufev);
+
+    if (BEV_IS_ASYNC(bufev) || BEV_IS_FILTER(bufev) || BEV_IS_PAIR(bufev))
+
+        goto done;
+
+  
+
+    if (event_priority_set(&bufev->ev_read, priority) == -1)
+
+        goto done;
+
+    if (event_priority_set(&bufev->ev_write, priority) == -1)
+
+        goto done;
+
+  
+
+    event_deferred_cb_set_priority_(&bufev_p->deferred, priority);
+
+  
+
+    r = 0;
+
+done:
+
+    BEV_UNLOCK(bufev);
+
+    return r;
+
+}
+~~~

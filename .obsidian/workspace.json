@@ -36,18 +36,6 @@
             }
           },
           {
-            "id": "3c21ac8c7c5d8249",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Macro definition.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "42c6c889bed03ebc",
             "type": "leaf",
             "state": {
@@ -58,9 +46,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "48b811d86950f2e1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Build event.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -226,10 +226,13 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "db730313e0ffb1b4",
+  "active": "42c6c889bed03ebc",
   "lastOpenFiles": [
-    "Macro definition.md",
     "Bufferevent and evbuffer.md",
+    "libevent_structure.md",
+    "Build event.md",
+    "Event loop.md",
+    "Macro definition.md",
     "Macro function.md",
     "aceld_notes/libevent_notes_aceld/82_evbufferyu_xian_cheng_an_quan.md",
     "aceld_notes/libevent_notes_aceld/libevent-2-解决阻塞04.png",
@@ -243,7 +246,6 @@
     "images/Pasted image 20240904092035.png",
     "images/Pasted image 20240904092708.png",
     "images/Pasted image 20240904103007.png",
-    "libevent_structure.md",
     "Memory management.md",
     "Helper types and functions.md",
     "epoll API.md",
@@ -262,8 +264,6 @@
     "aceld_notes/libevent_notes_aceld/5_eventloop_shi_jian_xun_huan.md",
     "aceld_notes/libevent_notes_aceld/SUMMARY.md",
     "aceld_notes/libevent_notes_aceld/85_zhen_ce_cuo_wu.md",
-    "aceld_notes/libevent_notes_aceld/85_evbuffershu_ju_yi_dong.md",
-    "aceld_notes/libevent_notes_aceld/84_xiang_evbuffer_tian_jia_shu_ju.md",
     "libevent-book/notes/identifier-list",
     "libevent-book/notes",
     "libevent-book/license_bsd.txt",

@@ -379,3 +379,142 @@ int bufferevent_rate_limit_group_decrement_write(struct bufferevent_rate_limit_g
     
     - **`struct bufferevent_rate_limit_group *grp`**: 这是一个指向 `bufferevent_rate_limit_group` 结构体的指针，表示需要调整写速率限制的速率限制组。
     - **`ev_ssize_t decr`**: 这是一个 `ev_ssize_t` 类型的值，表示要减少的写速率限制量
+
+## example
+~~~c
+#include <stdio.h>
+
+#include <stdlib.h>
+
+#include "event2/bufferevent.h"          // 假设你使用的是 libevent 库
+
+#include "event2/rate_limit.h"           // 假设这个库包含了速率限制相关的定义
+
+  
+
+// 模拟初始化和设置函数
+
+struct bufferevent* initialize_bufferevent() {
+
+    // 在实际程序中，这里应该包含实际的 bufferevent 初始化代码
+
+    return NULL;
+
+}
+
+  
+
+struct bufferevent_rate_limit_group* initialize_rate_limit_group() {
+
+    // 在实际程序中，这里应该包含实际的速率限制组初始化代码
+
+    return NULL;
+
+}
+
+  
+
+int main() {
+
+    // 初始化 bufferevent 和速率限制组对象
+
+    struct bufferevent *bev = initialize_bufferevent();
+
+    struct bufferevent_rate_limit_group *grp = initialize_rate_limit_group();
+
+  
+
+    // 检查对象是否正确初始化
+
+    if (!bev || !grp) {
+
+        fprintf(stderr, "Failed to initialize bufferevent or rate limit group.\n");
+
+        return 1;
+
+    }
+
+  
+
+    // 示例：减少 bufferevent 对象的读限制
+
+    ev_ssize_t read_decrease_amount = 1024; // 例如：减少 1024 字节
+
+    int read_result = bufferevent_decrement_read_limit(bev, read_decrease_amount);
+
+    if (read_result == 0) {
+
+        printf("Successfully decreased read limit by %ld bytes.\n", read_decrease_amount);
+
+    } else {
+
+        fprintf(stderr, "Failed to decrease read limit.\n");
+
+    }
+
+  
+
+    // 示例：减少 bufferevent 对象的写限制
+
+    ev_ssize_t write_decrease_amount = 2048; // 例如：减少 2048 字节
+
+    int write_result = bufferevent_decrement_write_limit(bev, write_decrease_amount);
+
+    if (write_result == 0) {
+
+        printf("Successfully decreased write limit by %ld bytes.\n", write_decrease_amount);
+
+    } else {
+
+        fprintf(stderr, "Failed to decrease write limit.\n");
+
+    }
+
+  
+
+    // 示例：减少速率限制组的读速率限制
+
+    ev_ssize_t rate_limit_read_decrease = 512; // 例如：减少 512 字节/秒
+
+    int rate_limit_read_result = bufferevent_rate_limit_group_decrement_read(grp, rate_limit_read_decrease);
+
+    if (rate_limit_read_result == 0) {
+
+        printf("Successfully decreased read rate limit by %ld bytes per second.\n", rate_limit_read_decrease);
+
+    } else {
+
+        fprintf(stderr, "Failed to decrease read rate limit.\n");
+
+    }
+
+  
+
+    // 示例：减少速率限制组的写速率限制
+
+    ev_ssize_t rate_limit_write_decrease = 1024; // 例如：减少 1024 字节/秒
+
+    int rate_limit_write_result = bufferevent_rate_limit_group_decrement_write(grp, rate_limit_write_decrease);
+
+    if (rate_limit_write_result == 0) {
+
+        printf("Successfully decreased write rate limit by %ld bytes per second.\n", rate_limit_write_decrease);
+
+    } else {
+
+        fprintf(stderr, "Failed to decrease write rate limit.\n");
+
+    }
+
+  
+
+    // 清理资源
+
+    // 这里应该包含释放 bufferevent 和速率限制组对象的代码
+
+  
+
+    return 0;
+
+}
+~~~

@@ -354,3 +354,12 @@ void bufferevent_rate_limit_group_reset_totals(struct bufferevent_rate_limit_gro
 每个bufferevent_rate_limit_group跟踪经过其发送的总的字节数，这可用于跟踪组中所有bufferevent总的使用情况。对一个组调用bufferevent_rate_limit_group_get_totals会分别设置total_read_out和total_written_out为组的总读取和写入字节数。组创建的时候这些计数从0开始，调用bufferevent_rate_limit_group_reset_totals会复位计数为0。
 # Manually adjust rate limits
 对于有复杂需求的程序，可能需要调整记号存储器的当前值。比如说，如果程序不通过使用bufferevent的方式产生一些通信量时。
+
+~~~c
+int bufferevent_decrement_read_limit(struct bufferevent *bev, ev_ssize_t decr);
+int bufferevent_decrement_write_limit(struct bufferevent *bev, ev_ssize_t decr);
+int bufferevent_rate_limit_group_decrement_read(struct bufferevent_rate_limit_group *grp, ev_ssize_t decr);
+int bufferevent_rate_limit_group_decrement_write(struct bufferevent_rate_limit_group *grp, ev_ssize_t decr);
+~~~
+
+这些函数减小某个bufferevent或者速率限制组的当前读或者写存储器。注意：减小是有符号的。如果要增加存储器，就传入负值

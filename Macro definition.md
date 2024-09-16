@@ -317,3 +317,41 @@ These definitions are used when locking is not enabled. `EVUTIL_NIL_STMT_` is ty
 
 #define BEV_UPCAST(b) EVUTIL_UPCAST((b), struct bufferevent_private, bev)
 ~~~
+
+~~~c  
+  
+
+/** Helper macro.  If we know that a given pointer points to a field in a
+
+    structure, return a pointer to the structure itself.  Used to implement
+
+    our half-baked C OO.  Example:
+
+  
+
+    struct subtype {
+
+    int x;
+
+    struct supertype common;
+
+    int y;
+
+    };
+
+    ...
+
+    void fn(struct supertype *super) {
+
+    struct subtype *sub = EVUTIL_UPCAST(super, struct subtype, common);
+
+    ...
+
+    }
+
+ */
+
+#define EVUTIL_UPCAST(ptr, type, field)             \
+
+    ((type *)(((char*)(ptr)) - evutil_offsetof(type, field)))
+~~~    

@@ -354,7 +354,7 @@ void bufferevent_rate_limit_group_reset_totals(struct bufferevent_rate_limit_gro
 每个bufferevent_rate_limit_group跟踪经过其发送的总的字节数，这可用于跟踪组中所有bufferevent总的使用情况。对一个组调用bufferevent_rate_limit_group_get_totals会分别设置total_read_out和total_written_out为组的总读取和写入字节数。组创建的时候这些计数从0开始，调用bufferevent_rate_limit_group_reset_totals会复位计数为0。
 # Manually adjust rate limits
 对于有复杂需求的程序，可能需要调整记号存储器的当前值。比如说，如果程序不通过使用bufferevent的方式产生一些通信量时。
-
+## bufferevent_decrement_read_limit bufferevent_decrement_write_limit  bufferevent_rate_limit_group_decrement_read bufferevent_rate_limit_group_decrement_write
 ~~~c
 int bufferevent_decrement_read_limit(struct bufferevent *bev, ev_ssize_t decr);
 int bufferevent_decrement_write_limit(struct bufferevent *bev, ev_ssize_t decr);
@@ -518,3 +518,10 @@ int main() {
 
 }
 ~~~
+
+# Set the minimum possible share for a rate limit group
+通常，不希望在每个滴答中为速率限制组中的所有bufferevent平等地分配可用的字节。比如说，有一个含有10000个活动bufferevent的速率限制组，它在每个滴答中可以写入10000字节，那么，因为系统调用和TCP头部的开销，让每个bufferevent在每个滴答中仅写入1字节是低效的。
+
+为解决此问题，速率限制组有一个“**最小共享（minimum share）**”的概念。在上述情况下，不是允许每个bufferevent在每个滴答中写入1字节，而是在每个滴答中允许某个bufferevent写入一些（最小共享）字节，而其余的bufferevent将不允许写入。允许哪个bufferevent写入将在每个滴答中随机选择。
+
+默认的最小共享值具有较好的性能，当前（2.0.6-rc版本）其值为64。可以通过这个函数调整最小共享值：

@@ -295,16 +295,14 @@ These definitions are used when locking is not enabled. `EVUTIL_NIL_STMT_` is ty
  } while (0)
 
 ~~~
-These definitions are used when locking is enabled. Here’s what happens in these macros:
+
 - **`BEV_LOCK(b)`**:
     
-    - `struct bufferevent_private *locking = BEV_UPCAST(b);`:
-        - This line casts the `bufferevent` object to its internal private structure (`bufferevent_private`). This cast is needed because the private structure contains the lock.
-    - `EVLOCK_LOCK(locking->lock, 0);`:
-        - This function locks the mutex associated with the `bufferevent` object. `EVLOCK_LOCK` is a macro or function used to acquire the lock.
+    - `b` 是一个指向 `bufferevent` 结构体的指针。
+    - `BEV_UPCAST(b)` 宏将 `b` 转换为 `bufferevent_private` 结构体的指针，并赋值给 `locking`。
+    - `EVLOCK_LOCK(locking->lock, 0)` 用于对 `locking` 中的 `lock` 进行加锁操作。这里的 `0` 可能表示锁的某种标志或者选项，具体含义取决于 `EVLOCK_LOCK` 的实现。
 - **`BEV_UNLOCK(b)`**:
     
-    - `struct bufferevent_private *locking = BEV_UPCAST(b);`:
-        - This line is similar to the `BEV_LOCK` macro; it casts the `bufferevent` object to its private structure.
-    - `EVLOCK_UNLOCK(locking->lock, 0);`:
-        - This function unlocks the mutex associated with the `bufferevent` object. `EVLOCK_UNLOCK` is a macro or function used to release the lock.
+    - `b` 也是一个指向 `bufferevent` 结构体的指针。
+    - 同样，`BEV_UPCAST(b)` 将 `b` 转换为 `bufferevent_private` 结构体的指针，并赋值给 `locking`。
+    - `EVLOCK_UNLOCK(locking->lock, 0)` 用于对 `locking` 中的 `lock` 进行解锁操作。这里的 `0` 与加锁时的标志或选项相同。

@@ -58,9 +58,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "e4d3ed0b5deed65c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Memory management.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -89,7 +101,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "libevent_structure.md"
+                "file": "Memory management.md"
               }
             }
           },
@@ -116,8 +128,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -137,7 +148,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "libevent_structure.md",
+                "file": "Memory management.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -154,7 +165,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "libevent_structure.md",
+                "file": "Memory management.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -177,7 +188,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "libevent_structure.md"
+                "file": "Memory management.md"
               }
             }
           },
@@ -226,11 +237,11 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "42c6c889bed03ebc",
+  "active": "e4d3ed0b5deed65c",
   "lastOpenFiles": [
     "Bufferevent and evbuffer.md",
-    "libevent_structure.md",
     "Macro definition.md",
+    "libevent_structure.md",
     "Build event.md",
     "Event loop.md",
     "Macro function.md",

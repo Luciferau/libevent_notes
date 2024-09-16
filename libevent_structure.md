@@ -978,3 +978,23 @@ extern const struct bufferevent_ops bufferevent_ops_pair;
 
 ~~~
 
+这些是不同类型 `bufferevent` 的操作表的声明：
+
+- **`bufferevent_ops_socket`**: 用于处理基于套接字的 `bufferevent` 实现。
+- **`bufferevent_ops_filter`**: 用于处理过滤器类型的 `bufferevent` 实现。
+- **`bufferevent_ops_pair`**: 用于处理配对类型的 `bufferevent` 实现。
+## macro definition
+
+~~~c
+#define BEV_IS_SOCKET(bevp) ((bevp)->be_ops == &bufferevent_ops_socket)
+#define BEV_IS_FILTER(bevp) ((bevp)->be_ops == &bufferevent_ops_filter)
+#define BEV_IS_PAIR(bevp) ((bevp)->be_ops == &bufferevent_ops_pair)
+~~~
+这些宏用于检查给定的 `bufferevent` 是否为特定类型：
+
+- **`BEV_IS_SOCKET(bevp)`**: 判断 `bufferevent` 是否是套接字类型。
+- **`BEV_IS_FILTER(bevp)`**: 判断 `bufferevent` 是否是过滤器类型。
+- **`BEV_IS_PAIR(bevp)`**: 判断 `bufferevent` 是否是配对类型。
+
+这些宏利用了 `bufferevent` 的操作表指针 `be_ops`，根据其是否匹配已知的类型操作表来判断 `bufferevent` 的类型。
+

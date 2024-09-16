@@ -274,36 +274,37 @@ int evutil_gettimeofday(struct timeval *tv, struct timezone *tz);
 
 # <font color="#8064a2">BEV_LOCK</font> <font color="#8064a2">BEV_UNLOCK</font>
 
+These definitions are used when locking is not enabled. `EVUTIL_NIL_STMT_` is typically a no-op or empty statement, meaning no locking is applied.
+
 ~~~c
-#ifdef EVENT__DISABLE_THREAD_SUPPORT
-
 #define BEV_LOCK(b) EVUTIL_NIL_STMT_
-
 #define BEV_UNLOCK(b) EVUTIL_NIL_STMT_
+~~~
 
-#else
 
-/** Internal: Grab the lock (if any) on a bufferevent */
-
+---
+~~~c
 #define BEV_LOCK(b) do {                        \
-
-        struct bufferevent_private *locking =  BEV_UPCAST(b);   \
-
-        EVLOCK_LOCK(locking->lock, 0);              \
-
-    } while (0)
-
-  
-
-/** Internal: Release the lock (if any) on a bufferevent */
+     struct bufferevent_private *locking =  BEV_UPCAST(b);   \
+     EVLOCK_LOCK(locking->lock, 0);              \
+ } while (0)
 
 #define BEV_UNLOCK(b) do {                      \
+     struct bufferevent_private *locking =  BEV_UPCAST(b);   \
+     EVLOCK_UNLOCK(locking->lock, 0);            \
+ } while (0)
 
-        struct bufferevent_private *locking =  BEV_UPCAST(b);   \
-
-        EVLOCK_UNLOCK(locking->lock, 0);            \
-
-    } while (0)
-
-#endif
 ~~~
+These definitions are used when locking is enabled. Here’s what happens in these macros:
+- **`BEV_LOCK(b)`**:
+    
+    - `struct bufferevent_private *locking = BEV_UPCAST(b);`:
+        - This line casts the `bufferevent` object to its internal private structure (`bufferevent_private`). This cast is needed because the private structure contains the lock.
+    - `EVLOCK_LOCK(locking->lock, 0);`:
+        - This function locks the mutex associated with the `bufferevent` object. `EVLOCK_LOCK` is a macro or function used to acquire the lock.
+- **`BEV_UNLOCK(b)`**:
+    
+    - `struct bufferevent_private *locking = BEV_UPCAST(b);`:
+        - This line is similar to the `BEV_LOCK` macro; it casts the `bufferevent` object to its private structure.
+    - `EVLOCK_UNLOCK(locking->lock, 0);`:
+        - This function unlocks the mutex associated with the `bufferevent` object. `EVLOCK_UNLOCK` is a macro or function used to release the lock.

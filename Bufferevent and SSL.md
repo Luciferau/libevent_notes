@@ -3,3 +3,4 @@ OpenSSL功能在2.0.3-alpha版本引入，然而直到2.0.5-beta和2.0.6-rc版�
 
 这一节不包含对OpenSSL、SSL/TLS或者密码学的概述。
 这一节描述的函数都在<font color="#4bacc6">event2/bufferevent_ssl.h</font>中声明。
+# Creating and using OpenSSL-based bufferevents

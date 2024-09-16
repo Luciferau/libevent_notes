@@ -362,4 +362,20 @@ int bufferevent_rate_limit_group_decrement_read(struct bufferevent_rate_limit_gr
 int bufferevent_rate_limit_group_decrement_write(struct bufferevent_rate_limit_group *grp, ev_ssize_t decr);
 ~~~
 
-这些函数减小某个bufferevent或者速率限制组的当前读或者写存储器。注意：减小是有符号的。如果要增加存储器，就传入负值
+这些函数减小某个bufferevent或者速率限制组的当前读或者写存储器。注意：减小是有符号的。如果要增加存储器，就传入负值。
+- **`int bufferevent_decrement_read_limit(struct bufferevent *bev, ev_ssize_t decr);`**
+    
+    - **`struct bufferevent *bev`**: 这是一个指向 `bufferevent` 结构体的指针，表示需要调整读限制的缓冲事件对象。
+    - **`ev_ssize_t decr`**: 这是一个 `ev_ssize_t` 类型的值，表示要减少的读限制量。
+- **`int bufferevent_decrement_write_limit(struct bufferevent *bev, ev_ssize_t decr);`**
+    
+    - **`struct bufferevent *bev`**: 这是一个指向 `bufferevent` 结构体的指针，表示需要调整写限制的缓冲事件对象。
+    - **`ev_ssize_t decr`**: 这是一个 `ev_ssize_t` 类型的值，表示要减少的写限制量。
+- **`int bufferevent_rate_limit_group_decrement_read(struct bufferevent_rate_limit_group *grp, ev_ssize_t decr);`**
+    
+    - **`struct bufferevent_rate_limit_group *grp`**: 这是一个指向 `bufferevent_rate_limit_group` 结构体的指针，表示需要调整读速率限制的速率限制组。
+    - **`ev_ssize_t decr`**: 这是一个 `ev_ssize_t` 类型的值，表示要减少的读速率限制量。
+- **`int bufferevent_rate_limit_group_decrement_write(struct bufferevent_rate_limit_group *grp, ev_ssize_t decr);`**
+    
+    - **`struct bufferevent_rate_limit_group *grp`**: 这是一个指向 `bufferevent_rate_limit_group` 结构体的指针，表示需要调整写速率限制的速率限制组。
+    - **`ev_ssize_t decr`**: 这是一个 `ev_ssize_t` 类型的值，表示要减少的写速率限制量

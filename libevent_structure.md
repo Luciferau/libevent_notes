@@ -887,3 +887,4 @@ struct bufferevent_private {
 - **`struct evdns_getaddrinfo_request *dns_request`**:
     
     - 用于 DNS 查询的请求结构体，协助处理域名解析过程。
+- `bufferevent_private` 结构体封装了 `bufferevent` 结构体的实现细节，包括锁、缓冲区、水位、延迟回调、速率限制等。这种设计使得 `bufferevent` 的内部实现与对外接口隔离，提高了代码的模块化和可维护性，同时也提供了更强大的功能来处理网络事件和数据流

@@ -588,3 +588,28 @@ int bufferevent_socket_get_dns_error(struct bufferevent *bev)
 本节描述的函数可用于多种bufferevent实现。
 
 ## free bufferevent
+### bufferevent_free
+~~~c
+void bufferevent_free(struct bufferevent *bufev){
+{
+
+    BEV_LOCK(bufev);
+
+    bufferevent_setcb(bufev, NULL, NULL, NULL, NULL);
+
+    bufferevent_cancel_all_(bufev);//
+
+    bufferevent_decref_and_unlock_(bufev);//
+
+}}
+~~~
+
+这个函数释放bufferevent。bufferevent内部具有引用计数，所以，如果释放bufferevent时还有未决的延迟回调，则在回调完成之前bufferevent不会被删除。
+
+如果设置了BEV_OPT_CLOSE_ON_FREE标志，并且bufferevent有一个套接字或者底层bufferevent作为其传输端口，则释放bufferevent将关闭这个传输端口。
+## Operation callbacks, watermarks, and enable/disable
+~~~c
+void bufferevent_setcb(struct bufferevent *bufev,
+	    bufferevent_data_cb readcb, bufferevent_data_cb writecb,bufferevent_event_cb eventcb, void *cbarg);
+    
+~~~

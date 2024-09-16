@@ -23,9 +23,11 @@
             "id": "31ba3cbf905aa9ad",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "libevent-book/event_states.png"
+                "file": "Bufferevent and evbuffer.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -59,7 +61,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "libevent-book/event_states.png"
+                "file": "Bufferevent and evbuffer.md"
               }
             }
           },
@@ -86,7 +88,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -106,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "libevent-book/event_states.png",
+                "file": "Bufferevent and evbuffer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -123,7 +126,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "libevent-book/event_states.png",
+                "file": "Bufferevent and evbuffer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -146,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "libevent-book/event_states.png"
+                "file": "Bufferevent and evbuffer.md"
               }
             }
           },
@@ -195,8 +198,9 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "31ba3cbf905aa9ad",
+  "active": "db730313e0ffb1b4",
   "lastOpenFiles": [
+    "libevent-book/event_states.png",
     "images/Pasted image 20240829113803.png",
     "images/Pasted image 20240830112747.png",
     "images/Pasted image 20240904090807.png",
@@ -207,7 +211,6 @@
     "images/Pasted image 20240904111332.png",
     "images/Pasted image 20240904112623.png",
     "images/Pasted image 20240904153038.png",
-    "images/Pasted image 20240904153810.png",
     "TODO Lists.md",
     "libevent_structure.md",
     "Bufferevent and evbuffer.md",

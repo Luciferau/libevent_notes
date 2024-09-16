@@ -583,3 +583,8 @@ int bufferevent_socket_get_dns_error(struct bufferevent *bev)
 
 }
 ~~~
+
+# Common bufferevent operations
+本节描述的函数可用于多种bufferevent实现。
+
+## free bufferevent

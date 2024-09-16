@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Bufferevent and evbuffer.md",
+                "file": "Macro definition.md",
                 "mode": "source",
                 "source": false
               }
@@ -61,7 +61,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Bufferevent and evbuffer.md"
+                "file": "Macro definition.md"
               }
             }
           },
@@ -109,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Bufferevent and evbuffer.md",
+                "file": "Macro definition.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -126,7 +126,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Bufferevent and evbuffer.md",
+                "file": "Macro definition.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Bufferevent and evbuffer.md"
+                "file": "Macro definition.md"
               }
             }
           },
@@ -198,8 +198,10 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "db730313e0ffb1b4",
+  "active": "31ba3cbf905aa9ad",
   "lastOpenFiles": [
+    "Macro function.md",
+    "Bufferevent and evbuffer.md",
     "libevent-book/event_states.png",
     "images/Pasted image 20240829113803.png",
     "images/Pasted image 20240830112747.png",
@@ -210,10 +212,8 @@
     "images/Pasted image 20240904103355.png",
     "images/Pasted image 20240904111332.png",
     "images/Pasted image 20240904112623.png",
-    "images/Pasted image 20240904153038.png",
     "TODO Lists.md",
     "libevent_structure.md",
-    "Bufferevent and evbuffer.md",
     "Memory management.md",
     "Helper types and functions.md",
     "epoll API.md",

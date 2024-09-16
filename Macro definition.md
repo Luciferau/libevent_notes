@@ -271,3 +271,39 @@ int evutil_gettimeofday(struct timeval *tv, struct timezone *tz);
 
 #endif
 ~~~
+
+# <font color="#8064a2">BEV_LOCK</font> <font color="#8064a2">BEV_UNLOCK</font>
+
+~~~c
+#ifdef EVENT__DISABLE_THREAD_SUPPORT
+
+#define BEV_LOCK(b) EVUTIL_NIL_STMT_
+
+#define BEV_UNLOCK(b) EVUTIL_NIL_STMT_
+
+#else
+
+/** Internal: Grab the lock (if any) on a bufferevent */
+
+#define BEV_LOCK(b) do {                        \
+
+        struct bufferevent_private *locking =  BEV_UPCAST(b);   \
+
+        EVLOCK_LOCK(locking->lock, 0);              \
+
+    } while (0)
+
+  
+
+/** Internal: Release the lock (if any) on a bufferevent */
+
+#define BEV_UNLOCK(b) do {                      \
+
+        struct bufferevent_private *locking =  BEV_UPCAST(b);   \
+
+        EVLOCK_UNLOCK(locking->lock, 0);            \
+
+    } while (0)
+
+#endif
+~~~

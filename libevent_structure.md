@@ -888,3 +888,93 @@ struct bufferevent_private {
     
     - 用于 DNS 查询的请求结构体，协助处理域名解析过程。
 - `bufferevent_private` 结构体封装了 `bufferevent` 结构体的实现细节，包括锁、缓冲区、水位、延迟回调、速率限制等。这种设计使得 `bufferevent` 的内部实现与对外接口隔离，提高了代码的模块化和可维护性，同时也提供了更强大的功能来处理网络事件和数据流
+
+# struct bufferevent_ops
+`bufferevent_ops` 结构体定义了与 `bufferevent` 类型相关的操作表，用于处理不同类型的 `bufferevent` 实现。这种设计使得 `bufferevent` 可以有多个不同的实现类型，每种类型都有自己专门的操作函数
+~~~c
+struct bufferevent_ops {
+	/** The name of the bufferevent's type. */
+	const char *type;
+
+	/** At what offset into the implementation type will we find a
+	    bufferevent structure?
+
+	    Example: if the type is implemented as
+	    struct bufferevent_x {
+	       int extra_data;
+	       struct bufferevent bev;
+	    }
+	    then mem_offset should be offsetof(struct bufferevent_x, bev)
+	*/
+	off_t mem_offset;
+
+	/** Enables one or more of EV_READ|EV_WRITE on a bufferevent.  Does
+	    not need to adjust the 'enabled' field.  Returns 0 on success, -1
+	    on failure.
+	 */
+	int (*enable)(struct bufferevent *, short);
+
+	/** Disables one or more of EV_READ|EV_WRITE on a bufferevent.  Does
+	    not need to adjust the 'enabled' field.  Returns 0 on success, -1
+	    on failure.
+	 */
+	int (*disable)(struct bufferevent *, short);
+
+	/** Detaches the bufferevent from related data structures. Called as
+	 * soon as its reference count reaches 0. */
+	void (*unlink)(struct bufferevent *);
+
+	/** Free any storage and deallocate any extra data or structures used
+	    in this implementation. Called when the bufferevent is
+	    finalized.
+	 */
+	void (*destruct)(struct bufferevent *);
+
+	/** Called when the timeouts on the bufferevent have changed. */
+	int (*adj_timeouts)(struct bufferevent *);
+
+	/** Called to flush data. */
+	int (*flush)(struct bufferevent *, short, enum bufferevent_flush_mode);
+
+	/** Called to access miscellaneous fields. */
+	int (*ctrl)(struct bufferevent *, enum bufferevent_ctrl_op, union bufferevent_ctrl_data *);
+};
+
+~~~
+
+- **`const char *type`**:
+    
+    - 这是一个指向字符的指针，用于描述 `bufferevent` 类型的名称。例如，可以是 `"socket"`, `"filter"`, 或 `"pair"`。
+- **`off_t mem_offset`**:
+    
+    - 表示 `bufferevent` 结构体在具体实现中的偏移量。这有助于在实际结构体中找到 `bufferevent` 结构体的位置。例如，如果 `bufferevent` 是结构体中的一部分，`mem_offset` 指定了它在结构体中的位置。
+- **`int (*enable)(struct bufferevent *, short)`**:
+    
+    - 函数指针，用于启用 `EV_READ` 或 `EV_WRITE` 事件。返回 `0` 表示成功，`-1` 表示失败。这个函数并不需要调整 `enabled` 字段的值。
+- **`int (*disable)(struct bufferevent *, short)`**:
+    
+    - 函数指针，用于禁用 `EV_READ` 或 `EV_WRITE` 事件。类似地，返回 `0` 表示成功，`-1` 表示失败。
+- **`void (*unlink)(struct bufferevent *)`**:
+    
+    - 函数指针，用于在 `bufferevent` 的引用计数达到 0 时，将其从相关数据结构中分离。这个函数在 `bufferevent` 的引用计数减少到零时被调用。
+- **`void (*destruct)(struct bufferevent *)`**:
+    
+    - 函数指针，用于释放 `bufferevent` 使用的任何额外存储或数据结构。这个函数在 `bufferevent` 被销毁时调用。
+- **`int (*adj_timeouts)(struct bufferevent *)`**:
+    
+    - 函数指针，用于调整 `bufferevent` 的超时设置。这个函数在 `bufferevent` 的超时设置发生变化时被调用。
+- **`int (*flush)(struct bufferevent *, short, enum bufferevent_flush_mode)`**:
+    
+    - 函数指针，用于刷新数据。根据提供的模式（`bufferevent_flush_mode`），该函数会将数据刷新到目标。
+- **`int (*ctrl)(struct bufferevent *, enum bufferevent_ctrl_op, union bufferevent_ctrl_data *)`**:
+    
+    - 函数指针，用于访问 `bufferevent` 的各种控制操作。这个函数允许对 `bufferevent` 进行特定的控制操作。
+
+## extern definition
+~~~c
+extern const struct bufferevent_ops bufferevent_ops_socket;
+extern const struct bufferevent_ops bufferevent_ops_filter;
+extern const struct bufferevent_ops bufferevent_ops_pair;
+
+~~~
+

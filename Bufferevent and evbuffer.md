@@ -1118,3 +1118,30 @@ bufferevent_get_output(struct bufferevent *bufev)
 <font color="#c0504d">如果写入操作因为数据量太少而停止（或者读取操作因为太多数据而停止），则向输出缓冲区添加数据（或者从输入缓冲区移除数据）将自动重启操作。</font>
 
 这些函数由2.0.1-alpha版引入。
+
+### <font color="#4bacc6">bufferevent_write</font>  <font color="#4bacc6">bufferevent_write_buffer</font>
+
+~~~c
+int
+
+bufferevent_write(struct bufferevent *bufev, const void *data, size_t size)
+{
+    if (evbuffer_add(bufev->output, data, size) == -1)
+        return (-1);
+    return 0;
+}
+
+
+int
+
+bufferevent_write_buffer(struct bufferevent *bufev, struct evbuffer *buf)
+{
+    if (evbuffer_add_buffer(bufev->output, buf) == -1)
+        return (-1);
+    return 0;
+}
+~~~
+
+这些函数向<font color="#8064a2">bufferevent</font>的输出缓冲区添加数据。<font color="#4bacc6">bufferevent_write</font>()将内存中从data处开始的size字节数据添加到输出缓冲区的末尾。bufferevent_write_buffer()移除buf的所有内容，将其放置到输出缓冲区的末尾。成功时这些函数都返回0，发生错误时则返回-1。
+
+这些函数从0.8版就存在了。

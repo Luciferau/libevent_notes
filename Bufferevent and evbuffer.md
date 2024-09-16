@@ -1470,3 +1470,39 @@ bufferevent_set_timeouts(struct bufferevent *bufev,
 
 }
 ~~~
+
+设置超时为NULL会移除超时回调。
+
+试图读取数据的时候，如果至少等待了timeout_read秒，则读取超时事件将被触发。试图写入数据的时候，如果至少等待了timeout_write秒，则写入超时事件将被触发。
+
+<font color="#ffff00">注意，只有在读取或者写入的时候才会计算超时。也就是说，如果bufferevent的读取被禁止，或者输入缓冲区满（达到其高水位），则读取超时被禁止。类似的，如果写入被禁止，或者没有数据待写入，则写入超时被禁止。</font>
+
+读取或者写入超时发生时，相应的读取或者写入操作被禁止，然后超时事件回调被调用，带有标志<font color="#8064a2">BEV_EVENT_TIMEOUT | BEV_EVENT_READING</font>或者<font color="#8064a2">BEV_EVENT_TIMEOUT | BEV_EVENT_WRITING</font>。
+
+这个函数从2.0.1-alpha版就存在了，但是直到2.0.4-alpha版才对于各种bufferevent类型行为一致。
+## clean bufferevent
+~~~c
+int
+
+bufferevent_flush(struct bufferevent *bufev,
+
+    short iotype,
+
+    enum bufferevent_flush_mode mode)
+
+{
+
+    int r = -1;
+
+    BEV_LOCK(bufev);
+
+    if (bufev->be_ops->flush)
+
+        r = bufev->be_ops->flush(bufev, iotype, mode);
+
+    BEV_UNLOCK(bufev);
+
+    return r;
+
+}
+~~~

@@ -830,3 +830,60 @@ struct bufferevent_private {
 
 };
 ~~~
+
+`bufferevent_private` 结构体是 `bufferevent` 结构体的一个扩展部分，包含了用于实现 `bufferevent` 的私有数据和状态。这些成员在 `bufferevent_struct.h` 头文件中并未暴露，旨在实现封装和内部管理。
+
+- **`struct bufferevent bev`**:
+    
+    - 这是 `bufferevent` 结构体的基础部分。`bufferevent_private` 通过包含 `bufferevent` 结构体，继承了 `bufferevent` 的所有公开接口和基本功能。
+- **`struct evbuffer_cb_entry *read_watermarks_cb`**:
+    
+    - 用于处理输入缓冲区的watermarks回调。这是 `evbuffer` 结构体的回调机制的一部分，用于实现流量控制或其他与数据处理相关的逻辑。
+- **`unsigned own_lock : 1`**:
+    
+    - 标记是否在释放 `bufferevent` 时需要释放锁。如果设置了该标志，则 `bufferevent` 的销毁过程将包括锁的释放。
+- **`unsigned readcb_pending : 1`** 和 **`unsigned writecb_pending : 1`**:
+    
+    - 分别表示是否有待处理的读回调或写回调。这些标志用于处理延迟的回调函数，确保它们在适当的时间被调用。
+- **`unsigned connecting : 1`**:
+    
+    - 指示当前是否正在进行连接操作。这有助于处理与连接状态相关的特殊情况。
+- **`unsigned connection_refused : 1`**:
+    
+    - 标记连接是否被拒绝。这是为了绕过 `bufferevent` 抽象的一种技巧，用于处理连接失败的情况。
+- **`short eventcb_pending`**:
+    
+    - 如果有延迟的回调并且事件回调待处理，这里保存待处理的事件。
+- **`bufferevent_suspend_flags read_suspended`** 和 **`bufferevent_suspend_flags write_suspended`**:
+    
+    - 分别用于指示读取和写入操作是否被暂停。这里使用位域来表示不同的暂停条件。
+- **`int errno_pending`**:
+    
+    - 保存当前待处理的 `errno` 错误码，以便在事件回调中使用。
+- **`int dns_error`**:
+    
+    - 用于存储与 DNS 解析相关的错误码，特别是用于 `bufferevent_socket_connect_hostname` 的操作。
+- **`struct event_callback deferred`**:
+    
+    - 用于实现延迟回调的机制，允许在特定条件满足时才执行回调函数。
+- **`enum bufferevent_options options`**:
+    
+    - 存储创建 `bufferevent` 时使用的选项。这可以包括各种配置选项，如缓冲区大小、事件类型等。
+- **`int refcnt`**:
+    
+    - 当前 `bufferevent` 的引用计数，用于管理内存和资源的生命周期。
+- **`void *lock`**:
+    
+    - 指向用于保护 `bufferevent` 结构体中共享资源的锁。如果为 `NULL`，则表示锁定机制被禁用。
+- **`ev_ssize_t max_single_read`** 和 **`ev_ssize_t max_single_write`**:
+    
+    - 限制单次读取或写入操作的最大字节数，以避免在处理大数据量时出现性能问题或其他潜在问题。
+- **`struct bufferevent_rate_limit *rate_limiting`**:
+    
+    - 用于实现速率限制的结构体，控制数据的传输速率。
+- **`union { struct sockaddr_in6 in6; struct sockaddr_in in; } conn_address`**:
+    
+    - 保存连接地址，用于从服务器获取 IP 地址，即使在连接关闭时也能保留该信息。
+- **`struct evdns_getaddrinfo_request *dns_request`**:
+    
+    - 用于 DNS 查询的请求结构体，协助处理域名解析过程。

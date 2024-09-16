@@ -703,7 +703,118 @@ int bufferevent_enable(struct bufferevent *bufev, short event);
 int bufferevent_disable(struct bufferevent *bufev, short event);  
 short bufferevent_get_enabled(struct bufferevent *bufev);
 ~~~
-可以启用或者禁用bufferevent上的<font color="#8064a2">EV_READ</font>、EV_WRITE或者EV_READ | EV_WRITE事件。没有启用读取或者写入事件时，bufferevent将不会试图进行数据读取或者写入。
+可以启用或者禁用bufferevent上的<font color="#8064a2">EV_READ</font>、<font color="#8064a2">EV_WRITE</font>或者<font color="#8064a2">EV_READ | EV_WRITE</font>事件。没有启用读取或者写入事件时，bufferevent将不会试图进行数据读取或者写入。
 
 没有必要在输出缓冲区空时禁用写入事件：bufferevent将自动停止写入，然后在有数据等待写入时重新开始。
+类似地，没有必要在输入缓冲区高于高水位时禁用读取事件：bufferevent将自动停止读取，然后在有空间用于读取时重新开始读取。
+
+默认情况下，新创建的bufferevent的写入是启用的，但是读取没有启用。
+
+可以调用bufferevent_get_enabled()确定bufferevent上当前启用的事件。
+
+除了bufferevent_get_enabled()由2.0.3-alpha版引入外，这些函数都由0.8版引入。
+
 #### source code
+~~~c
+short
+
+bufferevent_get_enabled(struct bufferevent *bufev)
+
+{
+
+    short r;
+
+    BEV_LOCK(bufev);
+
+    r = bufev->enabled;
+
+    BEV_UNLOCK(bufev);
+
+    return r;
+
+}
+~~~
+
+~~~c
+  
+
+int
+
+bufferevent_enable(struct bufferevent *bufev, short event)
+
+{
+
+    struct bufferevent_private *bufev_private = BEV_UPCAST(bufev);
+
+    short impl_events = event;
+
+    int r = 0;
+
+  
+
+    bufferevent_incref_and_lock_(bufev);
+
+    if (bufev_private->read_suspended)
+
+        impl_events &= ~EV_READ;
+
+    if (bufev_private->write_suspended)
+
+        impl_events &= ~EV_WRITE;
+
+  
+
+    bufev->enabled |= event;
+
+  
+
+    if (impl_events && bufev->be_ops->enable(bufev, impl_events) < 0)
+
+        r = -1;
+
+    if (r)
+
+        event_debug(("%s: cannot enable 0x%hx on %p", __func__, event, bufev));
+
+  
+
+    bufferevent_decref_and_unlock_(bufev);
+
+    return r;
+
+}
+~~~
+
+~~~c
+int
+
+bufferevent_disable(struct bufferevent *bufev, short event)
+
+{
+
+    int r = 0;
+
+  
+
+    BEV_LOCK(bufev);
+
+    bufev->enabled &= ~event;
+
+  
+
+    if (bufev->be_ops->disable(bufev, event) < 0)
+
+        r = -1;
+
+    if (r)
+
+        event_debug(("%s: cannot disable 0x%hx on %p", __func__, event, bufev));
+
+  
+
+    BEV_UNLOCK(bufev);
+
+    return r;
+
+}
+~~~

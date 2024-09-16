@@ -608,8 +608,102 @@ void bufferevent_free(struct bufferevent *bufev){
 
 如果设置了BEV_OPT_CLOSE_ON_FREE标志，并且bufferevent有一个套接字或者底层bufferevent作为其传输端口，则释放bufferevent将关闭这个传输端口。
 ## Operation callbacks, watermarks, and enable/disable
+### bufferevent_data_cb bufferevent_data_cb bufferevent_event_cb
 ~~~c
 void bufferevent_setcb(struct bufferevent *bufev,
 	    bufferevent_data_cb readcb, bufferevent_data_cb writecb,bufferevent_event_cb eventcb, void *cbarg);
-    
 ~~~
+---
+
+
+~~~c  
+/**
+   A read or write callback for a bufferevent.  
+   The read callback is triggered when new data arrives in the input
+   buffer and the amount of readable data exceed the low watermark
+   which is 0 by default.  
+   The write callback is triggered if the write buffer has been
+   exhausted or fell below its low watermark.  
+   @param bev the bufferevent that triggered the callback
+   @param ctx the user-specified context for this buffervent
+ */
+
+typedef void (*bufferevent_data_cb)(struct bufferevent *bev, void *ctx);    
+~~~
+
+
+~~~c
+  
+
+/**
+
+   An event/error callback for a bufferevent.  
+   The event callback is triggered if either an EOF condition or another
+   unrecoverable error was encountered.
+     For bufferevents with deferred callbacks, this is a bitwise OR of all errors
+
+   that have happened on the bufferevent since the last callback invocation.
+
+   @param bev the bufferevent for which the error condition was reached
+
+   @param what a conjunction of flags: BEV_EVENT_READING or BEV_EVENT_WRITING
+
+     to indicate if the error was encountered on the read or write path,
+
+     and one of the following flags: BEV_EVENT_EOF, BEV_EVENT_ERROR,
+	    BEV_EVENT_TIMEOUT, BEV_EVENT_CONNECTED.
+  
+
+   @param ctx the user-specified context for this bufferevent
+
+*/
+
+typedef void (*bufferevent_event_cb)(struct bufferevent *bev, short what, void *ctx);
+~~~
+#### source code
+~~~c
+void
+
+bufferevent_setcb(struct bufferevent *bufev,
+
+    bufferevent_data_cb readcb, bufferevent_data_cb writecb,
+
+    bufferevent_event_cb eventcb, void *cbarg)
+
+{
+
+    BEV_LOCK(bufev);
+
+  
+
+    bufev->readcb = readcb;
+
+    bufev->writecb = writecb;
+
+    bufev->errorcb = eventcb;
+
+  
+
+    bufev->cbarg = cbarg;
+
+    BEV_UNLOCK(bufev);
+
+}
+~~~
+
+bufferevent_setcb()函数修改bufferevent的一个或者多个回调。readcb、writecb和eventcb函数将分别在已经读取足够的数据、已经写入足够的数据，或者发生错误时被调用。每个回调函数的第一个参数都是发生了事件的bufferevent，最后一个参数都是调用bufferevent_setcb()时用户提供的cbarg参数：可以通过它向回调传递数据。事件回调的events参数是一个表示事件标志的位掩码：请看前面的“Callbacks and watermarks”节。
+
+要禁用回调，传递NULL而不是回调函数。<font color="#c0504d">注意：bufferevent的所有回调函数共享单个cbarg，所以修改它将影响所有回调函数。</font>
+这个函数由1.4.4版引入。类型名bufferevent_data_cb和bufferevent_event_cb由2.0.2-alpha版引入。
+
+---
+### bufferevent_enable bufferevent_disable bufferevent_get_enabled
+~~~c
+int bufferevent_enable(struct bufferevent *bufev, short event);  
+int bufferevent_disable(struct bufferevent *bufev, short event);  
+short bufferevent_get_enabled(struct bufferevent *bufev);
+~~~
+可以启用或者禁用bufferevent上的<font color="#8064a2">EV_READ</font>、EV_WRITE或者EV_READ | EV_WRITE事件。没有启用读取或者写入事件时，bufferevent将不会试图进行数据读取或者写入。
+
+没有必要在输出缓冲区空时禁用写入事件：bufferevent将自动停止写入，然后在有数据等待写入时重新开始。
+#### source code

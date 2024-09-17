@@ -30,3 +30,33 @@ bufferevent_openssl_filter_new(struct event_base *base,
 
     int options)
 ~~~
+
+可以创建两种类型的SSL bufferevent：基于过滤器的、在另一个底层bufferevent之上进行通信的buffervent；或者基于套接字的、直接使用OpenSSL进行网络通信的bufferevent。这两种bufferevent都要求提供SSL对象及其状态描述。如果SSL当前作为客户端在进行协商，状态应该是BUFFEREVENT_SSL_CONNECTING；如果作为服务器在进行协商，则是BUFFEREVENT_SSL_ACCEPTING；如果SSL握手已经完成，则状态是BUFFEREVENT_SSL_OPEN。
+
+接受通常的选项。BEV_OPT_CLOSE_ON_FREE表示在关闭openssl bufferevent对象的时候同时关闭SSL对象和底层fd或者bufferevent。
+
+创建基于套接字的bufferevent时，如果SSL对象已经设置了套接字，就不需要提供套接字了：只要传递-1就可以。也可以随后调用bufferevent_setfd（）来设置。
+
+~~~c
+SSL * bufferevent_openssl_get_ssl(struct bufferevent *bufev)
+~~~
+这个函数返回OpenSSL bufferevent使用的SSL对象。如果bev不是一个基于OpenSSL的bufferevent，则返回NULL。
+~~~c
+unsigned long
+
+	bufferevent_get_openssl_error(struct bufferevent *bev)
+~~~
+这个函数返回给定bufferevent的第一个未决的OpenSSL错误；如果没有未决的错误，则返回0。错误值的格式与openssl库中的ERR_get_error（）返回的相同。
+
+~~~c
+int bufferevent_ssl_renegotiate(struct bufferevent *bev)
+~~~
+
+	调用这个函数要求SSL重新协商，bufferevent会调用合适的回调函数。这是个高级功能，通常应该避免使用，除非你确实知道自己在做什么，特别是有些SSL版本具有与重新协商相关的安全问题。
+**evbuffer：缓冲IO实用功能**
+
+libevent的evbuffer实现了为向后面添加数据和从前面移除数据而优化的字节队列。
+
+evbuffer用于处理缓冲网络IO的“缓冲”部分。它不提供调度IO或者当IO就绪时触发IO的功能：这是bufferevent的工作。
+
+除非特别说明，本章描述的函数都在event2/buffer.h中声明。1

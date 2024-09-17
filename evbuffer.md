@@ -259,6 +259,7 @@ evbuffer_remove_buffer()函数从src中移动datlen字节到dst末尾，尽量�
 
 evbuffer_add_buffer()在0.8版本引入；evbuffer_remove_buffer()是2.0.1-alpha版本新增加的。
 # Add data to the front of the evbuffer
+## evbuffer_prepend  evbuffer_prepend_buffer
 ~~~c
 int evbuffer_prepend(struct evbuffer *buf, const void *data, size_t datlen);
 int evbuffer_prepend_buffer(struct evbuffer *outbuf, struct evbuffer *inbuf);
@@ -269,6 +270,7 @@ int evbuffer_prepend_buffer(struct evbuffer *outbuf, struct evbuffer *inbuf);
 使用这些函数时要当心，永远不要对与bufferevent共享的evbuffer使用。这些函数是2.0.1-alpha版本新添加的。
 
 # Rearrange the internal layout of the evbuffer
+## evbuffer_pullup
 有时候需要取出evbuffer前面的N字节，将其看作连续的字节数组。要做到这一点，首先必须确保缓冲区的前面确实是连续的。
 ~~~c
 unsigned char * evbuffer_pullup(struct evbuffer *buf, ev_ssize_t size)
@@ -277,3 +279,42 @@ unsigned char * evbuffer_pullup(struct evbuffer *buf, ev_ssize_t size)
 evbuffer_pullup()函数“线性化”buf前面的size字节，必要时将进行复制或者移动，以保证这些字节是连续的，占据相同的内存块。如果size是负的，函数会线性化整个缓冲区。如果size大于缓冲区中的字节数，函数返回NULL。否则，evbuffer_pullup()返回指向buf中首字节的指针。
 
 	调用evbuffer_pullup()时使用较大的size参数可能会非常慢，因为这可能需要复制整个缓冲区的内容。
+## example 
+~~~c
+#include <event2/event.h>
+#include <event2/buffer.h>
+#include <event2/bufferevent.h>
+#include <string.h>
+
+int parse_socket4(struct evbuffer * buf,ev_uint64_t * port,ev_uint32_t* addr){
+    unsigned char *mem;
+    mem = (unsigned char *)evbuffer_pullup(buf, 8);
+    if(mem == NULL){
+
+        return -1;
+
+    }
+
+    else if(mem[0]!= 4 || mem[1] != 1){
+
+        return -1;
+
+    }else{
+
+        memcpy(port, mem + 2, 2);
+
+        memcpy(&addr, mem + 4, 4);
+
+        *port = ntohs(*port);
+
+        *addr = ntohl(*addr);
+
+        evbuffer_drain(buf, 8);
+
+        return 1;
+
+    }
+
+}
+~~~
+

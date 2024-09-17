@@ -123,3 +123,65 @@ evbuffer_lock()和evbuffer_unlock()函数分别请求和释放evbuffer上的锁�
 （注意：对于单个操作，不需要调用evbuffer_lock()和evbuffer_unlock()：如果evbuffer启用了锁，单个操作就已经是原子的。只有在需要多个操作连续执行，不让其他线程介入的时候，才需要手动锁定evbuffer)
 
 这些函数都在2.0.1-alpha版本中引入。
+
+# Check evbuffer
+
+## evbuffer_get_contiguous_space evbuffer_get_length
+
+~~~c
+  
+//这个函数返回evbuffer存储的字节数，它在2.0.1-alpha版本中引入。
+size_t
+
+evbuffer_get_length(const struct evbuffer *buffer)
+
+{
+
+    size_t result;
+
+  
+
+    EVBUFFER_LOCK(buffer);
+
+  
+
+    result = (buffer->total_len);
+
+  
+
+    EVBUFFER_UNLOCK(buffer);
+
+  
+
+    return result;
+
+}
+
+  
+
+size_t
+
+evbuffer_get_contiguous_space(const struct evbuffer *buf)
+
+{
+
+    struct evbuffer_chain *chain;
+
+    size_t result;
+
+  
+
+    EVBUFFER_LOCK(buf);
+
+    chain = buf->first;
+
+    result = (chain != NULL ? chain->off : 0);
+
+    EVBUFFER_UNLOCK(buf);
+
+  
+
+    return result;
+
+}
+~~~

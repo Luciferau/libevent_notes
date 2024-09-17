@@ -279,6 +279,9 @@ unsigned char * evbuffer_pullup(struct evbuffer *buf, ev_ssize_t size)
 evbuffer_pullup()函数“线性化”buf前面的size字节，必要时将进行复制或者移动，以保证这些字节是连续的，占据相同的内存块。如果size是负的，函数会线性化整个缓冲区。如果size大于缓冲区中的字节数，函数返回NULL。否则，evbuffer_pullup()返回指向buf中首字节的指针。
 
 	调用evbuffer_pullup()时使用较大的size参数可能会非常慢，因为这可能需要复制整个缓冲区的内容。
+使用evbuffer_get_contiguous_space()返回的值作为尺寸值调用evbuffer_pullup()不会导致任何数据复制或者移动。
+
+evbuffer_pullup()函数由2.0.1-alpha版本新增加：先前版本的libevent总是保证evbuffer中的数据是连续的，而不计开销。
 ## example 
 ~~~c
 #include <event2/event.h>

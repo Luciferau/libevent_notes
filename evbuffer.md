@@ -189,3 +189,36 @@ evbuffer_get_contiguous_space(const struct evbuffer *buf)
     - 解锁 `evbuffer` 后返回这个值。
 
 # Adding data to an evbuffer: the basics
+## evbuffer_add
+~~~c
+int evbuffer_add(struct evbuffer *buf, const void *data_in, size_t datlen);
+~~~
+这个函数添加data处的datalen字节到buf的末尾，成功时返回0，失败时返回-1。
+## evbuffer_add_vprintf  evbuffer_add_printf
+
+~~~c
+int evbuffer_add_vprintf(struct evbuffer *buf, const char *fmt, va_list ap);
+int evbuffer_add_printf(struct evbuffer *buf, const char *fmt, ...);
+~~~
+
+这些函数添加格式化的数据到buf末尾。格式参数和其他参数的处理分别与C库函数printf和vprintf相同。函数返回添加的字节数。
+## evbuffer_expand
+~~~c
+int evbuffer_expand(struct evbuffer *buf, size_t datlen)
+
+{
+
+    struct evbuffer_chain *chain;
+
+    EVBUFFER_LOCK(buf);
+
+    chain = evbuffer_expand_singlechain(buf, datlen);
+
+    EVBUFFER_UNLOCK(buf);
+
+    return chain ? 0 : -1;
+
+}
+~~~
+
+这个函数修改缓冲区的最后一块，或者添加一个新的块，使得缓冲区足以容纳datlen字节，而不需要更多的内存分配

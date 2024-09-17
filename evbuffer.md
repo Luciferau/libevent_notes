@@ -187,3 +187,5 @@ evbuffer_get_contiguous_space(const struct evbuffer *buf)
     - 这个函数用于获取 `evbuffer` 中可用于写入新数据的连续空间的大小。
     - 函数先锁定 `evbuffer`，然后访问 `first` 链，检查 `off` 字段，该字段可能表示连续空间的偏移量或长度。
     - 解锁 `evbuffer` 后返回这个值。
+
+# Adding data to an evbuffer: the basics

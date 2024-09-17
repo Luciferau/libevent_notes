@@ -199,11 +199,11 @@
   },
   "active": "db730313e0ffb1b4",
   "lastOpenFiles": [
+    "libevent_structure.md",
+    "evbuffer.md",
     "Bufferevent and SSL.md",
     "Bufferevent and evbuffer.md",
     "Bufferevent Advanced Topics.md",
-    "libevent_structure.md",
-    "evbuffer.md",
     "libevent 中文文档_lucifer.pdf",
     "aceld_notes/libevent_notes_aceld/45_eventbase_he_fork.md",
     "TODO Lists.md",

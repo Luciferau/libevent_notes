@@ -259,3 +259,11 @@ evbuffer_remove_buffer()函数从src中移动datlen字节到dst末尾，尽量�
 
 evbuffer_add_buffer()在0.8版本引入；evbuffer_remove_buffer()是2.0.1-alpha版本新增加的。
 # Add data to the front of the evbuffer
+~~~c
+int evbuffer_prepend(struct evbuffer *buf, const void *data, size_t datlen);
+int evbuffer_prepend_buffer(struct evbuffer *outbuf, struct evbuffer *inbuf);
+~~~
+
+除了将数据移动到目标缓冲区前面之外，这两个函数的行为分别与evbuffer_add()和evbuffer_add_buffer()相同。
+
+使用这些函数时要当心，永远不要对与bufferevent共享的evbuffer使用。这些函数是2.0.1-alpha版本新添加的。

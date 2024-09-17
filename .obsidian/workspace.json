@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Bufferevent and SSL.md",
+                "file": "evbuffer.md",
                 "mode": "source",
                 "source": false
               }
@@ -73,7 +73,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Bufferevent and SSL.md"
+                "file": "evbuffer.md"
               }
             }
           },
@@ -120,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Bufferevent and SSL.md",
+                "file": "evbuffer.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -137,7 +137,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Bufferevent and SSL.md",
+                "file": "evbuffer.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -160,7 +160,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Bufferevent and SSL.md"
+                "file": "evbuffer.md"
               }
             }
           },
@@ -209,11 +209,13 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "e35340117c9e52e1",
+  "active": "c8ffd50713a0298d",
   "lastOpenFiles": [
+    "Bufferevent and SSL.md",
+    "libevent 中文文档_lucifer.pdf",
+    "evbuffer.md",
     "Bufferevent and evbuffer.md",
     "Bufferevent Advanced Topics.md",
-    "Bufferevent and SSL.md",
     "libevent_structure.md",
     "aceld_notes/libevent_notes_aceld/45_eventbase_he_fork.md",
     "TODO Lists.md",
@@ -245,8 +247,6 @@
     "aceld_notes/libevent_notes_aceld/83_jian_cha_evbuffer.md",
     "aceld_notes/libevent_notes_aceld/83_diao_zheng_evconnlistener_de_hui_diao_han_shu.md",
     "aceld_notes/libevent_notes_aceld/82_qi_yong_he_jin_yong_evconnlistener.md",
-    "aceld_notes/libevent_notes_aceld/81_chuang_jian_he_shi_fang_evbuffer.md",
-    "aceld_notes/libevent_notes_aceld/75_tong_yong_bufferevent_cao_zuo.md",
     "libevent-book/notes/identifier-list",
     "libevent-book/notes",
     "libevent-book/license_bsd.txt",
@@ -256,7 +256,6 @@
     "libevent-book/examples_R9/Makefile",
     "libevent-book/examples_R9",
     "libevent-book/examples_R8/R8_echo_server.c",
-    "libevent-book/examples_R8/Makefile",
     "未命名.canvas"
   ]
 }

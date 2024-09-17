@@ -73,7 +73,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Bufferevent and evbuffer.md"
+                "file": "Bufferevent and SSL.md"
               }
             }
           },
@@ -100,8 +100,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -121,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Bufferevent and evbuffer.md",
+                "file": "Bufferevent and SSL.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -138,7 +137,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Bufferevent and evbuffer.md",
+                "file": "Bufferevent and SSL.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -161,7 +160,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Bufferevent and evbuffer.md"
+                "file": "Bufferevent and SSL.md"
               }
             }
           },
@@ -210,11 +209,11 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "db730313e0ffb1b4",
+  "active": "e35340117c9e52e1",
   "lastOpenFiles": [
+    "Bufferevent and evbuffer.md",
     "Bufferevent Advanced Topics.md",
     "Bufferevent and SSL.md",
-    "Bufferevent and evbuffer.md",
     "libevent_structure.md",
     "aceld_notes/libevent_notes_aceld/45_eventbase_he_fork.md",
     "TODO Lists.md",

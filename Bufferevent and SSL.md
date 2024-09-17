@@ -42,9 +42,7 @@ SSL * bufferevent_openssl_get_ssl(struct bufferevent *bufev)
 ~~~
 这个函数返回OpenSSL bufferevent使用的SSL对象。如果bev不是一个基于OpenSSL的bufferevent，则返回NULL。
 ~~~c
-unsigned long
-
-	bufferevent_get_openssl_error(struct bufferevent *bev)
+unsigned long bufferevent_get_openssl_error(struct bufferevent *bev)
 ~~~
 这个函数返回给定bufferevent的第一个未决的OpenSSL错误；如果没有未决的错误，则返回0。错误值的格式与openssl库中的ERR_get_error（）返回的相同。
 

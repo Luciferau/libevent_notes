@@ -222,3 +222,20 @@ int evbuffer_expand(struct evbuffer *buf, size_t datlen)
 ~~~
 
 这个函数修改缓冲区的最后一块，或者添加一个新的块，使得缓冲区足以容纳datlen字节，而不需要更多的内存分配
+
+## example
+~~~c
+  
+
+int main() {
+
+    evbuffer * buf = evbuffer_new();
+
+    evbuffer_add(buf,"The time is  24.9.17", sizeof("Hello world 24.9.17"));
+
+    //Via printf
+
+    evbuffer_add_printf(buf, "The time is %s", "24.9.17");
+
+}
+~~~

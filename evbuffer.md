@@ -245,3 +245,17 @@ evbuffer_add()和evbuffer_add_printf()函数在libevent 0.8版本引入；evbuff
 # Move data from one evbuffer to another
 
 为提高效率，libevent具有将数据从一个evbuffer移动到另一个的优化函数。
+
+## evbuffer_add_buffer evbuffer_remove_buffer 
+
+~~~c
+int evbuffer_add_buffer(struct evbuffer *outbuf, struct evbuffer *inbuf);
+
+int evbuffer_remove_buffer(struct evbuffer *src, struct evbuffer *dst,size_t datlen)
+~~~
+evbuffer_add_buffer()将src中的所有数据移动到dst末尾，成功时返回0，失败时返回-1。
+
+evbuffer_remove_buffer()函数从src中移动datlen字节到dst末尾，尽量少进行复制。如果字节数小于datlen，所有字节被移动。函数返回移动的字节数。
+
+evbuffer_add_buffer()在0.8版本引入；evbuffer_remove_buffer()是2.0.1-alpha版本新增加的。
+# Add data to the front of the evbuffer

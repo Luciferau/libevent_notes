@@ -1047,3 +1047,137 @@ union bufferevent_ctrl_data {
 
 };
 ~~~
+
+# struct evbuffer_chain
+~~~c
+  
+
+/** A single item in an evbuffer. */
+
+struct evbuffer_chain {
+
+    /** points to next buffer in the chain */
+
+    struct evbuffer_chain *next;
+
+  
+
+    /** total allocation available in the buffer field. */
+
+    size_t buffer_len;
+
+  
+
+    /** unused space at the beginning of buffer or an offset into a
+
+     * file for sendfile buffers. */
+
+    ev_misalign_t misalign;
+
+  
+
+    /** Offset into buffer + misalign at which to start writing.
+
+     * In other words, the total number of bytes actually stored
+
+     * in buffer. */
+
+    size_t off;
+
+  
+
+    /** Set if special handling is required for this chain */
+
+    unsigned flags;
+
+#define EVBUFFER_FILESEGMENT    0x0001  /**< A chain used for a file segment */
+
+#define EVBUFFER_SENDFILE   0x0002  /**< a chain used with sendfile */
+
+#define EVBUFFER_REFERENCE  0x0004  /**< a chain with a mem reference */
+
+#define EVBUFFER_IMMUTABLE  0x0008  /**< read-only chain */
+
+    /** a chain that mustn't be reallocated or freed, or have its contents
+
+     * memmoved, until the chain is un-pinned. */
+
+#define EVBUFFER_MEM_PINNED_R   0x0010
+
+#define EVBUFFER_MEM_PINNED_W   0x0020
+
+#define EVBUFFER_MEM_PINNED_ANY (EVBUFFER_MEM_PINNED_R|EVBUFFER_MEM_PINNED_W)
+
+    /** a chain that should be freed, but can't be freed until it is
+
+     * un-pinned. */
+
+#define EVBUFFER_DANGLING   0x0040
+
+    /** a chain that is a referenced copy of another chain */
+
+#define EVBUFFER_MULTICAST  0x0080
+
+  
+
+    /** number of references to this chain */
+
+    int refcnt;
+
+  
+
+    /** Usually points to the read-write memory belonging to this
+
+     * buffer allocated as part of the evbuffer_chain allocation.
+
+     * For mmap, this can be a read-only buffer and
+
+     * EVBUFFER_IMMUTABLE will be set in flags.  For sendfile, it
+
+     * may point to NULL.
+
+     */
+
+    unsigned char *buffer;
+
+};
+
+~~~
+
+- **`struct evbuffer_chain *next`**:
+    
+    - **描述**：指向链表中下一个 `evbuffer_chain` 节点的指针。
+    - **作用**：允许多个 `evbuffer_chain` 节点通过链表结构连接在一起，从而管理整个缓冲区的数据。
+- **`size_t buffer_len`**:
+    
+    - **描述**：表示 `buffer` 字段中总的可用分配空间的大小。
+    - **作用**：确定当前链条可以容纳多少数据。
+- **`ev_misalign_t misalign`**:
+    
+    - **描述**：表示 `buffer` 开始位置前的未使用空间，或者在发送文件缓冲区时的文件偏移量。
+    - **作用**：用于处理缓冲区起始位置的对齐问题，或者在使用 `sendfile` 时，表示文件内容的起始位置。
+- **`size_t off`**:
+    
+    - **描述**：表示从 `buffer` 开始位置加上 `misalign` 后可以开始写入的偏移量，或者已经存储在 `buffer` 中的字节数。
+    - **作用**：指示当前链条中实际存储数据的结束位置。
+- **`unsigned flags`**:
+    
+    - **描述**：用于设置链条的特殊处理标志。
+    - **作用**：通过标志字段指定链条的不同属性或行为，例如是否用于文件片段、是否是只读链条等。
+    - **具体标志**：
+        - `EVBUFFER_FILESEGMENT`：表示链条用于文件片段。
+        - `EVBUFFER_SENDFILE`：表示链条与 `sendfile` 函数一起使用。
+        - `EVBUFFER_REFERENCE`：表示链条包含内存引用。
+        - `EVBUFFER_IMMUTABLE`：表示链条是只读的。
+        - `EVBUFFER_MEM_PINNED_R`：表示链条在读时被固定，不能重新分配或释放。
+        - `EVBUFFER_MEM_PINNED_W`：表示链条在写时被固定，不能重新分配或释放。
+        - `EVBUFFER_DANGLING`：表示链条应该被释放，但不能立即释放，直到解除固定。
+        - `EVBUFFER_MULTICAST`：表示链条是另一个链条的引用副本。
+- **`int refcnt`**:
+    
+    - **描述**：表示对当前链条的引用计数。
+    - **作用**：用于跟踪链条的引用数，以便正确管理内存（例如在链条被销毁之前，确保所有引用都被清除）。
+- **`unsigned char *buffer`**:
+    
+    - **描述**：通常指向实际的读写内存，属于当前 `evbuffer_chain` 分配的一部分。
+    - **作用**：用于存储实际的数据。对于使用 `mmap` 的情况，它可能是只读的，并且会设置 `EVBUFFER_IMMUTABLE` 标志。对于 `sendfile`，它可能指向 `NULL`，因为数据可能在文件中，而不是在内存中。

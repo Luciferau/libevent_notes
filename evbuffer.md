@@ -43,3 +43,77 @@ evbuffer_free(struct evbuffer *buffer)
 这两个函数的功能很简明：evbuffer_new()分配和返回一个新的空evbuffer；而evbuffer_free()释放evbuffer和其内容。
 
 # evbuffer and thread safety
+## evbuffer_enable_locking evbuffer_lock evbuffer_unlock
+~~~c
+int
+
+evbuffer_enable_locking(struct evbuffer *buf, void *lock)
+
+{
+
+#ifdef EVENT__DISABLE_THREAD_SUPPORT
+
+    return -1;
+
+#else
+
+    if (buf->lock)
+
+        return -1;
+
+  
+
+    if (!lock) {
+
+        EVTHREAD_ALLOC_LOCK(lock, EVTHREAD_LOCKTYPE_RECURSIVE);
+
+        if (!lock)
+
+            return -1;
+
+        buf->lock = lock;
+
+        buf->own_lock = 1;
+
+    } else {
+
+        buf->lock = lock;
+
+        buf->own_lock = 0;
+
+    }
+
+  
+
+    return 0;
+
+#endif
+
+}
+~~~
+
+~~~c
+void
+
+evbuffer_lock(struct evbuffer *buf)
+
+{
+
+    EVBUFFER_LOCK(buf);
+
+}
+
+  
+
+void
+
+evbuffer_unlock(struct evbuffer *buf)
+
+{
+
+    EVBUFFER_UNLOCK(buf);
+
+}
+~~~
+
+默认情况下，在多个线程中同时访问evbuffer是不安全的。如果需要这样的访问，可以调用evbuffer_enable_locking()。如果lock参数为NULL，libevent会使用evthread_set_lock_creation_callback提供的锁创建函数创建一个锁。否则，libevent将lock参数用作锁。

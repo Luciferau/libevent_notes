@@ -138,27 +138,19 @@ evbuffer_get_length(const struct evbuffer *buffer)
 {
 
     size_t result;
-
-  
-
     EVBUFFER_LOCK(buffer);
-
-  
-
     result = (buffer->total_len);
 
-  
-
     EVBUFFER_UNLOCK(buffer);
-
   
-
-    return result;
+   return result;
 
 }
 
   
+/*这个函数返回连续地存储在evbuffer前面的字节数。evbuffer中的数据可能存储在多个分隔开的内存块中，这个函数返回当前第一个块中的字节数。
 
+这个函数在2.0.1-alpha版本引入*/
 size_t
 
 evbuffer_get_contiguous_space(const struct evbuffer *buf)

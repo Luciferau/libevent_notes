@@ -321,3 +321,15 @@ int parse_socket4(struct evbuffer * buf,ev_uint64_t * port,ev_uint32_t* addr){
 }
 ~~~
 
+# Remove data from the evbuffer
+## evbuffer_drain evbuffer_remove 
+~~~c
+int evbuffer_drain(struct evbuffer *buf, size_t len);
+int evbuffer_remove(struct evbuffer *buf, void *data_out, size_t datlen);
+~~~
+
+evbuffer_remove（）函数从buf前面复制和移除datlen字节到data处的内存中。如果可用字节少于datlen，函数复制所有字节。失败时返回-1，否则返回复制了的字节数。
+
+evbuffer_drain（）函数的行为与evbuffer_remove（）相同，只是它不进行数据复制：而只是将数据从缓冲区前面移除。成功时返回0，失败时返回-1。
+
+evbuffer_drain（）由0.8版引入，evbuffer_remove（）首次出现在0.9版。

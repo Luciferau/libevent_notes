@@ -268,7 +268,7 @@ int evbuffer_prepend_buffer(struct evbuffer *outbuf, struct evbuffer *inbuf);
 
 使用这些函数时要当心，永远不要对与bufferevent共享的evbuffer使用。这些函数是2.0.1-alpha版本新添加的。
 
-## Rearrange the internal layout of the evbuffer
+# Rearrange the internal layout of the evbuffer
 有时候需要取出evbuffer前面的N字节，将其看作连续的字节数组。要做到这一点，首先必须确保缓冲区的前面确实是连续的。
 ~~~c
 unsigned char * evbuffer_pullup(struct evbuffer *buf, ev_ssize_t size)
@@ -276,4 +276,4 @@ unsigned char * evbuffer_pullup(struct evbuffer *buf, ev_ssize_t size)
 
 evbuffer_pullup()函数“线性化”buf前面的size字节，必要时将进行复制或者移动，以保证这些字节是连续的，占据相同的内存块。如果size是负的，函数会线性化整个缓冲区。如果size大于缓冲区中的字节数，函数返回NULL。否则，evbuffer_pullup()返回指向buf中首字节的指针。
 
-调用evbuffer_pullup()时使用较大的size参数可能会非常慢，因为这可能需要复制整个缓冲区的内容。
+	调用evbuffer_pullup()时使用较大的size参数可能会非常慢，因为这可能需要复制整个缓冲区的内容。

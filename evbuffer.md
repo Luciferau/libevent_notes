@@ -239,3 +239,5 @@ int main() {
 
 }
 ~~~
+
+evbuffer_add()和evbuffer_add_printf()函数在libevent 0.8版本引入；evbuffer_expand()首次出现在0.9版本，而evbuffer_add_printf()首次出现在1.1版本。

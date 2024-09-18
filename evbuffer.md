@@ -346,3 +346,149 @@ evbuffer_copyout（）的行为与evbuffer_remove（）相同，但是它不从�
 
 如果从缓冲区复制数据太慢，可以使用<font color="#4bacc6">evbuffer_peek（）</font>。
 ## example
+~~~c
+#include <event2/buffer.h>
+
+#include <event2/event.h>
+
+#include <event2/util.h>
+
+  
+
+#include <stdio.h>
+
+#include <stdlib.h>
+
+  
+
+int getr_record(struct evbuffer *buf,size_t *size_out,char** record_out){
+
+  
+
+    size_t bufffer_len = evbuffer_get_length(buf); //获取缓冲区长度
+
+    ev_uint32_t record_len;
+
+    char * record;
+
+    if(bufffer_len <4){
+
+        return 0;
+
+    }
+
+    evbuffer_copyout(buf, &record, 4); //从缓冲区中读取4个字节
+
+    record_len = ntohl(record_len); //将网络字节序转换为主机字节序
+
+    if(bufffer_len < record_len){
+
+        return 0;
+
+    }
+
+    record = (char*)malloc(record_len);
+
+    if(record == NULL){
+
+        return -1;
+
+    }
+
+    evbuffer_drain(buf, record_len); //从缓冲区中移除record_len个字节
+
+    evbuffer_remove(buf, record, record_len); //将record_len个字节从缓冲区中移除并存储到record中
+
+  
+
+    *record_out = record;
+
+    *size_out = record_len;
+
+    return 0;
+
+}
+~~~
+
+# Line-oriented input
+~~~c
+/** Used to tell evbuffer_readln what kind of line-ending to look for.
+
+ */
+
+enum evbuffer_eol_style {
+
+  /** Any sequence of CR and LF characters is acceptable as an
+
+   * EOL.
+
+   *
+
+   * Note that this style can produce ambiguous results: the
+
+   * sequence "CRLF" will be treated as a single EOL if it is
+
+   * all in the buffer at once, but if you first read a CR from
+
+   * the network and later read an LF from the network, it will
+
+   * be treated as two EOLs.
+
+   */
+
+  EVBUFFER_EOL_ANY,
+
+  /** An EOL is an LF, optionally preceded by a CR.  This style is
+
+   * most useful for implementing text-based internet protocols. */
+
+  EVBUFFER_EOL_CRLF,
+
+  /** An EOL is a CR followed by an LF. */
+
+  EVBUFFER_EOL_CRLF_STRICT,
+
+  /** An EOL is a LF. */
+
+  EVBUFFER_EOL_LF,
+
+  /** An EOL is a NUL character (that is, a single byte with value 0) */
+
+  EVBUFFER_EOL_NUL
+
+};
+~~~
+很多互联网协议使用基于行的格式。evbuffer_readln()函数从evbuffer前面取出一行，用一个新分配的空字符结束的字符串返回这一行。如果n_read_out不是NULL，则它被设置为返回的字符串的字节数。如果没有整行供读取，函数返回空。返回的字符串不包括行结束符。
+
+<font color="#4bacc6">evbuffer_readln()</font>理解4种行结束格式：
+- **EVBUFFER_EOL_LF**
+
+	行尾是单个换行符（也就是\n，ASCII值是0x0A）
+
+- **EVBUFFER_EOL_CRLF_STRICT**
+
+	行尾是一个回车符，后随一个换行符（也就是\r\n，ASCII值是0x0D 0x0A）
+
+- **EVBUFFER_EOL_CRLF**
+
+	行尾是一个可选的回车，后随一个换行符（也就是说，可以是\r\n或者\n）。这种格式对于解析基于文本的互联网协议很有用，因为标准通常要求\r\n的行结束符，而不遵循标准的客户端有时候只使用\n。
+
+- **EVBUFFER_EOL_ANY**
+
+	行尾是任意数量、任意次序的回车和换行符。这种格式不是特别有用。它的存在主要是为了向后兼容。
+
+（注意，如果使用<font color="#4bacc6">event_se_mem_functions()</font>覆盖默认的malloc，则evbuffer_readln返回的字符串将由你指定的malloc替代函数分配）
+## example
+~~~c
+char * request_line; size_t len;
+
+request_line = evbuffer_readln(buf,&len,EVBUFFER_ELO_CRLF);
+if(!request_line){
+	/*This first line has not arrived yet.*/
+}else{
+	if(!strcmp(request_Line,"HTTP/1.0 ",9)){
+		/**HTTP 1.0 DETECTED*/
+	}
+	free(request_line);
+}
+~~~

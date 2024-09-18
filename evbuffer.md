@@ -602,5 +602,47 @@ int evbuffer_ptr_set(struct evbuffer *buf, struct evbuffer_ptr *pos,size_t posit
 evbuffer_ptr_set函数操作buffer中的位置pos。如果how等于EVBUFFER_PTR_SET,指针被移动到缓冲区中的绝对位置position；如果等于EVBUFFER_PTR_ADD，则向前移动position字节。成功时函数返回0，失败时返回-1。
 
 ~~~c
-#include <ev
+#include <event2/buffer.h>
+
+#include <event2/event.h>
+
+#include <event2/util.h>
+
+#include <string.h>  
+
+int count_instances(struct evbuffer *buf,const char* str) {
+
+    size_t len = strlen(str);
+
+    int total = 0;
+
+  
+
+    struct evbuffer_ptr p ;
+
+    if(!len)
+
+        return -1;
+
+    evbuffer_ptr_set(buf, &p, 0, EVBUFFER_PTR_SET) ;
+
+    while (1)
+
+    {
+
+        p = evbuffer_search(buf, str, len, &p);
+
+        if(p.pos < 0 )
+
+            break;
+
+        total++;
+
+        evbuffer_ptr_set(buf, &p, p.pos + len, EVBUFFER_PTR_SET) ;
+
+    }
+
+    return total;
+
+}
 ~~~

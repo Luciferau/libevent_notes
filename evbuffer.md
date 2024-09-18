@@ -492,3 +492,7 @@ if(!request_line){
 	free(request_line);
 }
 ~~~
+
+evbuffer_readln()接口在1.4.14-stable及以后版本中可用。
+# Searching in evbuffer
+evbuffer_ptr结构体指示evbuffer中的一个位置，包含可用于在evbuffer中迭代的数据。

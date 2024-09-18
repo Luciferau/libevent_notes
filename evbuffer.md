@@ -567,3 +567,33 @@ evbuffer_search()函数在缓冲区中查找含有len个字符的字符串what�
 evbuffer_search_range()函数和evbuffer_search行为相同，只是它只考虑在end之前出现的what。
 
 evbuffer_search_eol()函数像evbuffer_readln()一样检测行结束，但是不复制行，而是返回指向行结束符的evbuffer_ptr。如果eol_len_out非空，则它被设置为EOL字符串长度。
+
+~~~c
+/**
+
+   Defines how to adjust an evbuffer_ptr by evbuffer_ptr_set()
+
+  
+
+   @see evbuffer_ptr_set() */
+
+enum evbuffer_ptr_how {
+
+  /** Sets the pointer to the position; can be called on with an
+
+      uninitialized evbuffer_ptr. */
+
+  EVBUFFER_PTR_SET,
+
+  /** Advances the pointer by adding to the current position. */
+
+  EVBUFFER_PTR_ADD
+
+};
+~~~
+
+~~~c
+
+int evbuffer_ptr_set(struct evbuffer *buf, struct evbuffer_ptr *pos,size_t position, 
+					 enum evbuffer_ptr_how how);
+~~~    

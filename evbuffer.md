@@ -559,5 +559,11 @@ struct evbuffer_ptr evbuffer_search(struct evbuffer *buffer, const char *what, s
 }
 
 
-
+struct evbuffer_ptr evbuffer_search_eol(struct evbuffer *buffer,struct evbuffer_ptr *start, size_t *eol_len_out,enum evbuffer_eol_style eol_style);
 ~~~
+
+evbuffer_search()函数在缓冲区中查找含有len个字符的字符串what。函数返回包含字符串位置，或者在没有找到字符串时包含-1的evbuffer_ptr结构体。如果提供了start参数，则从指定的位置开始搜索；否则，从开始处进行搜索。
+
+evbuffer_search_range()函数和evbuffer_search行为相同，只是它只考虑在end之前出现的what。
+
+evbuffer_search_eol()函数像evbuffer_readln()一样检测行结束，但是不复制行，而是返回指向行结束符的evbuffer_ptr。如果eol_len_out非空，则它被设置为EOL字符串长度。

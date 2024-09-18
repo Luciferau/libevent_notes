@@ -336,3 +336,4 @@ evbuffer_drain（）由0.8版引入，evbuffer_remove（）首次出现在0.9版
 
 # Copy data from the evbuffer
 有时候需要获取缓冲区前面数据的副本，而不清除数据。比如说，可能需要查看某特定类型的记录是否已经完整到达，而不清除任何数据（像evbuffer_remove那样），或者在内部重新排列缓冲区（像evbuffer_pullup那样）。
+111

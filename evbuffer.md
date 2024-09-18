@@ -336,4 +336,12 @@ evbuffer_drain（）由0.8版引入，evbuffer_remove（）首次出现在0.9版
 
 # Copy data from the evbuffer
 有时候需要获取缓冲区前面数据的副本，而不清除数据。比如说，可能需要查看某特定类型的记录是否已经完整到达，而不清除任何数据（像evbuffer_remove那样），或者在内部重新排列缓冲区（像evbuffer_pullup那样）。
-111
+~~~c
+ev_ssize_t evbuffer_copyout(struct evbuffer *buf, void *data_out, size_t datlen){
+	return evbuffer_copyout_from(buf, NULL, data_out, datlen);
+}
+~~~
+
+evbuffer_copyout（）的行为与evbuffer_remove（）相同，但是它不从缓冲区移除任何数据。也就是说，它从buf前面复制datlen字节到data处的内存中。如果可用字节少于datlen，函数会复制所有字节。失败时返回-1，否则返回复制的字节数。
+
+如果从缓冲区复制数据太慢，可以使用<font color="#4bacc6">evbuffer_peek（）</font>。

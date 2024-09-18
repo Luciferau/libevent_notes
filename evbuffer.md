@@ -345,3 +345,4 @@ ev_ssize_t evbuffer_copyout(struct evbuffer *buf, void *data_out, size_t datlen)
 evbuffer_copyout（）的行为与evbuffer_remove（）相同，但是它不从缓冲区移除任何数据。也就是说，它从buf前面复制datlen字节到data处的内存中。如果可用字节少于datlen，函数会复制所有字节。失败时返回-1，否则返回复制的字节数。
 
 如果从缓冲区复制数据太慢，可以使用<font color="#4bacc6">evbuffer_peek（）</font>。
+## example

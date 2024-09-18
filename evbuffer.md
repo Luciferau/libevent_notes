@@ -551,6 +551,11 @@ pos是唯一的公有字段，用户代码不应该使用其他字段。pos指�
 ## API
 ~~~c
   
-struct evbuffer_ptr evbuffer_search_range(struct evbuffer *buffer, const char *what, size_t len, const struct evbuffer_ptr *start, const struct evbuffer_ptr *end)；
+struct evbuffer_ptr evbuffer_search_range(struct evbuffer *buffer, const char *what, size_t len, const struct evbuffer_ptr *start, const struct evbuffer_ptr *end);
+
+struct evbuffer_ptr evbuffer_search(struct evbuffer *buffer, const char *what, size_t len, const struct evbuffer_ptr *start)
+{
+    return evbuffer_search_range(buffer, what, len, start, NULL);
+}
 
 ~~~

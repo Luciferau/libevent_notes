@@ -596,4 +596,11 @@ enum evbuffer_ptr_how {
 
 int evbuffer_ptr_set(struct evbuffer *buf, struct evbuffer_ptr *pos,size_t position, 
 					 enum evbuffer_ptr_how how);
-~~~    
+
+~~~
+
+evbuffer_ptr_set函数操作buffer中的位置pos。如果how等于EVBUFFER_PTR_SET,指针被移动到缓冲区中的绝对位置position；如果等于EVBUFFER_PTR_ADD，则向前移动position字节。成功时函数返回0，失败时返回-1。
+
+~~~c
+#include <ev
+~~~

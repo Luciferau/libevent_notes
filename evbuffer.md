@@ -496,3 +496,54 @@ if(!request_line){
 evbuffer_readln()接口在1.4.14-stable及以后版本中可用。
 # Searching in evbuffer
 evbuffer_ptr结构体指示evbuffer中的一个位置，包含可用于在evbuffer中迭代的数据。
+~~~c
+  
+
+/**
+
+    Pointer to a position within an evbuffer.
+
+  
+
+    Used when repeatedly searching through a buffer.  Calling any function
+
+    that modifies or re-packs the buffer contents may invalidate all
+
+    evbuffer_ptrs for that buffer.  Do not modify or contruct these values
+
+    except with evbuffer_ptr_set.
+
+  
+
+    An evbuffer_ptr can represent any position from the start of a buffer up
+
+    to a position immediately after the end of a buffer.
+
+  
+
+    @see evbuffer_ptr_set()
+
+ */
+
+struct evbuffer_ptr {
+
+  ev_ssize_t pos;
+
+  
+
+  /* Do not alter or rely on the values of fields: they are for internal
+
+   * use */
+
+  struct {
+
+    void *chain;
+
+    size_t pos_in_chain;
+
+  } internal_;
+
+};
+~~~
+
+pos是唯一的公有字段，用户代码不应该使用其他字段。pos指示evbuffer中的一个位置，以到开始处的偏移量表

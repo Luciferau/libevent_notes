@@ -547,3 +547,10 @@ struct evbuffer_ptr {
 ~~~
 
 pos是唯一的公有字段，用户代码不应该使用其他字段。pos指示evbuffer中的一个位置，以到开始处的偏移量表
+
+## API
+~~~c
+  
+struct evbuffer_ptr evbuffer_search_range(struct evbuffer *buffer, const char *what, size_t len, const struct evbuffer_ptr *start, const struct evbuffer_ptr *end)；
+
+~~~

@@ -689,7 +689,8 @@ int evbuffer_peek(struct evbuffer *buffer, ev_ssize_t len,
 {
 	/**Let's look at the first two chunks of buf ,and write them to stderr */
 	int n ,i;
-	struct evbuffer_iovec 
+	struct evbuffer_iovec v[2];
+	n = 
 }
 
 ~~~

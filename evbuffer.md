@@ -653,4 +653,5 @@ int count_instances(struct evbuffer *buf,const char* str) {
 
 这些接口是2.0.1-alpha版本新增加的。
 
-# # **检测数据而不复制**
+# Detect data without copying
+有时候需要读取evbuffer中的数据而不进行复制（像evbuffer_copyout()那样），也不重新排列内部内存布局（像evbuffer_pullup()那样）。有时候可能需要查看evbuffer中间的数据。

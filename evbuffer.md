@@ -652,3 +652,4 @@ int count_instances(struct evbuffer *buf,const char* str) {
 任何修改evbuffer或者其布局的调用都会使得evbuffer_ptr失效，不能再安全地使用。
 
 这些接口是2.0.1-alpha版本新增加的。
+

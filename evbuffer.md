@@ -653,3 +653,4 @@ int count_instances(struct evbuffer *buf,const char* str) {
 
 这些接口是2.0.1-alpha版本新增加的。
 
+# # **检测数据而不复制**

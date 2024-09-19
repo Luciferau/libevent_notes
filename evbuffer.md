@@ -687,7 +687,7 @@ int evbuffer_peek(struct evbuffer *buffer, ev_ssize_t len,
 ## example
 ~~~c
 {
-
+	/**Let's look at the first two chunks of buf ,*/
 	int n ,i;
 }
 

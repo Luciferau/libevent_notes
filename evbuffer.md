@@ -686,7 +686,9 @@ int evbuffer_peek(struct evbuffer *buffer, ev_ssize_t len,
 如果ptr为NULL，函数从缓冲区开始处进行搜索。否则，从ptr处开始搜索。
 ## example
 ~~~c
-~~~
-~~~c
+{
+
+	int n ,i;
+}
 
 ~~~

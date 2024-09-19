@@ -687,3 +687,6 @@ int evbuffer_peek(struct evbuffer *buffer, ev_ssize_t len,
 ## example
 ~~~c
 ~~~
+~~~c
+
+~~~

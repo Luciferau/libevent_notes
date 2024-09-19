@@ -335,6 +335,7 @@ evbuffer_drain（）函数的行为与evbuffer_remove（）相同，只是它不
 evbuffer_drain（）由0.8版引入，evbuffer_remove（）首次出现在0.9版。
 
 # Copy data from the evbuffer
+## evbuffer_copyout
 有时候需要获取缓冲区前面数据的副本，而不清除数据。比如说，可能需要查看某特定类型的记录是否已经完整到达，而不清除任何数据（像evbuffer_remove那样），或者在内部重新排列缓冲区（像evbuffer_pullup那样）。
 ~~~c
 ev_ssize_t evbuffer_copyout(struct evbuffer *buf, void *data_out, size_t datlen){
@@ -411,6 +412,7 @@ int getr_record(struct evbuffer *buf,size_t *size_out,char** record_out){
 ~~~
 
 # Line-oriented input
+## enum evbuffer_eol_style
 ~~~c
 /** Used to tell evbuffer_readln what kind of line-ending to look for.
 
@@ -498,12 +500,9 @@ evbuffer_readln()接口在1.4.14-stable及以后版本中可用。
 evbuffer_ptr结构体指示evbuffer中的一个位置，包含可用于在evbuffer中迭代的数据。
 ~~~c
   
-
 /**
 
     Pointer to a position within an evbuffer.
-
-  
 
     Used when repeatedly searching through a buffer.  Calling any function
 

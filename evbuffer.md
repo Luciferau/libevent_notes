@@ -681,3 +681,8 @@ evbuffer_peek(struct evbuffer *buffer, ev_ssize_t len,
     struct evbuffer_iovec *vec, int n_vec);
 ~~~
 
+调用evbuffer_peek()的时候，通过vec_out给定一个evbuffer_iovec数组，数组的长度是n_vec。函数会让每个结构体包含指向evbuffer内部内存块的指针（iov_base)和块中数据长度。
+
+如果len小于0，evbuffer_peek()会试图填充所有evbuffer_iovec结构体。否则，函数会进行填充，直到使用了所有结构体，或者见到len字节为止。如果函数可以给出所有请求的数据，则返回实际使用的结构体个数；否则，函数返回给出所有请求数据所需的结构体个数。
+
+如果ptr为NULL，函数从缓冲区开始处进行搜索。否则，从ptr处开始搜索。

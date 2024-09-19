@@ -693,7 +693,7 @@ int evbuffer_peek(struct evbuffer *buffer, ev_ssize_t len,
 	n = evbuffer_peek(buf,-1.NULL,v,2);
 	for(i = 0;i < n;++i){
 		/**There might be less than two chunks available.*/
-		fw
+		fwrite(v[1].io)
 	}
 }
 

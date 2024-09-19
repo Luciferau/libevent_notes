@@ -654,6 +654,7 @@ int count_instances(struct evbuffer *buf,const char* str) {
 
 # Detect data without copying
 有时候需要读取evbuffer中的数据而不进行复制（像evbuffer_copyout()那样），也不重新排列内部内存布局（像evbuffer_pullup()那样）。有时候可能需要查看evbuffer中间的数据。
+## struct iovec | evbuffer_peek()
 ~~~c
   
 #define evbuffer_iovec iovec
@@ -671,9 +672,7 @@ struct iovec
 
 ~~~c
 
-int
-
-evbuffer_peek(struct evbuffer *buffer, ev_ssize_t len,
+int evbuffer_peek(struct evbuffer *buffer, ev_ssize_t len,
 
     struct evbuffer_ptr *start_at,
 
@@ -685,3 +684,6 @@ evbuffer_peek(struct evbuffer *buffer, ev_ssize_t len,
 如果len小于0，evbuffer_peek()会试图填充所有evbuffer_iovec结构体。否则，函数会进行填充，直到使用了所有结构体，或者见到len字节为止。如果函数可以给出所有请求的数据，则返回实际使用的结构体个数；否则，函数返回给出所有请求数据所需的结构体个数。
 
 如果ptr为NULL，函数从缓冲区开始处进行搜索。否则，从ptr处开始搜索。
+## example
+~~~c
+~~~

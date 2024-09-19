@@ -655,3 +655,18 @@ int count_instances(struct evbuffer *buf,const char* str) {
 
 # Detect data without copying
 有时候需要读取evbuffer中的数据而不进行复制（像evbuffer_copyout()那样），也不重新排列内部内存布局（像evbuffer_pullup()那样）。有时候可能需要查看evbuffer中间的数据。
+~~~c
+  
+#define evbuffer_iovec iovec
+/* Structure for scatter/gather I/O.  */
+
+struct iovec
+
+  {
+
+    void *iov_base; /* Pointer to data.  */
+
+    size_t iov_len; /* Length of data.  */
+
+  };  
+~~~  

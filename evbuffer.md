@@ -670,4 +670,13 @@ struct iovec
 };
 ~~~
 
+~~~c
 
+int
+
+evbuffer_peek(struct evbuffer *buffer, ev_ssize_t len,
+
+    struct evbuffer_ptr *start_at,
+
+    struct evbuffer_iovec *vec, int n_vec);
+~~~

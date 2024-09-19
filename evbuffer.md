@@ -322,7 +322,7 @@ int parse_socket4(struct evbuffer * buf,ev_uint64_t * port,ev_uint32_t* addr){
 ~~~
 
 # Remove data from the evbuffer
-## evbuffer_drain evbuffer_remove 
+## evbuffer_drain() evbuffer_remove()
 ~~~c
 int evbuffer_drain(struct evbuffer *buf, size_t len);
 int evbuffer_remove(struct evbuffer *buf, void *data_out, size_t datlen);

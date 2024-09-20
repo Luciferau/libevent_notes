@@ -660,7 +660,7 @@ int count_instances(struct evbuffer *buf,const char* str) {
 #define evbuffer_iovec iovec
 /* Structure for scatter/gather I/O.  */
 
-struct iovec
+struct evbuffer_iovec
  {
 
     void *iov_base; /* Pointer to data.  */
@@ -743,3 +743,4 @@ while (n_written < 16 * 1024) {
 
 
 ~~~
+111

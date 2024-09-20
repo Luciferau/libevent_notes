@@ -820,3 +820,30 @@ if (evbuffer_commit_space(buf, v, i) < 0) {
 
 
 ## Bad example
+~~~c
+struct evbuffer_iovec v[2];
+evbuffer_reserve_space(buf, 1024, v, 2);
+evbuffer_add(buf, "x", 1);
+
+/* 错误：在调用 evbuffer_add() 后，缓冲区的内部结构可能已发生变化 */
+memset(v[0].iov_base, 'y', v[0].iov_len - 1); // 可能导致崩溃！
+evbuffer_commit_space(buf, v, 1);
+
+~~~
+
+~~~
+---
+
+
+~~~c
+const char *data = "Here is some data";
+evbuffer_reserve_space(buf, strlen(data), v, 1);
+
+/* 错误：你不能直接将 v[0].iov_base 指向外部数据 */
+v[0].iov_base = (char *)data; // 危险！
+v[0].iov_len = strlen(data);
+
+/* 提交空间可能会失败或产生意外行为 */
+evbuffer_commit_space(buf, v, 1);
+
+~~~

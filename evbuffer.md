@@ -750,6 +750,6 @@ while (n_written < 16 * 1024) {
 
 - 如果任何函数修改了evbuffer，则evbuffer_peek()返回的指针会失效
 
-l 如果在多个线程中使用evbuffer，确保在调用evbuffer_peek()之前使用evbuffer_lock()，在使用完evbuffer_peek()给出的内容之后进行解锁
+-  如果在多个线程中使用evbuffer，确保在调用<font color="#4bacc6">evbuffer_peek()</font>之前使用<font color="#4bacc6">evbuffer_lock()</font>，在使用完evbuffer_peek()给出的内容之后进行解锁
 
 这个函数是2.0.2-alpha版本新增加的。

@@ -774,3 +774,8 @@ n_vec的值必须至少是1。如果只提供一个向量，libevent会确保请
 - 当前实现中，不论用户提供多少个向量，evbuffer_reserve_space()从不使用多于两个。未来版本可能会改变这一点。
 
 - 如果在多个线程中使用evbuffer，确保在调用evbuffer_reserve_space()之前使用evbuffer_lock()进行锁定，然后在提交后解除锁定。
+
+## Good example
+
+
+## Bad example

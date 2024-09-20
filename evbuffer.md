@@ -776,6 +776,47 @@ n_vec的值必须至少是1。如果只提供一个向量，libevent会确保请
 - 如果在多个线程中使用evbuffer，确保在调用evbuffer_reserve_space()之前使用evbuffer_lock()进行锁定，然后在提交后解除锁定。
 
 ## Good example
+~~~c
+#include <event2/buffer.h>
+
+struct evbuffer *buf;
+struct evbuffer_iovec v[2];
+int n, i;
+size_t n_to_add = 2048;
+
+/* Reserve 2048 bytes in the buffer */
+n = evbuffer_reserve_space(buf, n_to_add, v, 2);
+if (n <= 0) {
+    /* Unable to reserve the space for some reason */
+    return;
+}
+
+for (i = 0; i < n && n_to_add > 0; ++i) {
+    size_t len = v[i].iov_len;
+
+    /* Don't write more than the required number of bytes */
+    if (len > n_to_add) {
+        len = n_to_add;
+    }
+
+    /* Generate data into the reserved space */
+    if (generate_data(v[i].iov_base, len) < 0) {
+        /* If there was an error during data generation, stop here. No data is committed to the buffer */
+        return;
+    }
+
+    /* Set iov_len to the number of bytes we actually wrote */
+    v[i].iov_len = len;
+    n_to_add -= len;
+}
+
+/* Commit the space to the buffer */
+if (evbuffer_commit_space(buf, v, i) < 0) {
+    /* Error committing */
+    return;
+}
+
+~~~
 
 
 ## Bad example

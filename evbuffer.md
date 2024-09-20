@@ -762,3 +762,8 @@ int evbuffer_reserve_space(struct evbuffer *buf, ssize_t size, struct iovec *vec
 int evbuffer_commit_space(struct evbuffer *buf, struct iovec *vec, int n_vecs);
  
 ~~~
+evbuffer_reserve_space()函数给出evbuffer内部空间的指针。函数会扩展缓冲区以至少提供size字节的空间。到扩展空间的指针，以及其长度，会存储在通过vec传递的向量数组中，n_vec是数组的长度。
+
+n_vec的值必须至少是1。如果只提供一个向量，libevent会确保请求的所有连续空间都在单个扩展区中，但是这可能要求重新排列缓冲区，或者浪费内存。为取得更好的性能，应该至少提供2个向量。函数返回提供请求的空间所需的向量数。
+
+写入到向量中的数据不会是缓冲区的一部分，直到调用evbuffer_commit_space()，使得写入的数据进入缓冲区。如果需要提交少于请求的空间，可以减小任何evbuffer_iovec结构体的iov_len字段，也可以提供较少的向量。函数成功时返回0，失败时返回-1。

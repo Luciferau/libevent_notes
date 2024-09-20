@@ -686,15 +686,60 @@ int evbuffer_peek(struct evbuffer *buffer, ev_ssize_t len,
 如果ptr为NULL，函数从缓冲区开始处进行搜索。否则，从ptr处开始搜索。
 ## example
 ~~~c
-{
-	/**Let's look at the first two chunks of buf ,and write them to stderr */
-	int n ,i;
-	struct evbuffer_iovec v[2];
-	n = evbuffer_peek(buf,-1.NULL,v,2);
-	for(i = 0;i < n;++i){
-		/**There might be less than two chunks available.*/
-		fwrite(v[1].io)
-	}
+/* Let's look at the first two chunks of buf, and write them to stderr. */
+int n, i;
+struct evbuffer_iovec v[2];
+n = evbuffer_peek(buf, 1, NULL, v, 2);
+for (i = 0; i < n; ++i) {
+    /* There might be less than two chunks available. */
+    fwrite(v[i].iov_base, 1, v[i].iov_len, stderr);
 }
+
+/* Let's send the first 4096 bytes to stdout via write. */
+int n, i;
+struct evbuffer_iovec *v;
+size_t written = 0;
+
+/* Determine how many chunks we need. */
+n = evbuffer_peek(buf, 4096, NULL, NULL, 0);
+/* Allocate space for the chunks. This would be a good time to use malloc if you have it. */
+v = malloc(sizeof(struct evbuffer_iovec) * n);
+
+/* Actually fill up v. */
+evbuffer_peek(buf, 4096, NULL, v, n);
+for (i = 0; i < n; ++i) {
+    size_t len = v[i].iov_len;
+    if (written + len > 4096) {
+        len = 4096 - written;
+    }
+    ssize_t r = write(1 /* stdout */, v[i].iov_base, len);
+    if (r <= 0) break;
+    written += len;
+}
+free(v);
+
+/* Let's get the first 16K of data after the first occurrence of the string "startn", and pass it to a consume() function. */
+struct evbuffer_ptr ptr;
+struct evbuffer_iovec v1;
+const char *s = "startn";
+int n_written = 0;
+
+ptr = evbuffer_search(buf, s, strlen(s), NULL);
+if (ptr.pos == -1) return; /* no start string found. */
+
+/* Advance the pointer past the start string. */
+if (evbuffer_ptr_set(buf, &ptr, strlen(s), EVBUFFER_PTR_ADD) < 0) return; /* off the end of the string. */
+
+while (n_written < 16 * 1024) {
+    /* Peek at a single chunk. */
+    if (evbuffer_peek(buf, -1, &ptr, v, 1) < 1) break;
+
+    /* Pass the data to some user-defined consume function. */
+    consume(v[0].iov_base, v[0].iov_len);
+    
+    /* Advance the pointer so we see the next chunk next time. */
+    if (evbuffer_ptr_set(buf, &ptr, v[0].iov_len, EVBUFFER_PTR_ADD) < 0) break;
+}
+
 
 ~~~

@@ -769,3 +769,8 @@ n_vec的值必须至少是1。如果只提供一个向量，libevent会确保请
 写入到向量中的数据不会是缓冲区的一部分，直到调用evbuffer_commit_space()，使得写入的数据进入缓冲区。如果需要提交少于请求的空间，可以减小任何evbuffer_iovec结构体的iov_len字段，也可以提供较少的向量。函数成功时返回0，失败时返回-1。
 
 **提示和警告**
+- 调用任何重新排列evbuffer或者向其添加数据的函数都将使从evbuffer_reserve_space()获取的指针失效。
+
+- 当前实现中，不论用户提供多少个向量，evbuffer_reserve_space()从不使用多于两个。未来版本可能会改变这一点。
+
+- 如果在多个线程中使用evbuffer，确保在调用evbuffer_reserve_space()之前使用evbuffer_lock()进行锁定，然后在提交后解除锁定。

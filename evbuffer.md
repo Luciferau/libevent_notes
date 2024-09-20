@@ -754,3 +754,4 @@ while (n_written < 16 * 1024) {
 
 这个函数是2.0.2-alpha版本新增加的。
 # Add data directly to the evbuffer
+有时候需要能够直接向<font color="#4bacc6">evbuffer</font>添加数据，而不用先将数据写入到字符数组中，然后再使用evbuffer_add()进行复制。有一对高级函数可以完成这种功能：evbuffer_reserve_space()和evbuffer_commit_space()。跟evbuffer_peek()一样，这两个函数使用evbuffer_iovec结构体来提供对evbuffer内部内存的直接访问。

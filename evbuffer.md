@@ -961,3 +961,9 @@ struct evbuffer_cb_entry {
 struct evbuffer_cb_entry * 
 evbuffer_add_cb(struct evbuffer *buf, evbuffer_cb cb, void *arg, size_t datalen, evbuffer_cb_flags flags);
 ~~~
+
+evbuffer_add_cb()函数为evbuffer添加一个回调函数，返回一个不透明的指针，随后可用于代表这个特定的回调实例。cb参数是将被调用的函数，cbarg是用户提供的将传给这个函数的指针。
+
+可以为单个evbuffer设置多个回调，添加新的回调不会移除原来的回调。
+
+## example

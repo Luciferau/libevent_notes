@@ -956,3 +956,8 @@ struct evbuffer_cb_entry {
 
 };
 ~~~
+
+~~~c
+struct evbuffer_cb_entry * 
+evbuffer_add_cb(struct evbuffer *buf, evbuffer_cb cb, void *arg, size_t datalen, evbuffer_cb_flags flags);
+~~~

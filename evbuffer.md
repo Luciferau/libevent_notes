@@ -1008,5 +1008,9 @@ void count_megabytes(struct evbuffer* buffer,
 
 }
 
-void 
+void operation_with_counted_bytes(){
+
+    struct
+
+}
 ~~~

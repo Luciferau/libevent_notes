@@ -919,3 +919,5 @@ struct evbuffer_cb_info {
 
 };
 ~~~
+
+向evbuffer添加数据，或者从中移除数据的时候，回调函数会被调用。函数收到缓冲区指针、一个<font color="#4bacc6">evbuffer_cb_info</font>结构体指针，和用户提供的参数。evbuffer_cb_info结构体的orig_size字段指示缓冲区改变大小前的字节数，n_added字段指示向缓冲区添加了多少字节；n_deleted字段指示移除了多少字节。

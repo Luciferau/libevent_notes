@@ -874,3 +874,10 @@ evbuffer_commit_space(buf, v, 1);
 ~~~
 # Network IO using evbuffers
 libevent中evbuffer的最常见使用场合是网络IO。将evbuffer用于网络IO的接口是：
+~~~c
+int evbuffer_write(struct evbuffer *buffer, int fd);
+
+int evbuffer_write_atmost(struct evbuffer *buffer, int fd, ssize_t howmuch);
+
+    int evbuffer_read(struct evbuffer *buffer, int fd, int howmuch);
+~~~

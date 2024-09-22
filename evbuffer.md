@@ -967,3 +967,11 @@ evbuffer_add_cb()函数为evbuffer添加一个回调函数，返回一个不透�
 可以为单个evbuffer设置多个回调，添加新的回调不会移除原来的回调。
 
 ## example
+~~~c
+#include <event2/buffer.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+
+/**Here is a cal*/
+~~~

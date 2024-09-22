@@ -895,7 +895,6 @@ evbuffer_write_atmost()函数在2.0.1-alpha版本中引入。
 evbuffer的用户常常需要知道什么时候向evbuffer添加了数据，什么时候移除了数据。为支持这个.
 libevent为evbuffer提高了通用回调机制。
 ~~~c
-  
 
 /** Structure passed to an evbuffer_cb_func evbuffer callback
     @see evbuffer_cb_func, evbuffer_add_cb()

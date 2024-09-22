@@ -973,5 +973,5 @@ evbuffer_add_cb()函数为evbuffer添加一个回调函数，返回一个不透�
 #include <stdlib.h>
 
 
-/**Here is a cal*/
+/**Here is a callback that remembers how many bytes we have drained*/
 ~~~

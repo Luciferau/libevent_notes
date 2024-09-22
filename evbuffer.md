@@ -974,5 +974,11 @@ evbuffer_add_cb()函数为evbuffer添加一个回调函数，返回一个不透�
 #include <stdlib.h>
 
 
-/**Here is a callback that remembers how many bytes we have drained in total from the buffer,and prints a dot */
+/**Here is a callback that remembers how many bytes we have drained in total from the buffer,and prints a dot every time we hit a megabyte*/
+
+struct total_processed{
+	size_t n;
+}
+
+void coun
 ~~~

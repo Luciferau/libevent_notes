@@ -1011,7 +1011,10 @@ void count_megabytes(struct evbuffer* buffer,
 void operation_with_counted_bytes(){
 
     struct total_processed *tp = malloc(sizeof(tp));
-    
+    struct evbuffer * buf = evbuffer_new();
+    tp->n = 0;
+    evbuffer_add_cb(buf,count_megabytes_cb,tp);
+    /*Use the evbuffer*/
 
 }
 ~~~

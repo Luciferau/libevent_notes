@@ -898,7 +898,6 @@ libevent为evbuffer提高了通用回调机制。
 
 /** Structure passed to an evbuffer_cb_func evbuffer callback
     @see evbuffer_cb_func, evbuffer_add_cb()
-
  */
 
 struct evbuffer_cb_info {
@@ -920,4 +919,40 @@ struct evbuffer_cb_info {
 };
 ~~~
 
-向evbuffer添加数据，或者从中移除数据的时候，回调函数会被调用。函数收到缓冲区指针、一个<font color="#4bacc6">evbuffer_cb_info</font>结构体指针，和用户提供的参数。evbuffer_cb_info结构体的orig_size字段指示缓冲区改变大小前的字节数，n_added字段指示向缓冲区添加了多少字节；n_deleted字段指示移除了多少字节。
+向evbuffer添加数据，或者从中移除数据的时候，回调函数会被调用。函数收到<font color="#4bacc6">缓冲区指针</font>、一个<font color="#4bacc6">evbuffer_cb_info</font>结构体指针，和用户提供的参数。evbuffer_cb_info结构体的orig_size字段指示缓冲区改变大小前的字节数，n_added字段指示向缓冲区添加了多少字节；n_deleted字段指示移除了多少字节。
+
+~~~c
+/** A single evbuffer callback for an evbuffer. This function will be invoked
+
+ * when bytes are added to or removed from the evbuffer. */
+
+struct evbuffer_cb_entry {
+
+    /** Structures to implement a doubly-linked queue of callbacks */
+
+    LIST_ENTRY(evbuffer_cb_entry) next;
+
+    /** The callback function to invoke when this callback is called.
+
+        If EVBUFFER_CB_OBSOLETE is set in flags, the cb_obsolete field is
+
+        valid; otherwise, cb_func is valid. */
+
+    union {
+
+        evbuffer_cb_func cb_func;
+
+        evbuffer_cb cb_obsolete;
+
+    } cb;
+
+    /** Argument to pass to cb. */
+
+    void *cbarg;
+
+    /** Currently set flags on this callback. */
+
+    ev_uint32_t flags;
+
+};
+~~~

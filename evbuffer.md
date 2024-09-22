@@ -872,3 +872,5 @@ v[0].iov_len = strlen(data);
 /* 提交保留的空间 */
 evbuffer_commit_space(buf, v, 1);
 ~~~
+# Network IO using evbuffers
+libevent中evbuffer的最常见使用场合是网络IO。将evbuffer用于网络IO的接口是：

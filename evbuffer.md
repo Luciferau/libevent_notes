@@ -831,6 +831,18 @@ evbuffer_commit_space(buf, v, 1);
 
 ~~~
 
+~~~c
+struct evbuffer_iovec v[2];
+evbuffer_reserve_space(buf, 1024, v, 2);
+
+/* 填充保留的空间 */
+memset(v[0].iov_base, 'y', v[0].iov_len - 1);
+
+/* 提交保留的空间 */
+evbuffer_commit_space(buf, v, 1);
+
+/* 现在可以安全地添加更多数据 */
+evbuffer_add(buf, "x", 1);
 ~~~
 ---
 
@@ -846,4 +858,16 @@ v[0].iov_len = strlen(data);
 /* 提交空间可能会失败或产生意外行为 */
 evbuffer_commit_space(buf, v, 1);
 
+~~~
+
+~~~c
+const char *data = "Here is some data";
+evbuffer_reserve_space(buf, strlen(data), v, 1);
+
+/* 将 'data' 的内容复制到保留的空间中 */
+memcpy(v[0].iov_base, data, strlen(data));
+v[0].iov_len = strlen(data);
+
+/* 提交保留的空间 */
+evbuffer_commit_space(buf, v, 1);
 ~~~

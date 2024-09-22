@@ -881,7 +881,7 @@ int evbuffer_read(struct evbuffer *buffer, int fd, int howmuch);
 ~~~
 <font color="#4bacc6">evbuffer_read()</font>函数从套接字fd读取至多howmuch字节到buffer末尾。成功时函数返回读取的字节数，0表示EOF，失败时返回-1。注意，错误码可能指示非阻塞操作不能立即成功，应该检查错误码EAGAIN（或者Windows中的<font color="#8064a2">WSAWOULDBLOCK</font>）。如果<font color="#4bacc6">howmuch</font>为负，<font color="#4bacc6">evbuffer_read()</font>试图猜测要读取多少数据。
 
-<font color="#4bacc6">evbuffer_write_atmost()</font>函数试图将buffer前面至多howmuch字节写入到套接字fd中。成功时函数返回写入的字节数，失败时返回-1。跟evbuffer_read()一样，应该检查错误码，看是真的错误，还是仅仅指示非阻塞IO不能立即完成。如果为howmuch给出负值，函数会试图写入buffer的所有内容。
+<font color="#4bacc6">evbuffer_write_atmost()</font>函数试图将<font color="#4bacc6">buffer</font>前面至多<font color="#4bacc6">howmuch</font>字节写入到套接字fd中。成功时函数返回写入的字节数，失败时返回-1。跟evbuffer_read()一样，应该检查错误码，看是真的错误，还是仅仅指示非阻塞IO不能立即完成。如果为<font color="#4bacc6">howmuch</font>给出负值，函数会试图写入buffer的所有内容。
 
 调用evbuffer_write()与使用负的howmuch参数调用evbuffer_write_atmost()一样：函数会试图尽量清空buffer的内容。
 
@@ -890,3 +890,5 @@ int evbuffer_read(struct evbuffer *buffer, int fd, int howmuch);
 注意，如果使用bufferevent，则不需要调用这些函数，bufferevent的代码已经为你调用了。
 
 evbuffer_write_atmost()函数在2.0.1-alpha版本中引入。
+
+# evbuffer and callback

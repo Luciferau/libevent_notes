@@ -895,6 +895,7 @@ evbuffer_write_atmost()函数在2.0.1-alpha版本中引入。
 # evbuffer and callback
 evbuffer的用户常常需要知道什么时候向evbuffer添加了数据，什么时候移除了数据。为支持这个.
 libevent为evbuffer提高了通用回调机制。
+## struct evbuffer_cb_info
 ~~~c
 
 /** Structure passed to an evbuffer_cb_func evbuffer callback
@@ -921,7 +922,7 @@ struct evbuffer_cb_info {
 ~~~
 
 向evbuffer添加数据，或者从中移除数据的时候，回调函数会被调用。函数收到<font color="#4bacc6">缓冲区指针</font>、一个<font color="#4bacc6">evbuffer_cb_info</font>结构体指针，和用户提供的参数。evbuffer_cb_info结构体的orig_size字段指示缓冲区改变大小前的字节数，n_added字段指示向缓冲区添加了多少字节；n_deleted字段指示移除了多少字节。
-## struct evbuffer_cb_entry
+## struct evbuffer_cb_entry | evbuffer_add_cb()
 
 ~~~c
 /** A single evbuffer callback for an evbuffer. This function will be invoked

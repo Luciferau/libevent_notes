@@ -906,7 +906,7 @@ struct evbuffer_cb_info {
 
   /** The number of bytes in this evbuffer when callbacks were last
    * invoked. */
-  /** 最后一次调用回调时此 evbuffer 中的字节数。
+	  /** 最后一次调用回调时此 evbuffer 中的字节数。
   */
 
   size_t orig_size;

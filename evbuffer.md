@@ -973,12 +973,35 @@ evbuffer_add_cb()函数为evbuffer添加一个回调函数，返回一个不透�
 #include <stdio.h>
 #include <stdlib.h>
 
-
 /**Here is a callback that remembers how many bytes we have drained in total from the buffer,and prints a dot every time we hit a megabyte*/
-
+  
 struct total_processed{
-	size_t n;
-}
 
-void count_megabytes(struct evbuffer)
+    size_t n;
+
+};
+
+void count_megabytes(struct evbuffer* buffer,
+
+    const struct evbuffer_cb_info * info,void *args)
+
+{
+
+    struct total_processed * tp = (struct total_processed *)args;
+
+    size_t old_n = tp->n;
+
+    int megabytes,i ;
+
+    tp->n += info->n_deleted;
+
+    megabytes = (tp->n >> 20)-(old_n >> 20);
+
+    for(i = 0; i < megabytes; ++i) {
+
+        putc('.',stdout);
+
+    }
+
+}
 ~~~

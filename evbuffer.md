@@ -980,5 +980,5 @@ struct total_processed{
 	size_t n;
 }
 
-void coun
+void count_megabytes(struct evbuffer)
 ~~~

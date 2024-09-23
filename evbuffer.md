@@ -1114,3 +1114,4 @@ void spool_resource_to_evbuffer(struct evbuffer *buf, struct huge_resource *hr) 
 }
 
 ~~~
+一些操作系统提供了将文件写入到网络，而不需要将数据复制到用户空间的方法。如果存在，可以使用下述接口访问这种机制：

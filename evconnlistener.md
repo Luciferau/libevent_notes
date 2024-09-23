@@ -238,3 +238,21 @@ event_listener_enable(struct evconnlistener *lev)
 ~~~
 
 # Adjust the callback function of evconnlistener
+~~~c
+void
+evconnlistener_set_cb(struct evconnlistener *lev,
+    evconnlistener_cb cb, void *arg)
+{
+	int enable = 0;
+	LOCK(lev);
+	if (lev->enabled && !lev->cb)
+		enable = 1;
+	lev->cb = cb;
+	lev->user_data = arg;
+	if (enable)
+		evconnlistener_enable(lev);
+	UNLOCK(lev);
+}
+~~~
+
+函数调整evconnlistener的回调函数和其参数。它是2.0.9-rc版本引入的。

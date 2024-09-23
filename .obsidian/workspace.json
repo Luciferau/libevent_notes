@@ -127,7 +127,7 @@
               "type": "outgoing-link",
               "state": {
                 "file": "evconnlistener.md",
-                "linksCollapsed": false,
+                "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
             }
@@ -182,7 +182,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -198,7 +199,7 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "db730313e0ffb1b4",
+  "active": "9ca2f2e1f76b8a93",
   "lastOpenFiles": [
     "evbuffer.md",
     "evconnlistener.md",

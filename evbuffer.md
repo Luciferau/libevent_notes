@@ -1133,3 +1133,12 @@ evbuffer_add_file()要求一个打开的可读文件描述符fd（注意：不�
 这一节描述的函数都在2.0.1-alpha版本中引入。evbuffer_add_referece()则从2.0.2-alpha版本开始存在。
 
 # Make evbuffer only add or only remove
+~~~c
+int evbuffer_free(struct evbuffer *buf);
+
+int evbuffer_freeze(struct evbuffer *buf, int at_front);
+~~~
+
+可以使用这些函数暂时禁止修改evbuffer的开头或者末尾。bufferevent的代码在内部使用这些函数阻止对输出缓冲区头部，或者输入缓冲区尾部的意外修改。
+
+evbuffer_freeze()函数是2.0.1-alpha版本引入的。

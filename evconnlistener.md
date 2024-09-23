@@ -64,7 +64,7 @@ typedef void (*evconnlistener_cb)(struct evconnlistener *, evutil_socket_t, stru
 ~~~
 
 
-
+接收到新连接会调用提供的回调函数。listener参数是接收连接的连接监听器。sock参数是新接收的套接字。addr和len参数是接收连接的地址和地址长度。ptr是调用evconnlistener_new()时用户提供的指针。
 ## source code
 
 ### evconnlistener_new()

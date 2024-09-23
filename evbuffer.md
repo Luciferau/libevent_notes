@@ -1025,7 +1025,7 @@ void operation_with_counted_bytes(){
 
 如果不想让缓冲区上的回调永远激活，可以移除或者禁用回调：
 
-## 
+## evbuffer_remove_cb evbuffer_remove_cb_entry evbuffer_cb_set_flags evbuffer_cb_clear_flags
 ~~~c
 int evbuffer_remove_cb(struct evbuffer *buffer, evbuffer_cb_func cb, void *cbarg);
 int evbuffer_remove_cb_entry(struct evbuffer *buffer, struct evbuffer_cb_entry *ent);

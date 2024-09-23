@@ -204,6 +204,7 @@ evconnlistener_free(struct evconnlistener *lev)
 ~~~
 
 # Enable and disable evconnlistener
+## evconnlistener_disable() evconnlistener_enable()
 
 ~~~c
 int evconnlistener_disable(evconnlistener* evlistener);
@@ -211,3 +212,29 @@ int evconnlistener_enable(evconnlistener* evlistener);
 ~~~
 
 这两个函数暂时禁止或者重新允许监听新连接。
+
+
+
+~~~c
+int
+evconnlistener_disable(struct evconnlistener *lev)
+{
+	int r;
+	LOCK(lev);
+	lev->enabled = 0;
+	r = lev->ops->disable(lev);
+	UNLOCK(lev);
+	return r;
+}
+
+static int
+event_listener_enable(struct evconnlistener *lev)
+{
+	struct evconnlistener_event *lev_e =
+	    EVUTIL_UPCAST(lev, struct evconnlistener_event, base);
+	return event_add(&lev_e->listener, NULL);
+}
+
+~~~
+
+# Adjust the callback function of evconnlistener

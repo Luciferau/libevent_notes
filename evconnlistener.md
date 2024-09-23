@@ -260,4 +260,29 @@ evconnlistener_set_cb(struct evconnlistener *lev,
 # Check evconnlistener
 ~~~c
  evutil_socket_t evconnlistener_get_fd(struct evconnlistener *lev);
+ struct event_base * evconnlistener_get_base(struct evconnlistener *lev);
 ~~~
+
+~~~c
+
+evutil_socket_t
+evconnlistener_get_fd(struct evconnlistener *lev)
+{
+	evutil_socket_t fd;
+	LOCK(lev);
+	fd = lev->ops->getfd(lev);
+	UNLOCK(lev);
+	return fd;
+}
+
+struct event_base *
+evconnlistener_get_base(struct evconnlistener *lev)
+{
+	struct event_base *base;
+	LOCK(lev);
+	base = lev->ops->getbase(lev);
+	UNLOCK(lev);
+	return base;
+}
+~~~
+

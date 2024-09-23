@@ -1058,3 +1058,4 @@ int evbuffer_defer_callbacks(struct evbuffer *buffer, struct event_base *base);
 # Avoiding data copying for evbuffer-based IO
 
 真正高速的网络编程通常要求尽量少的数据复制，libevent为此提供了一些机制：
+![Avoiding data copying for evbuffer-based IO](images/Pasted%20image%2020240923224952.png)

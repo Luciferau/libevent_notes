@@ -1144,3 +1144,16 @@ int evbuffer_freeze(struct evbuffer *buf, int at_front);
 <font color="#c0504d">evbuffer_freeze()</font>函数是2.0.1-alpha版本引入的。
 
 # Deprecated evbuffer functions
+2.0版对evbuffer接口进行了很多修改。在此之前，每个evbuffer实现为一个连续的内存块，访问效率是非常低的。
+
+event.h头文件用于暴露evbuffer结构体的内部，但该结构体已经不可用了，因为对于依赖于它们的代码，1.4和2.0版之间的改动太大了。
+
+要访问evbuffer中的字节数，可以使用EVBUFFER_LENGTH()宏；而实际数据可以通过EVBUFFER_DATA()来访问。这两个宏都在event2/buffer_compat.h中。然而，请注意：EVBUFFER_DATA(b)只是evbuffer_pullup(b,-1)的别名，其开销可能非常大。
+
+其他废弃的接口有：
+~~~c
+
+char *evbuffer)
+
+
+~~~

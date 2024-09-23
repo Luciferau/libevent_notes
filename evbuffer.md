@@ -1141,4 +1141,6 @@ int evbuffer_freeze(struct evbuffer *buf, int at_front);
 
 可以使用这些函数暂时禁止修改evbuffer的开头或者末尾。bufferevent的代码在内部使用这些函数阻止对输出缓冲区头部，或者输入缓冲区尾部的意外修改。
 
-evbuffer_freeze()函数是2.0.1-alpha版本引入的。
+<font color="#c0504d">evbuffer_freeze()</font>函数是2.0.1-alpha版本引入的。
+
+# Deprecated evbuffer functions

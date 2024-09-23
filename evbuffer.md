@@ -1062,7 +1062,9 @@ int evbuffer_defer_callbacks(struct evbuffer *buffer, struct event_base *base);
 
 ~~~c
 int evbuffer_add_reference(struct evbuffer *outbuf,
-						   const void *data, size_t datlen, 
-						   evbuffer_ref_cleanup_cb cleanupfn, 
-						   void *cleanupfn_arg);
+							   const void *data, size_t datlen, 
+							   evbuffer_ref_cleanup_cb cleanupfn, 
+							   void *cleanupfn_arg);
 ~~~
+
+这个函数通过引用向evbuffer末尾添加一段数据。不会进行复制：evbuffer只会存储一个到data处的datlen字节的指针。因此，在evbuffer使用这个指针期间，必须保持指针是有效的。evbuffer会在不再需要这部分数据的时候调用用户提供的cleanupfn函数，带有提供的data指针、datlen值和extra指针参数。函数成功时返回0，失败时返回-1。

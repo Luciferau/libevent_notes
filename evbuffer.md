@@ -1165,3 +1165,9 @@ typedef void (*evbuffer_cb)(struct evbuffer *buffer,size_t old_len,size_t new_le
 
 void evbuffer_setcb(struct evbuffer* buffer,evbuffer_cb cb,void *cbarg);
 ~~~
+
+evbuffer某时刻只能有一个回调，设置新的回调会禁止先前的回调，设置回调为NULL是最佳的禁止回调的方法。
+
+回调函数不使用evbuffer_cb_info结构体，而是使用evbuffer的原长度和新长度。因此，如果old_len大于new_len，数据被抽取；如果new_len大于old_len，数据被添加。回调不可能延迟，所以添加和删除操作不可能合并到单个回调的执行中。
+
+这里给出的废弃函数依然在event2/buffer_compat.h中，依然可用。

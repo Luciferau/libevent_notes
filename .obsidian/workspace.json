@@ -75,8 +75,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -164,12 +163,12 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -185,15 +184,15 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "80c93d318ba048c9",
+  "active": "9ca2f2e1f76b8a93",
   "lastOpenFiles": [
-    "images/Pasted image 20240923224952.png",
-    "Build event.md",
-    "evbuffer.md",
     "libevent_structure.md",
-    "Bufferevent and SSL.md",
     "Bufferevent and evbuffer.md",
     "Bufferevent Advanced Topics.md",
+    "Bufferevent and SSL.md",
+    "Build event.md",
+    "evbuffer.md",
+    "images/Pasted image 20240923224952.png",
     "libevent 中文文档_lucifer.pdf",
     "aceld_notes/libevent_notes_aceld/45_eventbase_he_fork.md",
     "TODO Lists.md",
@@ -216,7 +215,6 @@
     "images/Pasted image 20240904090807.png",
     "images/Pasted image 20240904092035.png",
     "images/Pasted image 20240904092708.png",
-    "images/Pasted image 20240904103007.png",
     "aceld_notes/libevent_notes_aceld/8_lian_jie_jian_ting_qi_evconnlistener.md",
     "aceld_notes/libevent_notes_aceld/8_evbuffer.md",
     "aceld_notes/libevent_notes_aceld/86_tian_jia_shu_ju_dao_evbuffer_qian.md",

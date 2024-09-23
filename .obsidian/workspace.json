@@ -88,7 +88,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -197,7 +198,7 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "f5f8b3d16f464f70",
+  "active": "db730313e0ffb1b4",
   "lastOpenFiles": [
     "evbuffer.md",
     "evconnlistener.md",

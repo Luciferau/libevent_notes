@@ -203,3 +203,9 @@ evconnlistener_free(struct evconnlistener *lev)
 }
 ~~~
 
+# Enable and disable evconnlistener
+
+~~~c
+int evconnlister_disable(struct evconlister* lev);
+
+~~~

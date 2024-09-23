@@ -48,6 +48,22 @@ void evconnlistener_free(evconnlistener* evlistener);
 
 为监听器分配锁，这样就可以在多个线程中安全地使用了。这是2.0.8-rc的新功能。
 ## Connection listener callback
+### evconnlistener_cb
+~~~c
+/**
+   A callback that we invoke when a listener has a new connection.
+
+   @param listener The evconnlistener
+   @param fd The new file descriptor
+   @param addr The source address of the connection
+   @param socklen The length of addr
+   @param user_arg the pointer passed to evconnlistener_new()
+ */
+typedef void (*evconnlistener_cb)(struct evconnlistener *, evutil_socket_t, struct sockaddr *,
+								  int socklen, void *);
+~~~
+
+
 
 ## source code
 

@@ -1,6 +1,6 @@
 {
   "promptDelete": false,
-  "showLineNumber": false,
+  "showLineNumber": true,
   "attachmentFolderPath": "./images",
   "readableLineLength": false,
   "strictLineBreaks": false,
@@ -14,5 +14,6 @@
     "landscape": false,
     "margin": "0",
     "downscalePercent": 100
-  }
+  },
+  "autoPairBrackets": true
 }

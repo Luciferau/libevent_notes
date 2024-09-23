@@ -206,6 +206,8 @@ evconnlistener_free(struct evconnlistener *lev)
 # Enable and disable evconnlistener
 
 ~~~c
-int evconnlister_disable(struct evconlister* lev);
-
+int evconnlistener_disable(evconnlistener* evlistener);
+int evconnlistener_enable(evconnlistener* evlistener);
 ~~~
+
+这两个函数暂时禁止或者重新允许监听新连接。

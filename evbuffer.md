@@ -1014,7 +1014,9 @@ void operation_with_counted_bytes(){
     struct evbuffer * buf = evbuffer_new();
     tp->n = 0;
     evbuffer_add_cb(buf,count_megabytes_cb,tp);
-    /*Use the evbuffer*/
+    /*Use the evbuffer for a while ,When we 're done:*/
+    evbuffer_free(buf);
+    free(tp);
 
 }
 ~~~

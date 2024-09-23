@@ -1026,4 +1026,6 @@ void operation_with_counted_bytes(){
 如果不想让缓冲区上的回调永远激活，可以移除或者禁用回调：
 
 ## 
+~~~c
+
 ~~~

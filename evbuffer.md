@@ -1116,4 +1116,20 @@ void spool_resource_to_evbuffer(struct evbuffer *buf, struct huge_resource *hr) 
 ~~~
 一些操作系统提供了将文件写入到网络，而不需要将数据复制到用户空间的方法。如果存在，可以使用下述接口访问这种机制：
 
-## 
+## evbuffer_add_file()
+~~~c
+int evbuffer_add_file(struct evbuffer *outbuf, int fd, int64_t offset, int64_t length);
+~~~
+evbuffer_add_file()要求一个打开的可读文件描述符fd（注意：不是套接字）。函数将文件中offset处开始的length字节添加到output末尾。成功时函数返回0，失败时返回-1。
+
+<font color="#c0504d">注意</font>
+
+在2.0.2-alpha版中，对于使用这种方式添加的数据的可靠操作只有：通过evbuffer_write*()将其发送到网络、使用evbuffer_drain()清空数据，或者使用evbuffer_*_buffer()将其移动到另一个evbuffer中。不能使用evbuffer_remove()取出数据，使用evbuffer_pullup()进行线性化等。
+
+如果操作系统支持splice()或者sendfile()，则调用evbuffer_write()时libevent会直接使用这些函数来将来自fd的数据发送到网络中，而根本不将数据复制到用户内存中。如果不存在splice()和sendfile()，但是支持mmap()，libevent将进行文件映射，而内核将意识到永远不需要将数据复制到用户空间。否则，libevent会将数据从磁盘读取到内存。
+
+清空数据或者释放evbuffer时文件描述符将被关闭。
+
+这一节描述的函数都在2.0.1-alpha版本中引入。evbuffer_add_referece()则从2.0.2-alpha版本开始存在。
+
+# Make evbuffer only add or only remove

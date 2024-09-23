@@ -1027,11 +1027,9 @@ void operation_with_counted_bytes(){
 
 ## 
 ~~~c
-int main() {
-
-    evbuffer_remove_cb(struct evbuffer *buffer, evbuffer_cb_func cb, void *cbarg);
-
-    evbuffer_remove_cb_entry(struct evbuffer *buffer, struct evbuffer_cb_entry *ent);
-
-}
+int evbuffer_remove_cb(struct evbuffer *buffer, evbuffer_cb_func cb, void *cbarg);
+int evbuffer_remove_cb_entry(struct evbuffer *buffer, struct evbuffer_cb_entry *ent);
+#define EVBUFFER_REMOVE_CB_ENABLED 1
+int evbuffer_cb_set_flags(struct evbuffer *buffer, struct evbuffer_cb_entry *cb, uint32_t flags);
+int evbuffer_cb_clear_flags(struct evbuffer *buffer, struct evbuffer_cb_entry *cb, uint32_t flags);
 ~~~

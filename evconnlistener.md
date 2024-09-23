@@ -28,23 +28,23 @@ void evconnlistener_free(evconnlistener* evlistener);
 
 可以给evconnlistener_new()函数的flags参数传入一些标志。可以用或(OR)运算任意连接下述标志：
 
-- **<font color="#8064a2">LEV_OPT_LEAVE_SOCKETS_BLOCKING</font>**
+###  **<font color="#8064a2">LEV_OPT_LEAVE_SOCKETS_BLOCKING</font>**
 
 	默认情况下，连接监听器接收新套接字后，会将其设置为非阻塞的，以便将其用于libevent。如果不想要这种行为，可以设置这个标志。
 
-- **<font color="#8064a2">LEV_OPT_CLOSE_ON_FREE</font>**
+### **<font color="#8064a2">LEV_OPT_CLOSE_ON_FREE</font>**
 
 	如果设置了这个选项，释放连接监听器会关闭底层套接字。
 
-- **<font color="#8064a2">LEV_OPT_CLOSE_ON_EXEC</font>**
+### **<font color="#8064a2">LEV_OPT_CLOSE_ON_EXEC</font>**
 
 	如果设置了这个选项，连接监听器会为底层套接字设置close-on-exec标志。更多信息请查看fcntl和FD_CLOEXEC的平台文档。
 
-- **<font color="#8064a2">LEV_OPT_REUSEABLE</font>**
+### **<font color="#8064a2">LEV_OPT_REUSEABLE</font>**
 
 	某些平台在默认情况下，关闭某监听套接字后，要过一会儿其他套接字才可以绑定到同一个端口。设置这个标志会让libevent标记套接字是可重用的，这样一旦关闭，可以立即打开其他套接字，在相同端口进行监听。
 
-- **<font color="#8064a2">LEV_OPT_THREADSAFE</font>**
+###   **<font color="#8064a2">LEV_OPT_THREADSAFE</font>**
 
 为监听器分配锁，这样就可以在多个线程中安全地使用了。这是2.0.8-rc的新功能。
 

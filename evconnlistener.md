@@ -257,4 +257,4 @@ evconnlistener_set_cb(struct evconnlistener *lev,
 
 函数调整evconnlistener的回调函数和其参数。它是2.0.9-rc版本引入的。
 
-# Check evconnli
+# Check evconnlistener

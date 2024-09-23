@@ -1152,8 +1152,14 @@ event.h头文件用于暴露evbuffer结构体的内部，但该结构体已经�
 
 其他废弃的接口有：
 ~~~c
-
 char *evbuffer_readline(struct evbuffer *buffer);
 unsigned char* evbuffer_find(struct evbuffer *buffer,const unsigned char*what ,size_t len);
+~~~
+evbuffer_readline()函数的工作方式类似于当前的evbuffer_readln(buffer,NULL,EVBUFFER_EOL_ANY）。
 
+evbuffer_find()将在缓冲区中搜索字符串的首次出现，返回其指针。与evbuffer_search()不同的是，它只能找到第一个字符串。为兼容使用这个函数的老代码，这个函数会线性化到被定位字符串末尾的整个缓冲区。
+
+回调函数也有不同：
+~~~c
+typedef void (*evbuffer_cb)(struct evbuffer *buffer,)
 ~~~

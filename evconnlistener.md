@@ -16,12 +16,40 @@ void evconnlistener_free(evconnlistener* evlistener);
     
 ~~~
 
+两个evconnlistener_new*()函数都分配和返回一个新的连接监听器对象。连接监听器使用event_base来得知什么时候在给定的监听套接字上有新的TCP连接。新连接到达时，监听器调用你给出的回调函数。
 
+两个函数中，base参数都是监听器用于监听连接的event_base。cb是收到新连接时要调用的回调函数；如果cb为NULL，则监听器是禁用的，直到设置了回调函数为止。ptr指针将传递给回调函数。flags参数控制回调函数的行为，下面会更详细论述。backlog是任何时刻网络栈允许处于还未接受状态的最大未决连接数。更多细节请查看系统的listen()函数文档。如果backlog是负的，libevent会试图挑选一个较好的值；如果为0，libevent认为已经对提供的套接字调用了listen()。
 
+两个函数的不同在于如何建立监听套接字。evconnlistener_new()函数假定已经将套接字绑定到要监听的端口，然后通过fd传入这个套接字。如果要libevent分配和绑定套接字，可以调用evconnlistener_new_bind()，传输要绑定到的地址和地址长度。
+
+要释放连接监听器，调用evconnlistener_free()。
+
+## Recognizable signs
+
+可以给evconnlistener_new()函数的flags参数传入一些标志。可以用或(OR)运算任意连接下述标志：
+
+- **LEV_OPT_LEAVE_SOCKETS_BLOCKING**
+
+默认情况下，连接监听器接收新套接字后，会将其设置为非阻塞的，以便将其用于libevent。如果不想要这种行为，可以设置这个标志。
+
+- **LEV_OPT_CLOSE_ON_FREE**
+
+如果设置了这个选项，释放连接监听器会关闭底层套接字。
+
+**-** **LEV_OPT_CLOSE_ON_EXEC**
+
+如果设置了这个选项，连接监听器会为底层套接字设置close-on-exec标志。更多信息请查看fcntl和FD_CLOEXEC的平台文档。
+
+**l** **LEV_OPT_REUSEABLE**
+
+某些平台在默认情况下，关闭某监听套接字后，要过一会儿其他套接字才可以绑定到同一个端口。设置这个标志会让libevent标记套接字是可重用的，这样一旦关闭，可以立即打开其他套接字，在相同端口进行监听。
+
+**l** **LEV_OPT_THREADSAFE**
+
+为监听器分配锁，这样就可以在多个线程中安全地使用了。这是2.0.8-rc的新功能。
 
 ## source code
-### evconnlistener_new
-
+### evconnlistener_new()
 
 ~~~c
 
@@ -80,7 +108,7 @@ evconnlistener_new(struct event_base *base,
 }
 
 ~~~
-### evconnlistener_new_bind
+### evconnlistener_new_bind()
 ~~~c
 
 struct evconnlistener *

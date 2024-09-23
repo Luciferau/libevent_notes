@@ -1161,5 +1161,7 @@ evbuffer_find()将在缓冲区中搜索字符串的首次出现，返回其指�
 
 回调函数也有不同：
 ~~~c
-typedef void (*evbuffer_cb)(struct evbuffer *buffer,)
+typedef void (*evbuffer_cb)(struct evbuffer *buffer,size_t old_len,size_t new_len,void *arg);
+
+void evbuffer_setcb(struct evbuffer* buffer,evbuffer_cb cb,void *cbarg);
 ~~~

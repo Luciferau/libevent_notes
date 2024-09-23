@@ -1068,3 +1068,47 @@ int evbuffer_add_reference(struct evbuffer *outbuf,
 ~~~
 
 这个函数通过引用向evbuffer末尾添加一段数据。不会进行复制：evbuffer只会存储一个到data处的datlen字节的指针。因此，在evbuffer使用这个指针期间，必须保持指针是有效的。evbuffer会在不再需要这部分数据的时候调用用户提供的cleanupfn函数，带有提供的data指针、datlen值和extra指针参数。函数成功时返回0，失败时返回-1。
+
+~~~c
+#include <event2/buffer.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define HUGE_RESOURCE_SIZE (1024 * 1024)
+
+// Define a structure for a huge resource
+struct huge_resource {
+    int reference_count; // Reference count
+    char data[HUGE_RESOURCE_SIZE]; // Storage for data
+};
+
+// Create a new resource
+struct huge_resource *new_resource(void) {
+    struct huge_resource *hr = malloc(sizeof(struct huge_resource));
+    if (hr) {
+        hr->reference_count = 1; // Initialize reference count to 1
+        // Here we should fill hr->data with something; in practice, this could load content or perform complex calculations
+        memset(hr->data, 0xEE, sizeof(hr->data)); // Fill with 0xEE
+    }
+    return hr;
+}
+
+// Free the resource
+void free_resource(struct huge_resource *hr) {
+    if (--hr->reference_count == 0) { // Decrease reference count
+        free(hr); // Free memory if reference count is zero
+    }
+}
+
+// Cleanup function
+static void cleanup(const void *data, size_t len, void *arg) {
+    free_resource(arg); // Free the resource
+}
+
+// Add the resource to evbuffer
+void spool_resource_to_evbuffer(struct evbuffer *buf, struct huge_resource *hr) {
+    hr->reference_count++; // Increase reference count
+    evbuffer_add_reference(buf, hr->data, HUGE_RESOURCE_SIZE, cleanup, hr); // Add resource to buffer
+}
+
+~~~

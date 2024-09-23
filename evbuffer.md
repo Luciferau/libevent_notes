@@ -1047,3 +1047,14 @@ int evbuffer_cb_clear_flags(struct evbuffer *buffer,
 ~~~c
 int evbuffer_defer_callbacks(struct evbuffer *buffer, struct event_base *base);
 ~~~
+跟bufferevent回调一样，可以让evbuffer回调不在evbuffer被修改时立即运行，而是延迟到某event_base的事件循环中执行。如果有多个evbuffer，它们的回调潜在地让数据添加到evbuffer中，或者从中移除，又要避免栈崩溃，延迟回调是很有用的。
+
+如果回调被延迟，则最终执行时，它可能是多个操作结果的总和。
+
+与bufferevent一样，evbuffer具有内部引用计数的，所以即使还有未执行的延迟回调，释放evbuffer也是安全的。
+
+整个回调系统是2.0.1-alpha版本新引入的。evbuffer_cb_(set|clear)_flags()函数从2.0.2-alpha版本开始存在。
+
+# Avoiding data copying for evbuffer-based IO
+
+真正高速的网络编程通常要求尽量少的数据复制，libevent为此提供了一些机制：

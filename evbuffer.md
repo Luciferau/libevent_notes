@@ -1032,15 +1032,15 @@ int evbuffer_remove_cb_entry(struct evbuffer *buffer, struct evbuffer_cb_entry *
 
 #define EVBUFFER_REMOVE_CB_ENABLED 1
 int evbuffer_cb_set_flags(struct evbuffer *buffer, 
-							struct evbuffer_cb_entry *cb, 
-							uint32_t flags);
+								struct evbuffer_cb_entry *cb, 
+								uint32_t flags);
 int evbuffer_cb_clear_flags(struct evbuffer *buffer, 
-							struct evbuffer_cb_entry *cb,
-							 uint32_t flags);
+								struct evbuffer_cb_entry *cb,
+								 uint32_t flags);
 ~~~
 
 可以通过添加回调时候的<font color="#4bacc6">evbuffer_cb_entry</font>来移除回调，也可以通过回调函数和参数指针来移除。成功时函数返回0，失败时返回-1。
 
 <font color="#4bacc6">evbuffer_cb_set_flags()</font>和evbuffer_cb_clear_flags()函数分别为回调函数设置或者清除给定的标志。当前只有一个标志是用户可见的：EVBUFFER_CB_ENABLED。这个标志默认是打开的。如果清除这个标志，对evbuffer的修改不会调用回调函数。
 
- 
+## 

@@ -1056,6 +1056,7 @@ int evbuffer_defer_callbacks(struct evbuffer *buffer, struct event_base *base);
 整个回调系统是2.0.1-alpha版本新引入的。evbuffer_cb_(set|clear)_flags()函数从2.0.2-alpha版本开始存在。
 
 # Avoiding data copying for evbuffer-based IO
+## evbuffer_add_reference()
 
 真正高速的网络编程通常要求尽量少的数据复制，libevent为此提供了一些机制：
 ![Avoiding data copying for evbuffer-based IO](images/Pasted%20image%2020240923224952.png)
@@ -1069,6 +1070,7 @@ int evbuffer_add_reference(struct evbuffer *outbuf,
 
 这个函数通过引用向evbuffer末尾添加一段数据。不会进行复制：evbuffer只会存储一个到data处的datlen字节的指针。因此，在evbuffer使用这个指针期间，必须保持指针是有效的。evbuffer会在不再需要这部分数据的时候调用用户提供的cleanupfn函数，带有提供的data指针、datlen值和extra指针参数。函数成功时返回0，失败时返回-1。
 
+## example
 ~~~c
 #include <event2/buffer.h>
 #include <stdlib.h>

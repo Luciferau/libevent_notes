@@ -44,11 +44,13 @@ void evconnlistener_free(evconnlistener* evlistener);
 
 	某些平台在默认情况下，关闭某监听套接字后，要过一会儿其他套接字才可以绑定到同一个端口。设置这个标志会让libevent标记套接字是可重用的，这样一旦关闭，可以立即打开其他套接字，在相同端口进行监听。
 
-###   **<font color="#8064a2">LEV_OPT_THREADSAFE</font>**
+### **<font color="#8064a2">LEV_OPT_THREADSAFE</font>**
 
 为监听器分配锁，这样就可以在多个线程中安全地使用了。这是2.0.8-rc的新功能。
+## Connection listener callback
 
 ## source code
+
 ### evconnlistener_new()
 
 ~~~c

@@ -1043,4 +1043,7 @@ int evbuffer_cb_clear_flags(struct evbuffer *buffer,
 
 <font color="#4bacc6">evbuffer_cb_set_flags()</font>和evbuffer_cb_clear_flags()函数分别为回调函数设置或者清除给定的标志。当前只有一个标志是用户可见的：EVBUFFER_CB_ENABLED。这个标志默认是打开的。如果清除这个标志，对evbuffer的修改不会调用回调函数。
 
-## 
+## evbuffer_defer_callbacks（）
+~~~c
+int evbuffer_defer_callbacks(struct evbuffer *buffer, struct event_base *base);
+~~~

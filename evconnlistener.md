@@ -350,6 +350,17 @@ static void echo_event_cb(struct bufferevent *bev, short events, void *ctx) {
     }
 }
 
+static void accept_conn_cb(struct evconnlistener *listener, evutil_socket_t fd,struct sockaddr *address,
+						   int socklen, void *ctx) 
+{
+    
+    /** We get a new connection ! Set up a bufferevent for it */
+    struct event_base *base = evconnlistener_get_base(listener);
+    struct bufferevent *bev = bufferevent_socket_new(base, fd, BEV_OPT_CLOSE_ON_FREE);
+    bufferevent_setcb(bev, echo_read_cb, NULL, echo_event_cb, NULL);
+    bufferevent_enable(bev, EV_READ | EV_WRITE);
+
+}
 
 
 

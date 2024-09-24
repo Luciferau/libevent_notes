@@ -301,5 +301,13 @@ evconnlistener_get_fd()函数首次出现在2.0.3-alpha版本。
    @param user_arg the pointer passed to evconnlistener_new()
  */
 typedef void (*evconnlistener_errorcb)(struct evconnlistener *, void *);
+
+void evconnlistener_set_error_cb(struct evconnlistener *lev,
+    evconnlistener_errorcb errorcb)
+{
+	LOCK(lev);
+	lev->errorcb = errorcb;
+	UNLOCK(lev);
+}
 ~~~
 

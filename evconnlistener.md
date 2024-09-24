@@ -325,3 +325,17 @@ void evconnlistener_set_error_cb(struct evconnlistener *lev,
 #include <event2/buffer.h>
 
 #include <arpa/inet.h>
+
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <error.h>
+
+static void echo_read_cb(struct bufferevent *bev, void *ctx) {
+    struct evbuffer *input = bufferevent_get_input(bev);
+    struct evbuffer *output = bufferevent_get_output(bev);
+    evbuffer_add_buffer(output, input);
+
+    /**Copy all the data from  */
+}
+

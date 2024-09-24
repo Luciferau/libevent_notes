@@ -350,9 +350,8 @@ static void echo_event_cb(struct bufferevent *bev, short events, void *ctx) {
     }
 }
 
-static void accept_conn_cb(struct evconnlistener *listener, evutil_socket_t fd,struct sockaddr *address,
-						   int socklen, void *ctx) 
-{
+
+static void accept_conn_cb(struct evconnlistener *listener, evutil_socket_t fd,struct sockaddr *address, int socklen, void *ctx) {
     
     /** We get a new connection ! Set up a bufferevent for it */
     struct event_base *base = evconnlistener_get_base(listener);
@@ -368,5 +367,51 @@ static void accecpt_error_cb(struct evconnlistener *listener, void *ctx) {
     fprintf(stderr, "Got an error %d (%s) on the listener. "
             "Shutting down.\n", err, evutil_socket_error_to_string(err));
     event_base_loopbreak(base);
+}
+
+
+int main(int argc, char **argv) {
+    struct event_base *base;
+    struct evconnlistener *listener;
+    struct sockaddr_in sin;
+
+    int port = 9876;
+    if (argc > 1) {
+        port = atoi(argv[1]);
+    }
+
+    if(port <= 0 || port > 65535) {
+        fprintf(stderr, "Invalid port number, try in range 0-65535\n");
+        return 1;
+    }
+
+    base = event_base_new();
+    if (!base) {
+        perror("Couldn't new event base");
+        return 1;
+    }
+
+    /** Clear the sockaddr before using it ,in case there are extra
+     * platform-specific fields that can mess us up. */
+    memset(&sin, 0, sizeof(sin));
+    
+    /*This is an INET address*/
+    sin.sin_family = AF_INET;
+
+    /*Listen on 0.0.0.0, port 9876*/
+    sin.sin_port = htons(port);
+
+    listener = evconnlistener_new_bind(base, accept_conn_cb, NULL,LEV_OPT_CLOSE_ON_FREE | LEV_OPT_REUSEABLE, -1, (struct sockaddr *)&sin, sizeof(sin));
+
+    if (!listener) {
+        perror("Couldn't create listener");
+        return 1;
+
+    }
+
+    evconnlistener_set_error_cb(listener, accecpt_error_cb);
+
+    event_base_dispatch(base);
+    return 0;
 }
 

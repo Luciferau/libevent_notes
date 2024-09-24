@@ -336,6 +336,8 @@ static void echo_read_cb(struct bufferevent *bev, void *ctx) {
     struct evbuffer *output = bufferevent_get_output(bev);
     evbuffer_add_buffer(output, input);
 
-    /**Copy all the data from  */
+    /**Copy all the data from the input buffer to the output buffer */
+    evbuffer_add_buffer(output, input);
+
 }
 

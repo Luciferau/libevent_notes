@@ -341,3 +341,15 @@ static void echo_read_cb(struct bufferevent *bev, void *ctx) {
 
 }
 
+static void echo_event_cb(struct bufferevent *bev, short events, void *ctx) {
+    if (events & BEV_EVENT_ERROR) {
+        perror("Error from bufferevent");
+    }
+    if (events & (BEV_EVENT_EOF | BEV_EVENT_ERROR)) {
+        bufferevent_free(bev);
+    }
+}
+
+
+
+

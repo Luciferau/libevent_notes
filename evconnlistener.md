@@ -362,5 +362,11 @@ static void accept_conn_cb(struct evconnlistener *listener, evutil_socket_t fd,s
 
 }
 
-
+static void accecpt_error_cb(struct evconnlistener *listener, void *ctx) {
+    struct event_base *base = evconnlistener_get_base(listener);
+    int err = EVUTIL_SOCKET_ERROR();
+    fprintf(stderr, "Got an error %d (%s) on the listener. "
+            "Shutting down.\n", err, evutil_socket_error_to_string(err));
+    event_base_loopbreak(base);
+}
 

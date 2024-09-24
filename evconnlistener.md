@@ -286,4 +286,7 @@ evconnlistener_get_base(struct evconnlistener *lev)
 	return base;
 }
 ~~~
+这些函数分别返回监听器关联的套接字和event_base。
 
+evconnlistener_get_fd()函数首次出现在2.0.3-alpha版本。
+## 

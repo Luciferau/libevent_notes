@@ -292,3 +292,14 @@ evconnlistener_get_fd()函数首次出现在2.0.3-alpha版本。
 ## Detection Error
 
 可以设置一个一旦监听器上的accept()调用失败就被调用的错误回调函数。对于一个不解决就会锁定进程的错误条件，这很重要。
+
+~~~c
+/**
+   A callback that we invoke when a listener encounters a non-retriable error.
+
+   @param listener The evconnlistener
+   @param user_arg the pointer passed to evconnlistener_new()
+ */
+typedef void (*evconnlistener_errorcb)(struct evconnlistener *, void *);
+~~~
+

@@ -292,7 +292,7 @@ evconnlistener_get_fd()函数首次出现在2.0.3-alpha版本。
 ## Detection Error
 
 可以设置一个一旦监听器上的accept()调用失败就被调用的错误回调函数。对于一个不解决就会锁定进程的错误条件，这很重要。
-
+## *evconnlistener_errorcb|  evconnlistener_set_error_cb()
 ~~~c
 /**
    A callback that we invoke when a listener encounters a non-retriable error.
@@ -311,3 +311,13 @@ void evconnlistener_set_error_cb(struct evconnlistener *lev,
 }
 ~~~
 
+
+如果使用evconnlistener_set_error_cb()为监听器设置了错误回调函数，则监听器发生错误时回调函数就会被调用。第一个参数是监听器，第二个参数是调用evconnlistener_new()时传入的ptr。
+
+这个函数在2.0.8-rc版本引入。
+
+
+# Echo server
+
+~~~c
+#include

@@ -192,10 +192,10 @@ hints的ai_flags字段指示<font color="#3f3f3f">evutil_getaddrinfo</font>如�
 
 - <font color="#8064a2">EVUTIL_AI_ALL</font>
 
-如果设置了这个标志和EVUTIL_AI_V4MAPPED，则无论结果是否包含IPv6地址，IPv4地址都应该以v4映射型IPv6地址的形式返回。当前evutil_getaddrinfo()不支持这个标志，除非操作系统支持它。
+如果设置了这个标志和<font color="#8064a2">EVUTIL_AI_V4MAPPED</font>，则无论结果是否包含<font color="#8064a2">IPv6</font>地址，<font color="#8064a2">IPv4</font>地址都应该以v4映射型<font color="#8064a2">IPv6</font>地址的形式返回。当前<font color="#4bacc6">evutil_getaddrinfo()</font>不支持这个标志，除非操作系统支持它。
 
 - <font color="#8064a2">EVUTIL_AI_ADDRCONFIG</font>
 
-如果设置了这个标志，则只有系统拥有非本地的IPv4地址时，结果才包含IPv4地址；只有系统拥有非本地的IPv6地址时，结果才包含IPv6地址。
+如果设置了这个标志，则只有系统拥有非本地的IPv4地址时，结果才包含IPv4地址；只有系统拥有非本地的<font color="#8064a2">IPv6</font>地址时，结果才包含<font color="#8064a2">IPv6</font>地址。
 
-hints的ai_family字段指示evutil_getaddrinfo()应该返回哪个地址。字段值可以是AF_INET，表示只请求IPv4地址；也可以是AF_INET6，表示只请求IPv6地址；或者用AF_UNSPEC表示请求所有可用地址。
+hints的<font color="#4bacc6">ai_family</font>字段指示<font color="#4bacc6">evutil_getaddrinfo()</font>应该返回哪个地址。字段值可以是<font color="#8064a2">AF_INET</font>，表示只请求<font color="#8064a2">IPv4</font>地址；也可以是AF_INET6，表示只请求IPv6地址；或者用<font color="#8064a2">AF_UNSPEC</font>表示请求所有可用地址。

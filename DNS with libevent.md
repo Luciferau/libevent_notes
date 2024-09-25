@@ -309,3 +309,10 @@ get_tcp_socket_for_host(const char *hostname,ev_uint64_t port){
 }
 ~~~
 
+上述函数和常量是2.0.3-alpha版本新增加的，声明在event2/util.h中。
+
+# Non-blocking name resolution using evdns_getaddrinfo()
+通常的getaddrinfo()，以及上面的evutil_getaddrinfo()的问题是，它们是阻塞的：调用线程必须等待函数查询DNS服务器，等待回应。对于libevent，这可能不是期望的行为。
+
+对于非阻塞式应用，libevent提供了一组函数用于启动DNS请求，让libevent等待服务器回应。
+

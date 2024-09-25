@@ -266,10 +266,46 @@ hints的ai_socktype和ai_protocol字段告知evutil_getaddrinfo()将如何使用
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <sys/types.h>
-
+#include <string.h>
+#include <memory.h>
+ 
 #include <assert.h>
 #include <unistd.h>
 
+/* Set N bytes of S to C.  */
+extern void *memset (void *__s, int __c, size_t __n) __THROW __nonnull ((1));
+evutil_socket_t 
+get_tcp_socket_for_host(const char *hostname,ev_uint64_t port){
+    char port_str[6];
+    struct evutil_addrinfo hints;
+    struct evutil_addrinfo *res = nullptr;
 
+    int err;
+    evutil_socket_t sock;
+    evutil_snprintf(port_str,sizeof(port_str),"%llu",(unsigned long long)port);
+    memset((&hints), 0, sizeof(hints));
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_flags = EVUTIL_AI_ADDRCONFIG;
+    hints.ai_protocol = IPPROTO_TCP;
+    err = evutil_getaddrinfo(hostname,port_str,&hints,&res);
+    if(err < 0){
+         
+        return -1;
+    }
+    assert(res);
+    sock = socket(res->ai_family,res->ai_socktype,res->ai_protocol);
+    if(sock < 0){
+        
+        EVUTIL_CLOSESOCKET(sock);
+        return -1;
+    }
+    if(connect(sock,res->ai_addr,res->ai_addrlen) < 0){
+        EVUTIL_CLOSESOCKET(sock);
+        return -1;
+    }
+    return sock;
+    
+}
 ~~~
 

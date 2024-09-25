@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "DNS with libevent.md",
+                "file": "Memory management.md",
                 "mode": "source",
                 "source": false
               }
@@ -73,7 +73,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "DNS with libevent.md"
+                "file": "Memory management.md"
               }
             }
           },
@@ -100,8 +100,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -121,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "DNS with libevent.md",
+                "file": "Memory management.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -138,7 +137,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "DNS with libevent.md",
+                "file": "Memory management.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -161,7 +160,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "DNS with libevent.md"
+                "file": "Memory management.md"
               }
             }
           },
@@ -210,10 +209,10 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "db730313e0ffb1b4",
+  "active": "2cef0710352747eb",
   "lastOpenFiles": [
-    "evconnlistener.md",
     "DNS with libevent.md",
+    "evconnlistener.md",
     "Macro definition.md",
     "Helper types and functions.md",
     "Bufferevent and evbuffer.md",

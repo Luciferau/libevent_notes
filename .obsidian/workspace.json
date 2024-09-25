@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Memory management.md",
+                "file": "Macro function.md",
                 "mode": "source",
                 "source": false
               }
@@ -73,7 +73,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Memory management.md"
+                "file": "Macro function.md"
               }
             }
           },
@@ -120,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Memory management.md",
+                "file": "Macro function.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -137,7 +137,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Memory management.md",
+                "file": "Macro function.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -160,7 +160,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Memory management.md"
+                "file": "Macro function.md"
               }
             }
           },
@@ -211,6 +211,7 @@
   },
   "active": "2cef0710352747eb",
   "lastOpenFiles": [
+    "Memory management.md",
     "DNS with libevent.md",
     "evconnlistener.md",
     "Macro definition.md",
@@ -230,7 +231,6 @@
     "epoll API.md",
     "Variadic function.md",
     "Macro function.md",
-    "Memory management.md",
     "Event loop.md",
     "aceld_notes/libevent_notes_aceld/82_evbufferyu_xian_cheng_an_quan.md",
     "aceld_notes/libevent_notes_aceld/libevent-2-解决阻塞04.png",

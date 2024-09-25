@@ -206,46 +206,46 @@ hints的ai_socktype和ai_protocol字段告知evutil_getaddrinfo()将如何使用
 
 如果失败，函数返回数值型的错误码：
 
-- **EVUTIL_EAI_ADDRFAMILY**
+-  **EVUTIL_EAI_ADDRFAMILY**
 
 	请求的地址族对nodename没有意义。
 
-**-** **EVUTIL_EAI_AGAIN**
+- **EVUTIL_EAI_AGAIN**
 
-名字解析中发生可以恢复的错误，请稍后重试。
+	名字解析中发生可以恢复的错误，请稍后重试。
 
-**-** **EVUTIL_EAI_FAIL**
+- **EVUTIL_EAI_FAIL**
 
-名字解析中发生不可恢复的错误：解析器或者DNS服务器可能已经崩溃。
+	名字解析中发生不可恢复的错误：解析器或者DNS服务器可能已经崩溃。
 
-**-** **EVUTIL_EAI_BADFLAGS**
+- **EVUTIL_EAI_BADFLAGS**
 
-hints中的ai_flags字段无效。
+	hints中的ai_flags字段无效。
 
-**-** **EVUTIL_EAI_FAMILY**
+- **EVUTIL_EAI_FAMILY**
 
-不支持hints中的ai_family字段。
+	不支持hints中的ai_family字段。
 
-**-** **EVUTIL_EAI_MEMORY**
+- **EVUTIL_EAI_MEMORY**
 
-回应请求的过程耗尽内存。
+	回应请求的过程耗尽内存。
 
-**-** **EVUTIL_EAI_NODATA**
+- **EVUTIL_EAI_NODATA**
 
 请求的主机不存在。
 
-**-** **EVUTIL_EAI_SERVICE**
+- **EVUTIL_EAI_SERVICE**
 
 请求的服务不存在。
 
-**-** **EVUTIL_EAI_SOCKTYPE**
+- **EVUTIL_EAI_SOCKTYPE**
 
 不支持请求的套接字类型，或者套接字类型与ai_protocol不匹配。
 
-**-** **EVUTIL_EAI_SYSTEM**
+- **EVUTIL_EAI_SYSTEM**
 
 名字解析中发生其他系统错误，更多信息请检查errno。
 
-**-** **EVUTIL_EAI_CANCEL**
+- **EVUTIL_EAI_CANCEL**
 
 应用程序在解析完成前请求取消。evutil_getaddrinfo()函数从不产生这个错误，但是后面描述的evdns_getaddrinfo()可能产生这个错误。

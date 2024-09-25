@@ -11,6 +11,7 @@ getaddrinfo()接口由RFC 中定义。关于libevent如何不满足其一致性�
 ~~~c
 /* Extension from POSIX.1:2001.  */
 #ifdef __USE_XOPEN2K
+#define evutil_addrinfo addrinfo
 /* Structure to contain information about address of a service provider.  */
 struct addrinfo
 {
@@ -138,5 +139,26 @@ struct addrinfo
 ~~~c
 int evutil_getaddrinfo(const char *nodename, const char *servname, 
                        const struct addrinfo *hints_in, struct addrinfo **res);
+~~~
+
+~~~c
+
+void
+ evutil_freeaddrinfo(struct evutil_addrinfo *ai)
+{
+#ifdef EVENT__HAVE_GETADDRINFO
+	if (!(ai->ai_flags & EVUTIL_AI_LIBEVENT_ALLOCATED)) {
+		freeaddrinfo(ai);
+		return;
+	}
+#endif
+	while (ai) {
+		struct evutil_addrinfo *next = ai->ai_next;
+		if (ai->ai_canonname)
+			mm_free(ai->ai_canonname);
+		mm_free(ai);
+		ai = next;
+	}
+}
 ~~~
 

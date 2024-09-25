@@ -316,3 +316,8 @@ get_tcp_socket_for_host(const char *hostname,ev_uint64_t port){
 
 对于非阻塞式应用，libevent提供了一组函数用于启动DNS请求，让libevent等待服务器回应。
 
+~~~c
+/** Callback for evdns_getaddrinfo. */
+typedef void (*evdns_getaddrinfo_cb)(int result, struct evutil_addrinfo *res, void *arg);
+~~~
+

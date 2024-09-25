@@ -66,5 +66,6 @@
   "Bufferevent Advanced Topics.md": "📓",
   "Bufferevent and SSL.md": "📓",
   "evbuffer.md": "📓",
-  "evconnlistener.md": "📓"
+  "evconnlistener.md": "📓",
+  "DNS with libevent.md": "📓"
 }

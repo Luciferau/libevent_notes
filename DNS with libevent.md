@@ -203,3 +203,49 @@ hints的<font color="#4bacc6">ai_family</font>字段指示<font color="#4bacc6">
 hints的ai_socktype和ai_protocol字段告知evutil_getaddrinfo()将如何使用返回的地址。这两个字段值的意义与传递给socket()函数的socktype和protocol参数值相同。
 
 成功时函数新建一个evutil_addrinfo结构体链表，存储在*res中，链表的每个元素通过ai_next指针指向下一个元素。因为链表是在堆上分配的，所以需要调用evutil_freeaddrinfo()进行释放。
+
+如果失败，函数返回数值型的错误码：
+
+- **EVUTIL_EAI_ADDRFAMILY**
+
+	请求的地址族对nodename没有意义。
+
+**-** **EVUTIL_EAI_AGAIN**
+
+名字解析中发生可以恢复的错误，请稍后重试。
+
+**-** **EVUTIL_EAI_FAIL**
+
+名字解析中发生不可恢复的错误：解析器或者DNS服务器可能已经崩溃。
+
+**-** **EVUTIL_EAI_BADFLAGS**
+
+hints中的ai_flags字段无效。
+
+**-** **EVUTIL_EAI_FAMILY**
+
+不支持hints中的ai_family字段。
+
+**-** **EVUTIL_EAI_MEMORY**
+
+回应请求的过程耗尽内存。
+
+**-** **EVUTIL_EAI_NODATA**
+
+请求的主机不存在。
+
+**-** **EVUTIL_EAI_SERVICE**
+
+请求的服务不存在。
+
+**-** **EVUTIL_EAI_SOCKTYPE**
+
+不支持请求的套接字类型，或者套接字类型与ai_protocol不匹配。
+
+**-** **EVUTIL_EAI_SYSTEM**
+
+名字解析中发生其他系统错误，更多信息请检查errno。
+
+**-** **EVUTIL_EAI_CANCEL**
+
+应用程序在解析完成前请求取消。evutil_getaddrinfo()函数从不产生这个错误，但是后面描述的evdns_getaddrinfo()可能产生这个错误。

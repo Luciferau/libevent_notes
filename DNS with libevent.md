@@ -321,3 +321,43 @@ get_tcp_socket_for_host(const char *hostname,ev_uint64_t port){
 typedef void (*evdns_getaddrinfo_cb)(int result, struct evutil_addrinfo *res, void *arg);
 ~~~
 
+~~~c
+
+/* State data used to implement an in-progress getaddrinfo. */
+struct evdns_getaddrinfo_request {
+	struct evdns_base *evdns_base;
+	/* Copy of the modified 'hints' data that we'll use to build
+	 * answers. */
+	struct evutil_addrinfo hints;
+	/* The callback to invoke when we're done */
+	evdns_getaddrinfo_cb user_cb;
+	/* User-supplied data to give to the callback. */
+	void *user_data;
+	/* The port to use when building sockaddrs. */
+	ev_uint16_t port;
+	/* The sub_request for an A record (if any) */
+	struct getaddrinfo_subrequest ipv4_request;
+	/* The sub_request for an AAAA record (if any) */
+	struct getaddrinfo_subrequest ipv6_request;
+
+	/* The cname result that we were told (if any) */
+	char *cname_result;
+
+	/* If we have one request answered and one request still inflight,
+	 * then this field holds the answer from the first request... */
+	struct evutil_addrinfo *pending_result;
+	/* And this event is a timeout that will tell us to cancel the second
+	 * request if it's taking a long time. */
+	struct event timeout;
+
+	/* And this field holds the error code from the first request... */
+	int pending_error;
+	/* If this is set, the user canceled this request. */
+	unsigned user_canceled : 1;
+	/* If this is set, the user can no longer cancel this request; we're
+	 * just waiting for the free. */
+	unsigned request_done : 1;
+};
+
+~~~
+

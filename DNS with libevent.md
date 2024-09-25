@@ -258,3 +258,18 @@ hints的ai_socktype和ai_protocol字段告知evutil_getaddrinfo()将如何使用
 
 
 ## example
+
+~~~c
+#include <event2/util.h>
+#include <event2/event.h>
+
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <sys/types.h>
+
+#include <assert.h>
+#include <unistd.h>
+
+
+~~~
+

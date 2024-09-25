@@ -132,3 +132,11 @@ struct addrinfo
 /**@}*/
 ~~~
 
+
+​	
+
+~~~c
+int evutil_getaddrinfo(const char *nodename, const char *servname, 
+                       const struct addrinfo *hints_in, struct addrinfo **res);
+~~~
+

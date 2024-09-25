@@ -199,3 +199,7 @@ hints的ai_flags字段指示<font color="#3f3f3f">evutil_getaddrinfo</font>如�
 如果设置了这个标志，则只有系统拥有非本地的IPv4地址时，结果才包含IPv4地址；只有系统拥有非本地的<font color="#8064a2">IPv6</font>地址时，结果才包含<font color="#8064a2">IPv6</font>地址。
 
 hints的<font color="#4bacc6">ai_family</font>字段指示<font color="#4bacc6">evutil_getaddrinfo()</font>应该返回哪个地址。字段值可以是<font color="#8064a2">AF_INET</font>，表示只请求<font color="#8064a2">IPv4</font>地址；也可以是AF_INET6，表示只请求IPv6地址；或者用<font color="#8064a2">AF_UNSPEC</font>表示请求所有可用地址。
+
+hints的ai_socktype和ai_protocol字段告知evutil_getaddrinfo()将如何使用返回的地址。这两个字段值的意义与传递给socket()函数的socktype和protocol参数值相同。
+
+成功时函数新建一个evutil_addrinfo结构体链表，存储在*res中，链表的每个元素通过ai_next指针指向下一个元素。因为链表是在堆上分配的，所以需要调用evutil_freeaddrinfo()进行释放。

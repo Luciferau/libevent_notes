@@ -206,46 +206,47 @@ hints的ai_socktype和ai_protocol字段告知evutil_getaddrinfo()将如何使用
 
 如果失败，函数返回数值型的错误码：
 
--  **EVUTIL_EAI_ADDRFAMILY**
+-  **<font color="#8064a2">EVUTIL_EAI_ADDRFAMILY</font>**
 
 	请求的地址族对nodename没有意义。
 
-- **EVUTIL_EAI_AGAIN**
+- **<font color="#8064a2">EVUTIL_EAI_AGAIN</font>**
 
 	名字解析中发生可以恢复的错误，请稍后重试。
 
-- **EVUTIL_EAI_FAIL**
+- **<font color="#8064a2">EVUTIL_EAI_FAIL</font>**
 
 	名字解析中发生不可恢复的错误：解析器或者DNS服务器可能已经崩溃。
 
-- **EVUTIL_EAI_BADFLAGS**
+- **<font color="#8064a2">EVUTIL_EAI_BADFLAGS</font>**
 
 	hints中的ai_flags字段无效。
 
-- **EVUTIL_EAI_FAMILY**
+- **<font color="#8064a2">EVUTIL_EAI_FAMILY</font>**
 
 	不支持hints中的ai_family字段。
 
-- **EVUTIL_EAI_MEMORY**
+- **<font color="#8064a2">EVUTIL_EAI_MEMORY</font>**
 
 	回应请求的过程耗尽内存。
 
-- **EVUTIL_EAI_NODATA**
+- **<font color="#8064a2">EVUTIL_EAI_NODATA</font>**
 
-请求的主机不存在。
+	请求的主机不存在。
 
-- **EVUTIL_EAI_SERVICE**
+- **<font color="#8064a2">EVUTIL_EAI_SERVICE</font>**
 
-请求的服务不存在。
+	请求的服务不存在。
 
-- **EVUTIL_EAI_SOCKTYPE**
+- **<font color="#8064a2">EVUTIL_EAI_SOCKTYPE</font>**
 
-不支持请求的套接字类型，或者套接字类型与ai_protocol不匹配。
+	不支持请求的套接字类型，或者套接字类型与ai_protocol不匹配。
 
-- **EVUTIL_EAI_SYSTEM**
+- **<font color="#8064a2">EVUTIL_EAI_SYSTEM</font>**
 
-名字解析中发生其他系统错误，更多信息请检查errno。
+	名字解析中发生其他系统错误，更多信息请检查errno。
 
-- **EVUTIL_EAI_CANCEL**
+- **<font color="#8064a2">EVUTIL_EAI_CANCEL</font>**
 
-应用程序在解析完成前请求取消。evutil_getaddrinfo()函数从不产生这个错误，但是后面描述的evdns_getaddrinfo()可能产生这个错误。
+	应用程序在解析完成前请求取消。evutil_getaddrinfo()函数从不产生这个错误，但是后面描述的evdns_getaddrinfo()可能产生这个错误。
+调用<font color="#4bacc6">evutil_gai_strerror()</font>可以将上述错误值转化成描述性的字符串。

@@ -9,4 +9,19 @@ libevent提供了少量用于解析DNS名字的API，以及用于实现简单DNS
 getaddrinfo()接口由RFC 中定义。关于libevent如何不满足其一致性实现的概述，请看下面的“兼容性提示”节。
 
 ~~~c
+/* Extension from POSIX.1:2001.  */
+#ifdef __USE_XOPEN2K
+/* Structure to contain information about address of a service provider.  */
+struct addrinfo
+{
+  int ai_flags;			/* Input flags.  */
+  int ai_family;		/* Protocol family for socket.  */
+  int ai_socktype;		/* Socket type.  */
+  int ai_protocol;		/* Protocol for socket.  */
+  socklen_t ai_addrlen;		/* Length of socket address.  */
+  struct sockaddr *ai_addr;	/* Socket address for socket.  */
+  char *ai_canonname;		/* Canonical name for service location.  */
+  struct addrinfo *ai_next;	/* Pointer to next in list.  */
+};
+
 ~~~

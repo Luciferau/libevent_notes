@@ -192,7 +192,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -208,7 +209,7 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "2cef0710352747eb",
+  "active": "80e11fab48a73e51",
   "lastOpenFiles": [
     "evconnlistener.md",
     "DNS with libevent.md",

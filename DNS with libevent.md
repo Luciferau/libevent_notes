@@ -183,19 +183,19 @@ hints的ai_flags字段指示<font color="#3f3f3f">evutil_getaddrinfo</font>如�
 
 如果设置了这个标志，函数仅仅解析数值类型的IPv4和IPv6地址；如果nodename要求名字查询，函数返回EVUTIL_EAI_NONAME错误。
 
-***\*l\**** ***\*EVUTIL_AI_NUMERICSERV\****
+- EVUTIL_AI_NUMERICSERV
 
 如果设置了这个标志，函数仅仅解析数值类型的服务名。如果servname不是空，也不是十进制整数，函数返回EVUTIL_EAI_NONAME错误。
 
-***\*l\**** ***\*EVUTIL_AI_V4MAPPED\****
+- EVUTIL_AI_V4MAPPED
 
 这个标志表示，如果ai_family是AF_INET6，但是找不到IPv6地址，则应该以v4映射(v4-mapped)型IPv6地址的形式返回结果中的IPv4地址。当前evutil_getaddrinfo()不支持这个标志，除非操作系统支持它。
 
-***\*l\**** ***\*EVUTIL_AI_ALL\****
+- EVUTIL_AI_ALL
 
 如果设置了这个标志和EVUTIL_AI_V4MAPPED，则无论结果是否包含IPv6地址，IPv4地址都应该以v4映射型IPv6地址的形式返回。当前evutil_getaddrinfo()不支持这个标志，除非操作系统支持它。
 
-***\*l\**** ***\*EVUTIL_AI_ADDRCONFIG\****
+- EVUTIL_AI_ADDRCONFIG
 
 如果设置了这个标志，则只有系统拥有非本地的IPv4地址时，结果才包含IPv4地址；只有系统拥有非本地的IPv6地址时，结果才包含IPv6地址。
 

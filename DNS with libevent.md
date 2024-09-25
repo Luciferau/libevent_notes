@@ -169,4 +169,34 @@ IPv6字面地址（如::1），或者是DNS名字（如www.example.com）。如�
 
 如果不指定<font color="#00b050">servname</font>，则*res中的端口号将是零。如果不指定nodename，则*res中的地址要么是localhost(默认），要么是“任意”（如果设置了<font color="#8064a2">EVUTIL_AI_PASSIVE</font>）。
 
-hints的ai_flags字段指示evutil_getaddrinfo如何进行查询，它可以包含0个或者多个以或运算连接的下述标志：
+hints的ai_flags字段指示<font color="#3f3f3f">evutil_getaddrinfo</font>如何进行查询，它可以包含0个或者多个以或运算连接的下述标志：
+
+- EVUTIL_AI_PASSIVE
+
+这个标志指示将地址用于监听，而不是连接。通常二者没有差别，除非nodename为空：对于连接，空的nodename表示localhost（127.0.0.1或者::1）；而对于监听，空的nodename表示任意（0.0.0.0或者::0）。
+
+- EVUTIL_AI_CANONNAME
+
+如果设置了这个标志，则函数试图在ai_canonname字段中报告标准名称。
+
+- EVUTIL_AI_NUMERICHOST
+
+如果设置了这个标志，函数仅仅解析数值类型的IPv4和IPv6地址；如果nodename要求名字查询，函数返回EVUTIL_EAI_NONAME错误。
+
+***\*l\**** ***\*EVUTIL_AI_NUMERICSERV\****
+
+如果设置了这个标志，函数仅仅解析数值类型的服务名。如果servname不是空，也不是十进制整数，函数返回EVUTIL_EAI_NONAME错误。
+
+***\*l\**** ***\*EVUTIL_AI_V4MAPPED\****
+
+这个标志表示，如果ai_family是AF_INET6，但是找不到IPv6地址，则应该以v4映射(v4-mapped)型IPv6地址的形式返回结果中的IPv4地址。当前evutil_getaddrinfo()不支持这个标志，除非操作系统支持它。
+
+***\*l\**** ***\*EVUTIL_AI_ALL\****
+
+如果设置了这个标志和EVUTIL_AI_V4MAPPED，则无论结果是否包含IPv6地址，IPv4地址都应该以v4映射型IPv6地址的形式返回。当前evutil_getaddrinfo()不支持这个标志，除非操作系统支持它。
+
+***\*l\**** ***\*EVUTIL_AI_ADDRCONFIG\****
+
+如果设置了这个标志，则只有系统拥有非本地的IPv4地址时，结果才包含IPv4地址；只有系统拥有非本地的IPv6地址时，结果才包含IPv6地址。
+
+hints的ai_family字段指示evutil_getaddrinfo()应该返回哪个地址。字段值可以是AF_INET，表示只请求IPv4地址；也可以是AF_INET6，表示只请求IPv6地址；或者用AF_UNSPEC表示请求所有可用地址。

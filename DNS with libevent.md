@@ -361,3 +361,11 @@ struct evdns_getaddrinfo_request {
 
 ~~~
 
+~~~c
+
+struct evdns_getaddrinfo_request *evdns_getaddrinfo(struct evdns_base *dns_base,
+    const char *nodename, const char *servname,
+    const struct evutil_addrinfo *hints_in,
+    evdns_getaddrinfo_cb cb, void *arg)；
+~~~
+

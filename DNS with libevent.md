@@ -254,4 +254,7 @@ hints的ai_socktype和ai_protocol字段告知evutil_getaddrinfo()将如何使用
 ## Attention 
 
 如果操作系统定义了<font color="#4bacc6">addrinfo</font>结构体，则<font color="#4bacc6">evutil_addrinfo</font>仅仅是操作系统内置的<font color="#4bacc6">addrinfo</font>结构体的别名。类似地，如果操作系统定义了<font color="#8064a2">AI_*</font>标志，则相应的<font color="#8064a2">EVUTIL_AI_*</font>标志仅仅是本地标志的别名；如果操作系统定义了<font color="#8064a2">EAI_*</font>错误，则相应的<font color="#8064a2">EVUTIL_EAI_*</font>只是本地错误码的别名。
+
+
+
 ## example

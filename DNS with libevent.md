@@ -367,5 +367,16 @@ struct evdns_getaddrinfo_request *evdns_getaddrinfo(struct evdns_base *dns_base,
     const char *nodename, const char *servname,
     const struct evutil_addrinfo *hints_in,
     evdns_getaddrinfo_cb cb, void *arg)；
+    
+void evdns_getaddrinfo_cancel(struct evdns_getaddrinfo_request *data)   
 ~~~
 
+除了不会阻塞在DNS查询上，而是使用libevent的底层DNS机制进行查询外，evdns_getaddrinfo()和evutil_getaddrinfo()是一样的。因为函数不是总能立即返回结果，所以需要提供一个evdns_getaddrinfo_cb类型的回调函数，以及一个给回调函数的可选的用户参数。
+
+此外，调用evdns_getaddrinfo()还要求一个evdns_base指针。evdns_base结构体为libevent的DNS解析器保持状态和配置。关于如何获取evdns_base指针，请看下一节。
+
+如果失败或者立即成功，函数返回NULL。否则，函数返回一个evdns_getaddrinfo_request指针。在解析完成之前可以随时使用evdns_getaddrinfo_cancel()和这个指针来取消解析。
+
+注意：不论evdns_getaddrinfo()是否返回NULL，是否调用了evdns_getaddrinfo_cancel()，回调函数总是会被调用。
+
+evdns_getaddrinfo()内部会复制nodename、servname和hints参数，所以查询进行过程中不必保持这些参数有效。

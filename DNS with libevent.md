@@ -162,9 +162,9 @@ void
 }
 ~~~
 
-<font color="#4bacc6">evutil_getaddrinfo()</font>函数试图根据hints给出的规则，解析指定的nodename和servname，建立一个<font color="#4bacc6">evutil_addrinfo</font>结构体链表，将其存储在\*res中。成功时函数返回0，失败时返回非零的<font color="#4bacc6">错误码</font>。
+<font color="#4bacc6">evutil_getaddrinfo()</font>函数试图根据hints给出的规则，解析指定的nodename和servname，建立一个<font color="#4bacc6">evutil_addrinfo</font>结构体链表，将其存储在\*res中。成功时函数返回0，失败时返回非零的<font color="#ff0000">错误码</font>。    
 
-必须至少提供nodename和servname中的一个。如果提供了nodename，则它是IPv4字面地址（如127.0.0.1）、IPv6字面地(如::1、或者是DNS名字（如www.example.com）。如果提供了servname，则它是某网络服务的符号名（如https），或者是一个包含十进制端口号的字符串（如443）。
+必须至少提供<font color="#00b050">nodename</font>和<font color="#00b050">servname</font>中的一个。如果提供了<font color="#00b050">nodename</font>，则它是<font color="#8064a2">IPv4</font>字面地址（如<font color="#de7802">127.0.0.1</font>）、IPv6字面地(如::1、或者是DNS名字（如<font color="#00b0f0">www.example.com</font>）。如果提供了servname，则它是某网络服务的符号名（如https），或者是一个包含十进制端口号的字符串（如443）。
 
 如果不指定<font color="#00b050">servname</font>，则*res中的端口号将是零。如果不指定nodename，则*res中的地址要么是localhost(默认），要么是“任意”（如果设置了<font color="#8064a2">EVUTIL_AI_PASSIVE</font>）。
 

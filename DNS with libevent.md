@@ -490,11 +490,36 @@ int main(int argc, char **argv) {
         hints.ai_flags = EVUTIL_AI_CANONNAME;
         hints.ai_protocol = IPPROTO_TCP;
 
-        if(!(user_data = (struct user_data*)malloc(sizeof(struct user_data)))){
+        if(!(data = (struct user_data*)malloc(sizeof(struct user_data)))){
             puts("malloc failed");
             return 3;
         }
+        
+        if(!(data->name = strdup(argv[i]))){
+            puts("strdup failed");
+            return 4;
+        }
+
+        data->idx = i;
+        ++n_pending_requests;
+        req = evdns_getaddrinfo(dnsbase, argv[i], NULL,&hints, callback,data);
+
+        if(req == NULL){
+            puts("evdns_getaddrinfo failed");
+            return 5;
+        }
+
+
     }
+
+    if(n_pending_requests)
+        event_base_dispatch(base);
+    evdns_base_free(dnsbase,0);
+    event_base_free(base);
 }
 ~~~
 
+上述函数是2.0.3-alpha版本新增加的，声明在event2/dns.h中。
+
+
+# Create and configure evdns_base

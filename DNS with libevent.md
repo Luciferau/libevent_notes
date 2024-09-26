@@ -386,7 +386,7 @@ evdns_getaddrinfo()内部会复制nodename、servname和hints参数，所以查�
 ~~~c
 #include <event2/event.h>
 #include <event2/util.h>
-#include <event2/event.h>
+#include <event2/dns.h>
 
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -458,5 +458,43 @@ void callback(int errcode, struct evutil_addrinfo *addr, void *ptr) {
     }
 }
 
+
+int main(int argc, char **argv) {
+
+    int i ;
+    struct evdns_base *dnsbase;
+    if(argc == 1){
+        puts("No address given");
+        return 0;
+    }
+
+    base = event_base_new();
+    if(!base){
+        puts("event_base_new failed");
+        return 1;
+    }
+
+    dnsbase = evdns_base_new(base, 1);
+
+    if(!dnsbase)
+        return 2;
+
+
+    for(i = 1; i < argc; ++i){
+        struct evutil_addrinfo hints;
+        struct evdns_getaddrinfo_request *req;
+        struct user_data *data;
+        memset(&hints, 0, sizeof(hints));
+        hints.ai_family = AF_UNSPEC;
+        hints.ai_socktype = SOCK_STREAM;
+        hints.ai_flags = EVUTIL_AI_CANONNAME;
+        hints.ai_protocol = IPPROTO_TCP;
+
+        if(!(user_data = (struct user_data*)malloc(sizeof(struct user_data)))){
+            puts("malloc failed");
+            return 3;
+        }
+    }
+}
 ~~~
 

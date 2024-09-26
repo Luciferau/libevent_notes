@@ -553,3 +553,25 @@ int evdns_base_resolv_conf_parse(struct evdns_base *base, int flags, const char 
 ~~~
 
 evdns_base_resolv_conf_parse()函数扫描resolv.conf格式的文件filename，从中读取flags指示的选项（关于resolv.conf文件的更多信息，请看Unix手册）。
+
+- <font color="#8064a2">DNS_OPTION_SEARCH</font>
+
+	请求从resolv.conf文件读取domain和search字段以及ndots选项，使用它们来确定使用哪个域（如果存在）来搜索不是全限定的主机名。
+
+- <font color="#8064a2">DNS_OPTION_NAMESERVERS</font>
+
+	请求从resolv.conf中读取名字服务器地址。
+
+- <font color="#8064a2">DNS_OPTION_MISC</font>
+
+	请求从resolv.conf文件中读取其他配置选项。
+
+- <font color="#8064a2">DNS_OPTION_HOSTSFILE</font>
+
+	请求从/etc/hosts文件读取主机列表。
+
+- <font color="#8064a2">DNS_OPTION_ALL</font>
+
+	请求从resolv.conf文件获取尽量多的信息。
+
+Windows中没有可以告知名字服务器在哪里的resolv.conf文件，但可以用evdns_base_config_windows_nameservers()函数从注册表（或者NetworkParams，或者其他隐藏的地方）读取名字服务器。

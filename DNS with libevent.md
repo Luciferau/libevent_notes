@@ -595,7 +595,7 @@ Windows中没有可以告知名字服务器在哪里的resolv.conf文件，但�
 
 空格分隔的选项列表。选项要么是空字符串，要么具有格式option:value（如果有参数）。可识别的选项有：
 						    <font color="#00b050">ndots:INTEGER</font>
-		用于配置搜索，请参考上面的“search”，默认值是1。
+	    用于配置搜索，请参考上面的“search”，默认值是1。
 	
 	 timeout:FLOAT
 	
@@ -615,3 +615,19 @@ Windows中没有可以告知名字服务器在哪里的resolv.conf文件，但�
 如果非零，evdns会为发出的DNS请求设置随机的事务ID，并且确认回应具有同样的随机事务ID值。这种称作“0x20 hack”的机制可以在一定程度上阻止对DNS的简单激活事件攻击。这个选项的默认值是1。
 
 （这段原文不易理解，译文可能很不准确。这里给出原文：If nonzero,we randomize the case on outgoing DNS requests and make sure that replies have the same case as our requests.This so-called "0x20 hack" can help prevent some otherwise simple active events against DNS.）
+
+	 bind-to:ADDRESS
+
+		如果提供，则向名字服务器发送数据之前绑定到给出的地址。对于2.0.4-alpha版本，这个设置仅应用于后面的名字服务器条目。
+
+	 initial-probe-timeout:FLOAT
+
+		确定名字服务器当机后，libevent以指数级降低的频率探测服务器以判断服务器是否恢复。这个选项配置（探测时间间隔）序列中的第一个
+		超时，单位是秒。默认值是10。
+
+	  getaddrinfo-allow-skew:FLOAT
+
+		同时请求IPv4和IPv6地址时，evdns_getaddrinfo()用单独的DNS请求包分别请求两种地址，因为有些服务器不能在一个包中同时处理两种请求
+	。服务器回应一种地址类型后，函数等待一段时间确定另一种类型的地址是否到达。这个选项配置等待多长时间，单位是秒。默认值是3秒。
+
+不识别的字段和选项会被忽略。

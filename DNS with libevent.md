@@ -395,6 +395,68 @@ evdns_getaddrinfo()内部会复制nodename、servname和hints参数，所以查�
 #include <string.h>
 #include <assert.h>
 
+int n_pending_requests = 0;
+
+struct event_base *base = NULL;
+
+struct user_data{
+    char * name;/*the name we're resloving*/
+    int idx;/*its  position on the command line*/
+};
+
+
+void callback(int errcode, struct evutil_addrinfo *addr, void *ptr) {
+    // 将指针转换为用户数据结构
+    struct user_data *data = (struct user_data*)ptr;
+    const char *name = data->name;
+
+    if (errcode) {
+        // 如果出错，打印错误信息
+        printf("%d %s -> %s\n", data->idx, name, evutil_gai_strerror(errcode));
+    } else {
+        // 打印成功的地址信息
+        struct evutil_addrinfo *ai;
+        printf("%d. %s", data->idx, name);
+
+        // 如果存在规范名称，则打印
+        if (addr->ai_canonname) {
+            printf("[%s]", addr->ai_canonname);
+        }
+        puts("");
+
+        // 遍历地址链表
+        for (ai = addr; ai; ai = ai->ai_next) {
+            char buf[128];
+            const char *s = NULL;
+
+            // 根据地址族处理不同类型的地址
+            if (ai->ai_family == AF_INET) {
+                struct sockaddr_in *sin = (struct sockaddr_in *)ai->ai_addr;
+                s = evutil_inet_ntop(AF_INET, &sin->sin_addr, buf, sizeof(buf));
+            } else if (ai->ai_family == AF_INET6) {
+                struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)ai->ai_addr;
+                s = evutil_inet_ntop(AF_INET6, &sin6->sin6_addr, buf, sizeof(buf));
+            }
+
+            // 如果成功转换地址，打印它
+            if (s) {
+                printf(" -> %s\n", s);
+            }
+        }
+
+        // 释放地址信息结构
+        evutil_freeaddrinfo(addr);
+    }
+
+    // 释放用户数据中的名称和数据结构
+    free(data->name);
+    free(data);
+
+    // 如果没有待处理请求，退出事件循环
+    if (--n_pending_requests == 0) {
+        event_base_loopexit(base, NULL);
+    }
+}
 
 ~~~
 

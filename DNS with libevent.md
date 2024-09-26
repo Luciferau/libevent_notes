@@ -617,18 +617,45 @@ Windows中没有可以告知名字服务器在哪里的resolv.conf文件，但�
 （这段原文不易理解，译文可能很不准确。这里给出原文：If nonzero,we randomize the case on outgoing DNS requests and make sure that replies have the same case as our requests.This so-called "0x20 hack" can help prevent some otherwise simple active events against DNS.）
 
 	 bind-to:ADDRESS
-
+	
 		如果提供，则向名字服务器发送数据之前绑定到给出的地址。对于2.0.4-alpha版本，这个设置仅应用于后面的名字服务器条目。
-
+	
 	 initial-probe-timeout:FLOAT
-
+	
 		确定名字服务器当机后，libevent以指数级降低的频率探测服务器以判断服务器是否恢复。这个选项配置（探测时间间隔）序列中的第一个
 		超时，单位是秒。默认值是10。
-
+	
 	  getaddrinfo-allow-skew:FLOAT
-
+	
 		同时请求IPv4和IPv6地址时，evdns_getaddrinfo()用单独的DNS请求包分别请求两种地址，
 		因为有些服务器不能在一个包中同时处理两种请求。服务器回应一种地址类型后，函数等待一段时间确定另一种类型的地址是否到达。
 		这个选项配置等待多长时间，单位是秒。默认值是3秒。不识别的字段和选项会被忽略。
 ## Manually configure evdns
 如果需要更精细地控制evdns的行为，可以使用下述函数：
+
+~~~c
+
+int evdns_base_nameserver_sockaddr_add(struct evdns_base *base, const struct sockaddr *sa, socklen_t len,
+									   unsigned int flags);
+int evdns_base_nameserver_ip_add(struct evdns_base *base, const char *ip_as_string);
+int evdns_base_load_hosts(struct evdns_base *base, const char *hosts_fname);
+
+void evdns_base_search_clear(struct evdns_base *base);
+void evdns_base_search_add(struct evdns_base *base, const char *domain);
+void evdns_base_search_ndots_set(struct evdns_base *base, int ndots);
+
+int evdns_base_set_option(struct evdns_base *base, const char *option, const char *val);
+int evdns_base_count_nameservers(struct evdns_base *base);
+~~~
+
+evdns_base_nameserver_sockaddr_add()函数通过地址向evdns_base添加名字服务器。当前忽略flags参数，为向前兼容考虑，应该传入0。成功时函数返回0，失败时返回负值。（这个函数在2.0.7-rc版本加入）
+
+evdns_base_nameserver_ip_add()函数向evdns_base加入字符串表示的名字服务器，格式可以是IPv4地址、IPv6地址、带端口号的IPv4地址（IPv4:Port)，或者带端口号的IPv6地址（[IPv6]:Port）。成功时函数返回0，失败时返回负值。
+
+evdns_base_load_hosts()函数从hosts_fname文件中载入主机文件（格式与/etc/hosts相同）。成功时函数返回0，失败时返回负值。
+
+evdns_base_search_clear()函数从evdns_base中移除所有（通过search配置的）搜索后缀；evdns_base_search_add()则添加后缀。
+
+evdns_base_set_option()函数设置evdns_base中某选项的值。选项和值都用字符串表示。（2.0.3版本之前，选项名后面必须有一个冒号）
+
+解析一组配置文件后，可以使用evdns_base_count_nameservers()查看添加了多少个名字服务器。

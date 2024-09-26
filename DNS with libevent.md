@@ -594,8 +594,7 @@ Windows中没有可以告知名字服务器在哪里的resolv.conf文件，但�
 - <font color="#00b050">options</font>
 
 空格分隔的选项列表。选项要么是空字符串，要么具有格式option:value（如果有参数）。可识别的选项有：
-	  ndots:INTEGER
-
+						    <font color="#00b050">ndots:INTEGER</font>
 		用于配置搜索，请参考上面的“search”，默认值是1。
 	
 	 timeout:FLOAT
@@ -613,3 +612,6 @@ Windows中没有可以告知名字服务器在哪里的resolv.conf文件，但�
 	 attempts:INT
 	
 		在放弃之前重新传输多少次DNS请求？默认值是XXX。
+如果非零，evdns会为发出的DNS请求设置随机的事务ID，并且确认回应具有同样的随机事务ID值。这种称作“0x20 hack”的机制可以在一定程度上阻止对DNS的简单激活事件攻击。这个选项的默认值是1。
+
+（这段原文不易理解，译文可能很不准确。这里给出原文：If nonzero,we randomize the case on outgoing DNS requests and make sure that replies have the same case as our requests.This so-called "0x20 hack" can help prevent some otherwise simple active events against DNS.）

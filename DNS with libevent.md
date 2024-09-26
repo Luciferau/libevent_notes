@@ -382,3 +382,19 @@ void evdns_getaddrinfo_cancel(struct evdns_getaddrinfo_request *data)
 evdns_getaddrinfo()内部会复制nodename、servname和hints参数，所以查询进行过程中不必保持这些参数有效。
 ## example
 使用<font color="#8064a2">evdns_getaddrinfo()</font>的非阻塞查询
+
+~~~c
+#include <event2/event.h>
+#include <event2/util.h>
+#include <event2/event.h>
+
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <assert.h>
+
+
+~~~
+

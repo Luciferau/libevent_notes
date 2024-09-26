@@ -523,3 +523,7 @@ int main(int argc, char **argv) {
 
 
 # Create and configure evdns_base
+使用evdns进行非阻塞DNS查询之前需要配置一个evdns_base。evdns_base存储名字服务器列表和DNS配置选项.
+跟踪活动的、进行中的DNS请求。
+~~~c
+struct evdns_base * evdns_base_new(struct event_base *event_base, int flags);

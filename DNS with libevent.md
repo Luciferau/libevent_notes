@@ -380,3 +380,5 @@ void evdns_getaddrinfo_cancel(struct evdns_getaddrinfo_request *data)
 注意：不论evdns_getaddrinfo()是否返回NULL，是否调用了evdns_getaddrinfo_cancel()，回调函数总是会被调用。
 
 evdns_getaddrinfo()内部会复制nodename、servname和hints参数，所以查询进行过程中不必保持这些参数有效。
+## example
+使用<font color="#8064a2">evdns_getaddrinfo()</font>的非阻塞查询

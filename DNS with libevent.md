@@ -575,3 +575,22 @@ evdns_base_resolv_conf_parse()函数扫描resolv.conf格式的文件filename，�
 	请求从resolv.conf文件获取尽量多的信息。
 
 Windows中没有可以告知名字服务器在哪里的resolv.conf文件，但可以用evdns_base_config_windows_nameservers()函数从注册表（或者NetworkParams，或者其他隐藏的地方）读取名字服务器。
+## resolv.conf File Format
+
+	resolv.conf是一个文本文件，每一行要么是空行，要么包含以#开头的注释，要么由一个跟随零个或者多个参数的标记组成。可以识别的标记有：
+
+- <font color="#00b050">nameserver</font>
+
+	必须后随一个名字服务器的IP地址。作为一个扩展，libevent允许使用IP:Port或者[IPv6]:port语法为名字服务器指定非标准端口。
+
+- <font color="#00b050">domain</font>
+
+本地域名
+
+- search
+
+	解析本地主机名时要搜索的名字列表。如果不能正确解析任何含有少于“ndots”个点的本地名字，则在这些域名中进行搜索。比如说，如果“search”字段值为example.com，“ndots”为1，则用户请求解析“www”时，函数认为那是“www.example.com”。
+
+- options
+
+空格分隔的选项列表。选项要么是空字符串，要么具有格式option:value（如果有参数）。可识别的选项有：

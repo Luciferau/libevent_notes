@@ -535,3 +535,21 @@ void evdns_base_free(struct evdns_base *base, int fail_requests);
 ## Initialize evdns using system configuration
 
 如果需要更多地控制evdns_base如何初始化，可以为evdns_base_new()的initialize参数传递0，然后调用下述函数。
+
+~~~c
+#define DNS_OPTION_HOSTSFILE 1
+#define DNS_OPTION_NAMESERVERS 2
+#define DNS_OPTION_MISC 4
+#define DNS_OPTION_HOSTSFILE 8
+#define DNS_OPTIONS_ALL 15
+
+int evdns_base_resolv_conf_parse(struct evdns_base *base, int flags, const char *const filename);
+
+#ifdef WIN32
+    int evdns_base_resolv_config_windows_namseservers(struct evdns_base *);
+    #define EVDNS_BASE_CONFIG_WINDOWS_NAMESERVERS_IMPLEMENTED
+#endif
+
+~~~
+
+evdns_base_resolv_conf_parse()函数扫描resolv.conf格式的文件filename，从中读取flags指示的选项（关于resolv.conf文件的更多信息，请看Unix手册）。

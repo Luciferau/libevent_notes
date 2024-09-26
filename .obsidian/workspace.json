@@ -99,8 +99,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -209,7 +208,7 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "80c93d318ba048c9",
+  "active": "e35340117c9e52e1",
   "lastOpenFiles": [
     "CppGuide/articles/网络编程/非阻塞模式下send和recv函数的返回值.md",
     "CppGuide/articles/网络编程/网络通信中收发数据的正确姿势.md",

@@ -587,10 +587,29 @@ Windows中没有可以告知名字服务器在哪里的resolv.conf文件，但�
 
 本地域名
 
-- search
+- <font color="#00b050">search</font>
 
 	解析本地主机名时要搜索的名字列表。如果不能正确解析任何含有少于“ndots”个点的本地名字，则在这些域名中进行搜索。比如说，如果“search”字段值为example.com，“ndots”为1，则用户请求解析“www”时，函数认为那是“www.example.com”。
 
-- options
+- <font color="#00b050">options</font>
 
 空格分隔的选项列表。选项要么是空字符串，要么具有格式option:value（如果有参数）。可识别的选项有：
+	  ndots:INTEGER
+
+		用于配置搜索，请参考上面的“search”，默认值是1。
+	
+	 timeout:FLOAT
+	
+		等待DNS服务器响应的时间，单位是秒。默认值为5秒。
+	
+	 max-timeouts:INT
+	
+		名字服务器响应超时几次才认为服务器当机？默认是3次。
+	
+	 max-inflight:INT
+	
+		最多允许多少个未决的DNS请求？（如果试图发出多于这么多个请求，则过多的请求将被延迟，直到某个请求被响应或者超时）。默认值是XXX。
+	
+	 attempts:INT
+	
+		在放弃之前重新传输多少次DNS请求？默认值是XXX。

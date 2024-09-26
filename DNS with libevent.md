@@ -527,3 +527,9 @@ int main(int argc, char **argv) {
 跟踪活动的、进行中的DNS请求。
 ~~~c
 struct evdns_base * evdns_base_new(struct event_base *event_base, int flags);
+void evdns_base_free(struct evdns_base *base, int fail_requests);
+~~~
+成功时evdns_base_new()返回一个新建的evdns_base，失败时返回NULL。如果initialize参数为true，函数试图根据操作系统的默认值配置evdns_base；否则，函数让evdns_base为空，不配置名字服务器和选项。
+
+可以用evdns_base_free()释放不再使用的evdns_base。如果fail_request参数为true，函数会在释放evdns_base前让所有进行中的请求使用取消错误码调用其回调函数。
+### **使用系统配置初始化evdns**

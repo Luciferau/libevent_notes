@@ -913,5 +913,25 @@ int evdns_server_request_add_ptr_reply(struct evdns_server_request *req, struct 
 
 这个函数为请求的结果节添加一个PTR记录。参数req和ttl跟上面的函数相同。必须提供in（一个IPv4地址）和inaddr_name(一个arpa域的地址）中的一个，而且只能提供一个，以指示为回应提供哪种地址。hostname是PTR查询的答案。
 
+~~~c
+#define EVDNS_ANSWER_SECTION        0
+#define EVDNS_AUTHORITY_SECTION     1
+#define EVDNS_ADDITIONAL_SECTION    2
+
+#define EVDNS_TYPE_A        1
+#define EVDNS_TYPE_NS       2
+#define EVDNS_TYPE_CNAME    5
+#define EVDNS_TYPE_SOA      6
+#define EVDNS_TYPE_PTR      12
+#define EVDNS_TYPE_MX       15
+#define EVDNS_TYPE_TXT      16
+#define EVDNS_TYPE_AAAA     28
+
+#define EVDNS_CLASS_INET4   1
+
+int evdns_server_request_add_reply(struct evdns_server_request *req, int section, const char *name, int type, 
+                                    int dns_class, int ttl, int datalen, int is_name, const char *data);
+~~~
+
 
 

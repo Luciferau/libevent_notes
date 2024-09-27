@@ -903,3 +903,15 @@ int evdns_server_request_add_cname_reply(struct evdns_server_request *req, const
 上述函数为请求req的DNS回应的结果节添加一个RR（类型分别为A、AAAA和CNAME）。各个函数中，name是要为之添加结果的主机名，ttl是以秒为单位的存活时间。对于A和AAAA记录，n是要添加的地址个数，addrs是到原始地址的指针：对于A记录，是以n*4字节序列格式给出的IPv4地址；对于AAAA记录，是以n*16字节序列格式给出的IPv6地址。
 
 成功时函数返回0，失败时返回-1。
+
+
+
+~~~c
+int evdns_server_request_add_ptr_reply(struct evdns_server_request *req, struct in_addr *in, 
+                                       const char *inaddr_name, const char *hostname, int ttl);
+~~~
+
+这个函数为请求的结果节添加一个PTR记录。参数req和ttl跟上面的函数相同。必须提供in（一个IPv4地址）和inaddr_name(一个arpa域的地址）中的一个，而且只能提供一个，以指示为回应提供哪种地址。hostname是PTR查询的答案。
+
+
+

@@ -663,3 +663,14 @@ evdns_base_set_option()函数设置evdns_base中某选项的值。选项和值�
 ## Library configuration
 有一些为evdns模块设置库级别配置的函数：
 
+~~~c
+/**
+  A callback that is invoked when a log message is generated
+
+  @param is_warning indicates if the log message is a 'warning'
+  @param msg the content of the log message
+ */
+typedef void (*evdns_debug_log_fn_type)(int is_warning, const char *msg);
+
+~~~
+

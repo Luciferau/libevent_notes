@@ -940,5 +940,19 @@ int evdns_server_request_respond(struct evdns_server_request *req, int err);
 int evdns_server_request_drop(struct evdns_server_request *req);
 ~~~
 
+evdns_server_request_respond()函数为请求发送DNS回应，带有用户添加的所有RR，以及错误码err。如果不想回应某个请求，可以调用evdns_server_request_drop()来忽略请求，释放请求关联的内存和结构体。
+
+~~~c
+#define EVDNS_FLAGS_AA 0X400
+#define EVDNS_FLAGS_RD 0X080
+
+void evdns_server_request_set_flags(struct evdns_server_request *req,int flags);
+~~~
+
+如果要为回应消息设置任何标志，可以在发送回应前的任何时候调用这个函数。
+
+除了evdns_server_request_set_flags()首次在2.0.1-alpha版本中出现外，本节描述的所有函数都在1.3版本中引入。
+
+## DNS server example
 
 

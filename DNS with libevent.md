@@ -795,3 +795,9 @@ evdns_base_clear_nameservers_and_suspend()会移除所有名字服务器，但�
 libevent为实现不重要的DNS服务器，响应通过UDP传输的DNS请求提供了简单机制。本章节要求读者对DNS协议有一定的了解。
 
 ## Create and close DNS server
+
+~~~c
+struct evdns_server_port* evdns_add_server_port_with_base(struct event_base *base, int socket, int flags, 
+                                    evdns_request_callback_fn_type callback, void *user_data);
+~~~
+

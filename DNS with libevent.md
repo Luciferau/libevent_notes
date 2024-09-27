@@ -810,6 +810,7 @@ struct evdns_server_port* evdns_add_server_port_with_base(struct event_base *bas
    @param user_data A pointer that was passed to
       evdns_add_server_port_with_base().
  */
-typedef void (*evdns_request_callback_fn_type)(struct evdns_server_request *, void *);
+typedef void (*evdns_request_callback_fn_type)(struct evdns_server_request *, void * user_data);
+void evdns_close_server_port(struct evdns_server_port *port);
 ~~~
 

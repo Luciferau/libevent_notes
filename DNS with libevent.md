@@ -773,3 +773,23 @@ evdns_err_to_string(int err)
 
 每个解析函数都返回不透明的evdns_request结构体指针。回调函数被调用前的任何时候都可以用这个指针来取消请求：
 
+~~~c
+/* exported function */
+void evdns_cancel_request(struct evdns_base *base, struct evdns_request *handle)
+~~~
+
+## Suspend DNS client operation and change name server
+有时候需要重新配置或者关闭DNS子系统，但不能影响进行中的DNS请求。
+
+~~~c
+int evdns_base_clear_nameservers_and_suspend(struct evdns_base *base);
+int evdns_base_resume(struct evdns_base *base);
+~~~
+
+evdns_base_clear_nameservers_and_suspend()会移除所有名字服务器，但未决的请求会被保留，直到随后重新添加名字服务器，调用evdns_base_resume()。
+
+这些函数成功时返回0，失败时返回-1。它们在2.0.1-alpha版本引入。
+
+# DNS server API
+
+libevent为实现不重要的DNS服务器，响应通过UDP传输的DNS请求提供了简单机制。本章节要求读者对DNS协议有一定的了解。

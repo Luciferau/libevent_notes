@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Event loop.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Event loop.md"
+                "file": "README.md"
               }
             }
           },
@@ -95,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Event loop.md",
+                "file": "README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -112,7 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Event loop.md",
+                "file": "README.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +135,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Event loop.md"
+                "file": "README.md"
               }
             }
           },
@@ -186,6 +186,11 @@
   },
   "active": "da7c6af468aafc41",
   "lastOpenFiles": [
+    "Memory management.md",
+    "Macro function.md",
+    "Variadic function.md",
+    "event_base.md",
+    "Event loop.md",
     "README.md",
     "libevent 中文文档_lucifer.pdf",
     "epoll API.md",
@@ -207,14 +212,9 @@
     "CppGuide/articles/程序员必知必会的网络命令/利用telnet命令发电子邮件.md",
     "CppGuide/README.md",
     "images/libevent.png",
-    "Macro function.md",
     "CppGuide/articles/网络编程/非阻塞模式下send和recv函数的返回值.md",
     "CppGuide/articles/网络编程/网络通信中收发数据的正确姿势.md",
     "CppGuide/articles/网络编程/服务器端发数据时，如果对端一直不收，怎么办？.md",
-    "CppGuide/articles/网络编程/服务器开发通信协议设计介绍.md",
-    "CppGuide/articles/网络编程/TCP协议如何解决粘包、半包问题.md",
-    "CppGuide/articles/网络编程/socket的阻塞模式和非阻塞模式.md",
-    "CppGuide/articles/网络编程/select函数重难点解析.md",
     "CppGuide/articles/网络编程",
     "CppGuide/articles/程序员面试题精讲",
     "CppGuide/articles/程序员的简历",

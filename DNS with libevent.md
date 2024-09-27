@@ -688,3 +688,60 @@ void evdns_set_transaction_id_fn(evdns_debug_log_fn_type);
 
 ## Missing features
 当前libevent的DNS支持缺少其他底层DNS系统所具有的一些特征，如支持任意请求类型和TCP请求。如果需要evdns所不具有的特征，欢迎贡献一个补丁。也可以看看其他全特征的DNS库，如c-ares。
+
+~~~c
+/**
+ * The callback that contains the results from a lookup.
+ * - result is one of the DNS_ERR_* values (DNS_ERR_NONE for success)
+ * - type is either DNS_IPv4_A or DNS_PTR or DNS_IPv6_AAAA
+ * - count contains the number of addresses of form type
+ * - ttl is the number of seconds the resolution may be cached for.
+ * - addresses needs to be cast according to type.  It will be an array of
+ *   4-byte sequences for ipv4, or an array of 16-byte sequences for ipv6,
+ *   or a nul-terminated string for PTR.
+ */
+typedef void (*evdns_callback_type) (int result, char type, int count, int ttl, 
+									 void *addresses, void *arg);
+
+struct evdns_request* 
+	evdns_base_resolve_ipv4(evutil_socket_t fd, const char *hostname, 
+                                              evdns_callback_type callback, void *arg);
+
+struct evdns_request* 
+	evdns_base_resolve_ipv6(struct evdns_base *base, const char *name,
+                                              int flags, evdns_callback_type callback, void *ptr);
+
+struct evdns_request* 
+	evdns_base_resolve_reverse(struct evdns_base *base, const struct in_addr *in,
+                                                 int flags, evdns_callback_type callback, void *ptr);
+
+struct evdns_request* 
+	evdns_base_resolve_reverse_ipv6(struct evdns_base *base, const struct in6_addr *in,
+                                                      int flags, evdns_callback_type callback, void *ptr);
+~~~
+
+这些解析函数为一个特别的记录发起DNS请求。每个函数要求一个evdns_base用于发起请求、一个要查询的资源（正向查询时的主机名，或者反向查询时的地址）、一组用以确定如何进行查询的标志、一个查询完成时调用的回调函数，以及一个用户提供的传给回调函数的指针。
+
+flags参数可以是0，也可以用DNS_QUERY_NO_SEARCH明确禁止原始查询失败时在搜索列表中进行搜索。DNS_QUERY_NO_SEARCH对反向查询无效，因为反向查询不进行搜索。
+
+请求完成（不论是否成功）时回调函数会被调用。回调函数的参数是指示成功或者错误码（参看下面的DNS错误表）的result、一个记录类型（DNS_IPv4_A、DNS_IPv6_AAAA，或者DNS_PTR）、addresses中的记录数、以秒为单位的存活时间、地址（查询结果），以及用户提供的指针。
+
+发生错误时传给回调函数的addresses参数为NULL。没有错误时：对于PTR记录，addresses是空字符结束的字符串；对于IPv4记录，则是网络字节序的四字节地址值数组；对于IPv6记录，则是网络字节序的16字节记录数组。（注意：即使没有错误，addresses的个数也可能是0。名字存在，但是没有请求类型的记录时就会出现这种情况）
+
+可能传递给回调函数的错误码如下：
+
+## DNS ERRORCODE
+
+| 错误码                  | 意义             |
+| -------------------- | -------------- |
+| DNS_ERR_NONE         | 没有错误           |
+| DNS_ERR_FORMAT       | 服务器不识别查询请求     |
+| DNS_ERR_SERVERFAILED | 服务器内部错误        |
+| DNS_ERR_NOTEXIST     | 没有给定名字的记录      |
+| DNS_ERR_NOTIMPL      | 服务器不识别这种类型的查询  |
+| DNS_ERR_REFUSED      | 因为策略设置，服务器拒绝查询 |
+| DNS_ERR_TRUNCATED    | DNS记录不适合UDP分组  |
+| DNS_ERR_UNKNOWN      | 未知的内部错误        |
+| DNS_ERR_TIMEOUT      | 等待超时           |
+| DNS_ERR_SHUTDOWN     | 用户请求关闭evdns系统  |
+| DNS_ERR_CANCEL       | 用户请求取消查询       |

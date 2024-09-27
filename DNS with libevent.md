@@ -799,5 +799,17 @@ libevent为实现不重要的DNS服务器，响应通过UDP传输的DNS请求提
 ~~~c
 struct evdns_server_port* evdns_add_server_port_with_base(struct event_base *base, int socket, int flags, 
                                     evdns_request_callback_fn_type callback, void *user_data);
+/**
+   A callback to implement a DNS server.  The callback function receives a DNS
+   request.  It should then optionally add a number of answers to the reply
+   using the evdns_server_request_add_*_reply functions, before calling either
+   evdns_server_request_respond to send the reply back, or
+   evdns_server_request_drop to decline to answer the request.
+
+   @param req A newly received request
+   @param user_data A pointer that was passed to
+      evdns_add_server_port_with_base().
+ */
+typedef void (*evdns_request_callback_fn_type)(struct evdns_server_request *, void *);
 ~~~
 

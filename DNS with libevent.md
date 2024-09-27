@@ -884,7 +884,22 @@ int evdns_server_request_get_requesting_addr(struct evdns_server_request *req,
 这个函数在1.3版本中引入。	
 
 ## Response DNS request
- 
+
 DNS服务器收到每个请求后，会将请求传递给用户提供的回调函数，还带有用户数据指针。回调函数必须响应请求或者忽略请求，或者确保请求最终会被回答或者忽略。
 
 回应请求前可以向回应中添加一个或者多个答案：
+
+~~~c
+int evdns_server_request_add_a_reply(struct evdns_server_request *req, const char *name, 
+                                        int n, const void *addrs, int ttl);
+
+int evdns_server_request_add_aaaa_reply(struct evdns_server_request *req, const char *name, 
+                                        int n, const void *addrs, int ttl);
+
+int evdns_server_request_add_cname_reply(struct evdns_server_request *req, const char *name, 
+                                        const char *cname, int ttl);
+~~~
+
+上述函数为请求req的DNS回应的结果节添加一个RR（类型分别为A、AAAA和CNAME）。各个函数中，name是要为之添加结果的主机名，ttl是以秒为单位的存活时间。对于A和AAAA记录，n是要添加的地址个数，addrs是到原始地址的指针：对于A记录，是以n*4字节序列格式给出的IPv4地址；对于AAAA记录，是以n*16字节序列格式给出的IPv6地址。
+
+成功时函数返回0，失败时返回-1。

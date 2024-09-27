@@ -955,4 +955,29 @@ void evdns_server_request_set_flags(struct evdns_server_request *req,int flags);
 
 ## DNS server example
 
+# Obosolote API
 
+~~~c
+void evdns_base_search_ndot_set(struct evdns_base *base,const int ndots);
+int  evdns_base_nameserver_add(struct evdns_base *base,unsigned long int address);
+void evdns_set_random_bytes_fn(void*(*fn)(char*,size_t));
+
+struct evdns_server_port *evdns_add_server_port(evutil_socket_t socket,int flags,
+                                                evdns_request_callback_fn_type callback,void *user_data);
+~~~
+
+evdns_base_search_ndots_set()等价于使用evdns_base_set_option()设置ndots选项。
+
+除了只能添加IPv4地址的名字服务器外，evdns_base_nameserver_add()函数的行为与evdns_base_nameserver_ip_add()相同。特别的是，evdns_base_nameserver_add()要求网络字节序的四字节地址。
+
+2.0.1-alpha版本之前，不能为DNS服务端口指定event_base。通过evdns_add_server_port()添加的服务端口只能使用默认的event_base。
+
+从版本2.0.1-alpha到2.0.3-alpha，可以使用evdns_set_random_bytes_fn()，而不是evdns_set_transsaction_id_fn()，来指定用于产生随机数的函数。这个函数现在没有效果了，因为libevent有自己的安全的随机数发生器了。
+
+DNS_QUERY_NO_SEARCH标志曾经称作DNS_NO_SEARCH。
+
+2.0.1-alpha版本之前，没有单独的evdns_base记号：evdns子系统中的所有信息都是全局存储的，操作这些信息的函数不需要evdns_base参数。这些函数现在都废弃了，但是还声明在event2/dns_compat.h中。它们通过一个单独的全局evdns_base实现，通过2.0.3-alpha版本引入的evdns_get_global_base()可以访问这个evdns_base。
+
+![](file:///C:\Users\Administrator\AppData\Local\Temp\ksohtml8720\wps1.jpg)
+
+EVDNS_CONFIG_WINDOWS_NAMESERVERS_IMPLEMENTED宏会被定义。

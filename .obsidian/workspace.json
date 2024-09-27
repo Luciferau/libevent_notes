@@ -87,8 +87,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -197,7 +196,7 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "2cef0710352747eb",
+  "active": "e35340117c9e52e1",
   "lastOpenFiles": [
     "libevent 中文文档_lucifer.pdf",
     "DNS with libevent.md",

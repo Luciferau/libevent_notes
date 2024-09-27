@@ -933,5 +933,12 @@ int evdns_server_request_add_reply(struct evdns_server_request *req, int section
                                     int dns_class, int ttl, int datalen, int is_name, const char *data);
 ~~~
 
+这个函数为请求req的DNS回应添加任意RR。section字段指示添加到哪一节，其值应该是某个EVDNS_*_SECTION。name参数是RR的名字字段。type参数是RR的类型字段，其值应该是某个EVDNS_TYPE_*。dns_class参数是RR的类别字段。RR的rdata和rdlength字段将从data处的datalen字节中产生。如果is_name为true，data将被编码成DNS名字（例如，使用DNS名字压缩）。否则，data将被直接包含到RR中。
+
+~~~c
+int evdns_server_request_respond(struct evdns_server_request *req, int err);
+int evdns_server_request_drop(struct evdns_server_request *req);
+~~~
+
 
 

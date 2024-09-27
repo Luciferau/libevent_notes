@@ -11,9 +11,11 @@
             "id": "2cef0710352747eb",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "libevent 中文文档_lucifer.pdf"
+                "file": "DNS with libevent.md",
+                "mode": "source",
+                "source": false
               }
             }
           },
@@ -58,7 +60,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "libevent 中文文档_lucifer.pdf"
+                "file": "DNS with libevent.md"
               }
             }
           },
@@ -105,7 +107,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "libevent 中文文档_lucifer.pdf",
+                "file": "DNS with libevent.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -122,7 +124,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "libevent 中文文档_lucifer.pdf",
+                "file": "DNS with libevent.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -145,7 +147,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "libevent 中文文档_lucifer.pdf"
+                "file": "DNS with libevent.md"
               }
             }
           },
@@ -196,6 +198,7 @@
   },
   "active": "2cef0710352747eb",
   "lastOpenFiles": [
+    "libevent 中文文档_lucifer.pdf",
     "DNS with libevent.md",
     "CppGuide/articles/程序员的烦心事/我是一名程序员，结婚时女友要求我用两年的工资作为彩礼，我该不该答应？.md",
     "CppGuide/articles/程序员的烦心事/拒绝了一家公司的offer后，他们的副总和hr总监同时打电话来询问拒绝原因并极力要求加入，我该不该去？.md",
@@ -225,7 +228,6 @@
     "CppGuide/articles/程序员面试题精讲/README.md",
     "CppGuide/articles/程序员面试题精讲/LinuxCC++后端开发面试问哪些问题.md",
     "CppGuide/articles/程序员面试题精讲",
-    "CppGuide/articles/程序员的简历/程序员如何写简历.md",
     "CppGuide/articles/程序员的简历",
     "CppGuide/articles/程序员的薪资与年终奖那些事儿",
     "CppGuide/articles/程序员的烦心事",

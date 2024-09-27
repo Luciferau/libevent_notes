@@ -660,4 +660,4 @@ evdns_base_set_option()函数设置evdns_base中某选项的值。选项和值�
 
 解析一组配置文件后，可以使用evdns_base_count_nameservers()查看添加了多少个名字服务器。
 
-## configure li
+## configure 

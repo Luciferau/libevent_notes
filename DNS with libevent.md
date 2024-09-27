@@ -793,3 +793,5 @@ evdns_base_clear_nameservers_and_suspend()会移除所有名字服务器，但�
 # DNS server API
 
 libevent为实现不重要的DNS服务器，响应通过UDP传输的DNS请求提供了简单机制。本章节要求读者对DNS协议有一定的了解。
+
+## Create and close DNS server

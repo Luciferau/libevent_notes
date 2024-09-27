@@ -659,3 +659,5 @@ evdns_base_search_clear()函数从evdns_base中移除所有（通过search配置
 evdns_base_set_option()函数设置evdns_base中某选项的值。选项和值都用字符串表示。（2.0.3版本之前，选项名后面必须有一个冒号）
 
 解析一组配置文件后，可以使用evdns_base_count_nameservers()查看添加了多少个名字服务器。
+
+## 

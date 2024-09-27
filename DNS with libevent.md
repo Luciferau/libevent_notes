@@ -814,3 +814,9 @@ typedef void (*evdns_request_callback_fn_type)(struct evdns_server_request *, vo
 void evdns_close_server_port(struct evdns_server_port *port);
 ~~~
 
+要开始监听DNS请求，调用evdns_add_server_port_with_base()。函数要求用于事件处理的event_base、用于监听的UDP套接字、可用的标志（现在总是0）、一个收到DNS查询时要调用的回调函数，以及要传递给回调函数的用户数据指针。函数返回evdns_server_port对象。
+
+使用DNS服务器完成工作后，需要调用evdns_close_server_port()。
+
+evdns_add_server_port_with_base()是2.0.1-alpha版本引入的，而evdns_close_server_port()则由1.3版本引入。
+

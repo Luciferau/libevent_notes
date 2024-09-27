@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Bufferevent Advanced Topics.md",
+                "file": "epoll API.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Bufferevent Advanced Topics.md"
+                "file": "epoll API.md"
               }
             }
           },
@@ -95,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Bufferevent Advanced Topics.md",
+                "file": "epoll API.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -112,7 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Bufferevent Advanced Topics.md",
+                "file": "epoll API.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +135,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Bufferevent Advanced Topics.md"
+                "file": "epoll API.md"
               }
             }
           },
@@ -186,6 +186,11 @@
   },
   "active": "da7c6af468aafc41",
   "lastOpenFiles": [
+    "TODO Lists.md",
+    "Macro definition.md",
+    "Helper types and functions.md",
+    "Bufferevent and evbuffer.md",
+    "Bufferevent Advanced Topics.md",
     "Bufferevent and SSL.md",
     "Build event.md",
     "evbuffer.md",
@@ -210,12 +215,7 @@
     "CppGuide/articles/网络编程/select函数重难点解析.md",
     "CppGuide/articles/网络编程/README.md",
     "CppGuide/articles/网络编程/Linuxepoll模型（含LT模式和ET模式详解）.md",
-    "CppGuide/articles/网络编程/connect函数在阻塞和非阻塞模式下的行为.md",
-    "CppGuide/articles/网络编程/bind函数重难点解析.md",
     "CppGuide/articles/网络编程",
-    "CppGuide/articles/程序员面试题精讲/聊聊如何拿大厂的offer.md",
-    "CppGuide/articles/程序员面试题精讲/腾讯后台开发实习生技能要求.md",
-    "CppGuide/articles/程序员面试题精讲/网络通信题目集锦.md",
     "CppGuide/articles/程序员面试题精讲",
     "CppGuide/articles/程序员的简历",
     "CppGuide/articles/程序员的薪资与年终奖那些事儿",

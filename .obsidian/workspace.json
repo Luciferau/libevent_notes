@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "libevent_structure.md",
+                "file": "Bufferevent Advanced Topics.md",
                 "mode": "source",
                 "source": false
               }
@@ -48,7 +48,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "libevent_structure.md"
+                "file": "Bufferevent Advanced Topics.md"
               }
             }
           },
@@ -95,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "libevent_structure.md",
+                "file": "Bufferevent Advanced Topics.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -112,7 +112,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "libevent_structure.md",
+                "file": "Bufferevent Advanced Topics.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +135,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "libevent_structure.md"
+                "file": "Bufferevent Advanced Topics.md"
               }
             }
           },
@@ -186,6 +186,10 @@
   },
   "active": "da7c6af468aafc41",
   "lastOpenFiles": [
+    "Bufferevent and SSL.md",
+    "Build event.md",
+    "evbuffer.md",
+    "libevent_structure.md",
     "evconnlistener.md",
     "DNS with libevent.md",
     "libevent 中文文档_lucifer.pdf",
@@ -197,7 +201,6 @@
     "CppGuide/README.md",
     "images/libevent.png",
     "Macro function.md",
-    "evbuffer.md",
     "CppGuide/articles/网络编程/非阻塞模式下send和recv函数的返回值.md",
     "CppGuide/articles/网络编程/网络通信中收发数据的正确姿势.md",
     "CppGuide/articles/网络编程/服务器端发数据时，如果对端一直不收，怎么办？.md",
@@ -213,9 +216,6 @@
     "CppGuide/articles/程序员面试题精讲/聊聊如何拿大厂的offer.md",
     "CppGuide/articles/程序员面试题精讲/腾讯后台开发实习生技能要求.md",
     "CppGuide/articles/程序员面试题精讲/网络通信题目集锦.md",
-    "CppGuide/articles/程序员面试题精讲/我面试后端开发经理的经历.md",
-    "CppGuide/articles/程序员面试题精讲/README.md",
-    "CppGuide/articles/程序员面试题精讲/LinuxCC++后端开发面试问哪些问题.md",
     "CppGuide/articles/程序员面试题精讲",
     "CppGuide/articles/程序员的简历",
     "CppGuide/articles/程序员的薪资与年终奖那些事儿",

@@ -820,3 +820,19 @@ void evdns_close_server_port(struct evdns_server_port *port);
 
 evdns_add_server_port_with_base()是2.0.1-alpha版本引入的，而evdns_close_server_port()则由1.3版本引入。
 
+## Check DNS request
+不幸的是，当前libevent没有提供较好的获取DNS请求的编程接口，用户需要包含event2/dns_struct.h文件，查看evdns_server_request结构体。
+
+未来版本的libevent应该会提供更好的方法。
+
+~~~c
+ /*
+ * Structures used to implement a DNS server.
+ */
+struct evdns_server_request {
+	int flags;
+	int nquestions;
+	struct evdns_server_question **questions;
+};
+~~~
+

@@ -834,5 +834,9 @@ struct evdns_server_request {
 	int nquestions;
 	struct evdns_server_question **questions;
 };
+
+#define EVDNS_QTYPE_ALL  255;
+#define EVDNS_QTYPE_AXFR 252;
+
 ~~~
 

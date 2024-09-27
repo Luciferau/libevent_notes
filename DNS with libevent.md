@@ -732,16 +732,44 @@ flags参数可以是0，也可以用DNS_QUERY_NO_SEARCH明确禁止原始查询�
 
 ## DNS ERRORCODE
 
-| 错误码                  | 意义             |
-| -------------------- | -------------- |
-| DNS_ERR_NONE         | 没有错误           |
-| DNS_ERR_FORMAT       | 服务器不识别查询请求     |
-| DNS_ERR_SERVERFAILED | 服务器内部错误        |
-| DNS_ERR_NOTEXIST     | 没有给定名字的记录      |
-| DNS_ERR_NOTIMPL      | 服务器不识别这种类型的查询  |
-| DNS_ERR_REFUSED      | 因为策略设置，服务器拒绝查询 |
-| DNS_ERR_TRUNCATED    | DNS记录不适合UDP分组  |
-| DNS_ERR_UNKNOWN      | 未知的内部错误        |
-| DNS_ERR_TIMEOUT      | 等待超时           |
-| DNS_ERR_SHUTDOWN     | 用户请求关闭evdns系统  |
-| DNS_ERR_CANCEL       | 用户请求取消查询       |
+| <center></center>错误码                              | 意义             |
+| ------------------------------------------------- | -------------- |
+| <font color="#8064a2">DNS_ERR_NONE</font>         | 没有错误           |
+| <font color="#8064a2">DNS_ERR_FORMAT</font>       | 服务器不识别查询请求     |
+| <font color="#8064a2">DNS_ERR_SERVERFAILED</font> | 服务器内部错误        |
+| <font color="#8064a2">DNS_ERR_NOTEXIST</font>     | 没有给定名字的记录      |
+| <font color="#8064a2">DNS_ERR_NOTIMPL</font>      | 服务器不识别这种类型的查询  |
+| <font color="#8064a2">DNS_ERR_REFUSED</font>      | 因为策略设置，服务器拒绝查询 |
+| <font color="#8064a2">DNS_ERR_TRUNCATED</font>    | DNS记录不适合UDP分组  |
+| <font color="#8064a2">DNS_ERR_UNKNOWN</font>      | 未知的内部错误        |
+| <font color="#8064a2">DNS_ERR_TIMEOUT</font>      | 等待超时           |
+| <font color="#8064a2">DNS_ERR_SHUTDOWN</font>     | 用户请求关闭evdns系统  |
+| <font color="#8064a2">DNS_ERR_CANCEL</font>       | 用户请求取消查询       |
+
+可以用下述函数将错误码转换成错误描述字符串
+
+~~~c
+const char *
+evdns_err_to_string(int err)
+{
+    switch (err) {
+	case DNS_ERR_NONE: return "no error";
+	case DNS_ERR_FORMAT: return "misformatted query";
+	case DNS_ERR_SERVERFAILED: return "server failed";
+	case DNS_ERR_NOTEXIST: return "name does not exist";
+	case DNS_ERR_NOTIMPL: return "query not implemented";
+	case DNS_ERR_REFUSED: return "refused";
+
+	case DNS_ERR_TRUNCATED: return "reply truncated or ill-formed";
+	case DNS_ERR_UNKNOWN: return "unknown";
+	case DNS_ERR_TIMEOUT: return "request timed out";
+	case DNS_ERR_SHUTDOWN: return "dns subsystem shut down";
+	case DNS_ERR_CANCEL: return "dns request canceled";
+	case DNS_ERR_NODATA: return "no records in the reply";
+	default: return "[Unknown error code]";
+    }
+}	
+~~~
+
+每个解析函数都返回不透明的evdns_request结构体指针。回调函数被调用前的任何时候都可以用这个指针来取消请求：
+

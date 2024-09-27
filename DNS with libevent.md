@@ -838,5 +838,53 @@ struct evdns_server_request {
 #define EVDNS_QTYPE_ALL  255;
 #define EVDNS_QTYPE_AXFR 252;
 
+
+/*
+ * Structures used to implement a DNS server.
+ */
+
+struct evdns_server_request {
+	int flags;
+	int nquestions;
+	struct evdns_server_question **questions;
+};
+struct evdns_server_question {
+	int type;
+#ifdef __cplusplus
+	int dns_question_class;
+#else
+	/* You should refer to this field as "dns_question_class".  The
+	 * name "class" works in C for backward compatibility, and will be
+	 * removed in a future version. (1.5 or later). */
+	int class;
+#define dns_question_class class
+#endif
+	char name[1];
+};
+
+#ifdef __cplusplus
+}
+#endif
+
+
 ~~~
 
+flags字段包含请求中设置的DNS标志；nquestions字段是请求中的问题数；questions是evdns_server_question结构体指针数组。每个evdns_server_question包含请求的资源类型（请看下面的EVDNS_*_TYPE宏列表）、请求类别（通常为EVDNS_CLASS_INET），以及请求的主机名。
+
+这些结构体在1.3版本中引入，但是1.4版之前的名字是dns_question_class。名字中的“class”会让C++用户迷惑。仍然使用原来的“class”名字的C程序将不能在未来发布版本中正确工作。
+
+~~~c
+int evdns_server_request_get_requesting_addr(struct evdns_server_request *req, 
+                                             struct sockaddr *sa, int addr_len);
+ 
+~~~
+
+有时候需要知道某特定DNS请求来自何方，这时调用evdns_server_request_get_requesting_add()就可以了。应该传入有足够存储空间以容量地址的sockaddr：建议使用sockaddr_storage结构体。
+
+这个函数在1.3版本中引入。	
+
+## Response DNS request
+ 
+DNS服务器收到每个请求后，会将请求传递给用户提供的回调函数，还带有用户数据指针。回调函数必须响应请求或者忽略请求，或者确保请求最终会被回答或者忽略。
+
+回应请求前可以向回应中添加一个或者多个答案：

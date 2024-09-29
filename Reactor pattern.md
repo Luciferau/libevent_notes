@@ -41,3 +41,4 @@ The reactor pattern (or a variant of it) has found a place in many web servers,Â
 - [Twisted](https://en.wikipedia.org/wiki/Twisted_(software) "Twisted (software)")[[9]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Twisted_2024-10)
 - [Vert.x](https://en.wikipedia.org/wiki/Vert.x "Vert.x")[[3]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Escoffier_2021-3)
 # structure 
+![reactor](images/Reactor_Pattern_-_UML_2_Component_Diagram.svg)

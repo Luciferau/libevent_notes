@@ -68,3 +68,5 @@ Also known as a request handler, this is the specific logic for processing one t
 ### Event Handler Interface
 
 An abstract interface class, representing the general properties and methods of an event handler. Each specific handler must implement this interface while the dispatcher will operate on the event handlers through this interface.
+
+[C10k problem - Wikipedia](https://en.wikipedia.org/wiki/C10k_problem)

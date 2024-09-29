@@ -46,3 +46,25 @@ UML 2 component diagram of a reactive application.[[1](https://en.wikipedia.org/
 UML 2 sequence diagram of a reactive server.[[1]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Schmidt_1995-1)
 
 ![](images/ReactorPattern_-_UML_2_Sequence_Diagram.svg)
+
+A reactive application consists of several moving parts and will rely on some support mechanisms:[[1]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Schmidt_1995-1)
+
+### Handle
+
+An identifier and interface to a specific request, with IO and data. This will often take the form of a socket, file descriptor, or similar mechanism, which should be provided by most modern operating systems.
+
+### Demultiplexer
+
+An event notifier that can efficiently monitor the _status_ of a handle, then notify other subsystems of a relevant status change (typically an IO handle becoming "ready to read"). Traditionally this role was filled by the [select() system call](https://en.wikipedia.org/wiki/Select_(Unix) "Select (Unix)"), but more contemporary examples include [epoll](https://en.wikipedia.org/wiki/Epoll "Epoll"), [kqueue](https://en.wikipedia.org/wiki/Kqueue "Kqueue"), and [IOCP](https://en.wikipedia.org/wiki/IOCP "IOCP").
+
+### Dispatcher
+
+The actual event loop of the reactive application, this component maintains the registry of valid event handlers, then invokes the appropriate handler when an event is raised.
+
+### Event Handler
+
+Also known as a request handler, this is the specific logic for processing one type of service request. The reactor pattern suggests registering these dynamically with the dispatcher as callbacks for greater flexibility. By default, a reactor does _not_ use multi-threading but invokes a request handler within the same thread as the dispatcher.
+
+### Event Handler Interface
+
+An abstract interface class, representing the general properties and methods of an event handler. Each specific handler must implement this interface while the dispatcher will operate on the event handlers through this interface.

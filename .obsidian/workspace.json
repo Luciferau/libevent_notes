@@ -13,13 +13,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Memory management.md",
+                "file": "libevent_structure.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "ab4dd55b24ec8c16",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Reactor pattern.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -48,7 +61,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Memory management.md"
+                "file": "Reactor pattern.md"
               }
             }
           },
@@ -95,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Memory management.md",
+                "file": "Reactor pattern.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -112,7 +125,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Memory management.md",
+                "file": "Reactor pattern.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -135,7 +148,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Memory management.md"
+                "file": "Reactor pattern.md"
               }
             }
           },
@@ -184,15 +197,19 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "da7c6af468aafc41",
+  "active": "ab4dd55b24ec8c16",
   "lastOpenFiles": [
+    "libevent_structure.md",
+    "Reactor pattern.md",
+    "Build event.md",
+    "evconnlistener.md",
+    "libevent 中文文档_lucifer.pdf",
+    "Event loop.md",
+    "event_base.md",
     "README.md",
     "Memory management.md",
     "Macro function.md",
     "Variadic function.md",
-    "event_base.md",
-    "Event loop.md",
-    "libevent 中文文档_lucifer.pdf",
     "epoll API.md",
     "TODO Lists.md",
     "Macro definition.md",
@@ -200,10 +217,7 @@
     "Bufferevent and evbuffer.md",
     "Bufferevent Advanced Topics.md",
     "Bufferevent and SSL.md",
-    "Build event.md",
     "evbuffer.md",
-    "libevent_structure.md",
-    "evconnlistener.md",
     "DNS with libevent.md",
     "images/Pasted image 20240923224952.png",
     "CppGuide/articles/程序员的烦心事/我是一名程序员，结婚时女友要求我用两年的工资作为彩礼，我该不该答应？.md",
@@ -214,7 +228,6 @@
     "images/libevent.png",
     "CppGuide/articles/网络编程/非阻塞模式下send和recv函数的返回值.md",
     "CppGuide/articles/网络编程/网络通信中收发数据的正确姿势.md",
-    "CppGuide/articles/网络编程/服务器端发数据时，如果对端一直不收，怎么办？.md",
     "CppGuide/articles/网络编程",
     "CppGuide/articles/程序员面试题精讲",
     "CppGuide/articles/程序员的简历",

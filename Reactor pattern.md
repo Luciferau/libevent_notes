@@ -1,1 +1,1 @@
-The reactor sofftware design pattern is an event handing strate
+The reactor sofftware design pattern is an event handing strategy that can respond to many potential service requests concurrently

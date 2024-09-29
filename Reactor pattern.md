@@ -27,4 +27,17 @@ However, the reactor pattern does have limitations, a major one being the use of
 Single-threading can also become a drawback in use-cases that require maximum throughput, or when requests involve significant processing. Different multi-threaded designs can overcome these limitations, and in fact, some still use the reactor pattern as a sub-component for handling events and I/O.[[1]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Schmidt_1995-1)
 
 
-# Applica
+# Applications
+The reactor pattern (or a variant of it) has found a place in many web servers, [application servers](https://en.wikipedia.org/wiki/Application_server "Application server"), and networking frameworks:
+
+- [Adaptive Communication Environment](https://en.wikipedia.org/wiki/Adaptive_Communication_Environment "Adaptive Communication Environment")[[1]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Schmidt_1995-1)
+- [EventMachine](https://en.wikipedia.org/wiki/EventMachine "EventMachine")[_[citation needed](https://en.wikipedia.org/wiki/Wikipedia:Citation_needed "Wikipedia:Citation needed")_]
+- [Netty](https://en.wikipedia.org/wiki/Netty_(software) "Netty (software)")[[3]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Escoffier_2021-3)
+- [Nginx](https://en.wikipedia.org/wiki/Nginx "Nginx")[[4]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Garrett_2015-4)
+- [Node.js](https://en.wikipedia.org/wiki/Node.js "Node.js")[[2]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Devresse_2014-2)[[6]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Bon%C3%A9r_2022-7)
+- [Perl Object Environment](https://en.wikipedia.org/wiki/Perl_Object_Environment "Perl Object Environment")[_[citation needed](https://en.wikipedia.org/wiki/Wikipedia:Citation_needed "Wikipedia:Citation needed")_]
+- [POCO C++ Libraries](https://en.wikipedia.org/wiki/POCO_C%2B%2B_Libraries "POCO C++ Libraries")[[7]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-POCO_Network_Programming-8)
+- [Spring Framework](https://en.wikipedia.org/wiki/Spring_Framework "Spring Framework") (version 5 and later)[[8]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Stoyanchev_2016-9)
+- [Twisted](https://en.wikipedia.org/wiki/Twisted_(software) "Twisted (software)")[[9]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Twisted_2024-10)
+- [Vert.x](https://en.wikipedia.org/wiki/Vert.x "Vert.x")[[3]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Escoffier_2021-3)
+# structure 

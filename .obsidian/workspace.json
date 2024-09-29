@@ -44,7 +44,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -73,7 +73,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "word.md"
+                "file": "Reactor pattern.md"
               }
             }
           },
@@ -120,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "word.md",
+                "file": "Reactor pattern.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -137,7 +137,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "word.md",
+                "file": "Reactor pattern.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -160,7 +160,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "word.md"
+                "file": "Reactor pattern.md"
               }
             }
           },
@@ -209,10 +209,10 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "e35340117c9e52e1",
+  "active": "ab4dd55b24ec8c16",
   "lastOpenFiles": [
-    "Reactor pattern.md",
     "word.md",
+    "Reactor pattern.md",
     "libevent_structure.md",
     "Build event.md",
     "evconnlistener.md",

@@ -6,11 +6,11 @@
     "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
+      "📔",
       "LiListTodo",
       "LiStickyNote",
       "LiCode",
-      "LiImage",
-      "📓"
+      "LiImage"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -70,5 +70,6 @@
   "DNS with libevent.md": "📓",
   "images/Pasted image 20240923224952.png": "LiImage",
   "libevent 中文文档_lucifer.pdf": "📓",
-  "Reactor pattern.md": "📓"
+  "Reactor pattern.md": "📓",
+  "word.md": "📔"
 }

@@ -7,6 +7,6 @@ By relying on event-based mechanisms rather than [blocking I/O](https://en.wiki
 With its balance of simplicity and [scalability](https://en.wikipedia.org/wiki/Scalability "Scalability"), the reactor has become a central architectural element in several [server](https://en.wikipedia.org/wiki/Server_(computing) "Server (computing)") applications and [software frameworks](https://en.wikipedia.org/wiki/Software_framework "Software framework") for [networking](https://en.wikipedia.org/wiki/Computer_network "Computer network"). Derivations such as the **multireactor** and [proactor](https://en.wikipedia.org/wiki/Proactor_pattern "Proactor pattern") also exist for special cases where even greater throughput, performance, or request complexity are necessary.[[1]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Schmidt_1995-1)[[2]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Devresse_2014-2)[[3]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Escoffier_2021-3)[[4]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Garrett_2015-4)
 
 # Overview
-
+Practical considerations for the [client–server model](https://en.wikipedia.org/wiki/Client%E2%80%93server_model "Client–server model") in large networks, such as the [C10k problem](https://en.wikipedia.org/wiki/C10k_problem "C10k problem") for [web servers](https://en.wikipedia.org/wiki/Web_server "Web server"), were the original motivation for the reactor pattern.[[5]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Kegel_2014-5)
 
 

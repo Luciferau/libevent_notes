@@ -18,3 +18,13 @@ From a design standpoint, both approaches [tightly couple](https://en.wikipedia
 1. Retain a single-threaded event handler; multi-threading introduces overhead and complexity without resolving the real issue of blocking I/O
 2. Use an event notification mechanism to demultiplex requests only _after_ I/O is complete (so I/O is effectively non-blocking)
 3. Register request handlers as [callbacks](https://en.wikipedia.org/wiki/Callback_(computer_programming) "Callback (computer programming)") with the event handler for better [separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concern)
+
+# Usage
+The reactor pattern can be a good starting point for any concurrent, event-handling problem. The pattern is not restricted to network sockets either; hardware I/O, [file system](https://en.wikipedia.org/wiki/File_system "File system") or [database](https://en.wikipedia.org/wiki/Database "Database") access, [inter-process communication](https://en.wikipedia.org/wiki/Inter-process_communication "Inter-process communication"), and even abstract [message passing](https://en.wikipedia.org/wiki/Message_passing "Message passing") systems are all possible use-cases.[_[citation needed](https://en.wikipedia.org/wiki/Wikipedia:Citation_needed "Wikipedia:Citation needed")_]
+
+However, the reactor pattern does have limitations, a major one being the use of callbacks, which make [program analysis](https://en.wikipedia.org/wiki/Program_analysis "Program analysis") and [debugging](https://en.wikipedia.org/wiki/Debugging "Debugging") more difficult, a problem common to designs with [inverted control](https://en.wikipedia.org/wiki/Inversion_of_control "Inversion of control").[[1]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Schmidt_1995-1) The simpler thread-per-connection and fully iterative approaches avoid this and can be valid solutions if scalability or high-throughput are not required.[[a]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-6)[_[citation needed](https://en.wikipedia.org/wiki/Wikipedia:Citation_needed "Wikipedia:Citation needed")_]
+
+Single-threading can also become a drawback in use-cases that require maximum throughput, or when requests involve significant processing. Different multi-threaded designs can overcome these limitations, and in fact, some still use the reactor pattern as a sub-component for handling events and I/O.[[1]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Schmidt_1995-1)
+
+
+# Applica

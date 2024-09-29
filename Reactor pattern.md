@@ -41,4 +41,8 @@ The reactor pattern (or a variant of it) has found a place in many web servers,Â
 - [Twisted](https://en.wikipedia.org/wiki/Twisted_(software) "Twisted (software)")[[9]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Twisted_2024-10)
 - [Vert.x](https://en.wikipedia.org/wiki/Vert.x "Vert.x")[[3]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Escoffier_2021-3)
 # structure 
-![reactor](images/Reactor_Pattern_-_UML_2_Component_Diagram.svg)![](images/ReactorPattern_-_UML_2_Sequence_Diagram.svg)
+UML 2 component diagram of a reactive application.[[1](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Schmidt_1995-1)
+![reactor](images/Reactor_Pattern_-_UML_2_Component_Diagram.svg)
+UML 2 sequence diagram of a reactive server.[[1]](https://en.wikipedia.org/wiki/Reactor_pattern#cite_note-Schmidt_1995-1)
+
+![](images/ReactorPattern_-_UML_2_Sequence_Diagram.svg)

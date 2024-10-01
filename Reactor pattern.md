@@ -64,7 +64,7 @@ The actual event loop of the reactive application, this component maintains the 
 ### Event Handler
 
 Also known as a request handler, this is the specific logic for processing one type of service request. The reactor pattern suggests registering these dynamically with the dispatcher as callbacks for greater flexibility. By default, a reactor does _not_ use multi-threading but invokes a request handler within the same thread as the dispatcher.
-
+1
 ### Event Handler Interface
 
 An abstract interface class, representing the general properties and methods of an event handler. Each specific handler must implement this interface while the dispatcher will operate on the event handlers through this interface.

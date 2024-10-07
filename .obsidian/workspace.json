@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "word.md",
+                "file": "Helper types and functions.md",
                 "mode": "source",
                 "source": false
               }
@@ -35,13 +35,16 @@
             "id": "56fd4ab71a5860a1",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "images/Reactor_Pattern_-_UML_2_Component_Diagram.svg"
+                "file": "libevent_structure.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -97,7 +100,8 @@
               "state": {}
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -206,31 +210,31 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "da7c6af468aafc41",
+  "active": "db730313e0ffb1b4",
   "lastOpenFiles": [
+    "Helper types and functions.md",
+    "libevent_structure.md",
+    "Macro definition.md",
+    "Reactor pattern.md",
+    "word.md",
+    "TODO Lists.md",
+    "evbuffer.md",
+    "Event loop.md",
+    "images/Reactor_Pattern_-_UML_2_Component_Diagram.svg",
     "evconnlistener.md",
     "DNS with libevent.md",
-    "Reactor pattern.md",
-    "libevent_structure.md",
-    "word.md",
-    "images/Reactor_Pattern_-_UML_2_Component_Diagram.svg",
     "images/ReactorPattern_-_UML_2_Sequence_Diagram.svg",
     "Build event.md",
     "libevent 中文文档_lucifer.pdf",
-    "Event loop.md",
     "event_base.md",
     "README.md",
     "Memory management.md",
     "Macro function.md",
     "Variadic function.md",
     "epoll API.md",
-    "TODO Lists.md",
-    "Macro definition.md",
-    "Helper types and functions.md",
     "Bufferevent and evbuffer.md",
     "Bufferevent Advanced Topics.md",
     "Bufferevent and SSL.md",
-    "evbuffer.md",
     "images/Pasted image 20240923224952.png",
     "CppGuide/articles/程序员的烦心事/我是一名程序员，结婚时女友要求我用两年的工资作为彩礼，我该不该答应？.md",
     "CppGuide/articles/程序员的烦心事/拒绝了一家公司的offer后，他们的副总和hr总监同时打电话来询问拒绝原因并极力要求加入，我该不该去？.md",

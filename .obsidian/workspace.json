@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "libevent_structure.md",
+                "file": "Variadic function.md",
                 "mode": "source",
                 "source": false
               }
@@ -73,7 +73,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "libevent_structure.md"
+                "file": "Variadic function.md"
               }
             }
           },
@@ -100,8 +100,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -121,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "libevent_structure.md",
+                "file": "Variadic function.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -138,7 +137,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "libevent_structure.md",
+                "file": "Variadic function.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -161,7 +160,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "libevent_structure.md"
+                "file": "Variadic function.md"
               }
             }
           },
@@ -212,9 +211,10 @@
   },
   "active": "56fd4ab71a5860a1",
   "lastOpenFiles": [
+    "Memory management.md",
+    "libevent_structure.md",
     "Reactor pattern.md",
     "Helper types and functions.md",
-    "libevent_structure.md",
     "Macro definition.md",
     "word.md",
     "TODO Lists.md",
@@ -228,7 +228,6 @@
     "libevent 中文文档_lucifer.pdf",
     "event_base.md",
     "README.md",
-    "Memory management.md",
     "Macro function.md",
     "Variadic function.md",
     "epoll API.md",

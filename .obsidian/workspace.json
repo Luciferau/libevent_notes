@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Reactor pattern.md",
+                "file": "Helper types and functions.md",
                 "mode": "source",
                 "source": false
               }
@@ -73,7 +73,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Reactor pattern.md"
+                "file": "Helper types and functions.md"
               }
             }
           },
@@ -120,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Reactor pattern.md",
+                "file": "Helper types and functions.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -137,7 +137,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Reactor pattern.md",
+                "file": "Helper types and functions.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -160,7 +160,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Reactor pattern.md"
+                "file": "Helper types and functions.md"
               }
             }
           },
@@ -211,10 +211,10 @@
   },
   "active": "56fd4ab71a5860a1",
   "lastOpenFiles": [
+    "Reactor pattern.md",
     "libevent_structure.md",
     "Variadic function.md",
     "Memory management.md",
-    "Reactor pattern.md",
     "Helper types and functions.md",
     "Macro definition.md",
     "word.md",

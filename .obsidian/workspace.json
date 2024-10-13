@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Variadic function.md",
+                "file": "Reactor pattern.md",
                 "mode": "source",
                 "source": false
               }
@@ -73,7 +73,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Variadic function.md"
+                "file": "Reactor pattern.md"
               }
             }
           },
@@ -120,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Variadic function.md",
+                "file": "Reactor pattern.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -137,7 +137,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Variadic function.md",
+                "file": "Reactor pattern.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -160,7 +160,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Variadic function.md"
+                "file": "Reactor pattern.md"
               }
             }
           },
@@ -211,8 +211,9 @@
   },
   "active": "56fd4ab71a5860a1",
   "lastOpenFiles": [
-    "Memory management.md",
     "libevent_structure.md",
+    "Variadic function.md",
+    "Memory management.md",
     "Reactor pattern.md",
     "Helper types and functions.md",
     "Macro definition.md",
@@ -229,7 +230,6 @@
     "event_base.md",
     "README.md",
     "Macro function.md",
-    "Variadic function.md",
     "epoll API.md",
     "Bufferevent and evbuffer.md",
     "Bufferevent Advanced Topics.md",

@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Reactor pattern.md",
+                "file": "libevent_structure.md",
                 "mode": "source",
                 "source": false
               }
@@ -70,7 +70,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Reactor pattern.md"
+                "file": "libevent_structure.md"
               }
             }
           },
@@ -117,7 +117,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Reactor pattern.md",
+                "file": "libevent_structure.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -134,7 +134,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Reactor pattern.md",
+                "file": "libevent_structure.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               }
@@ -157,7 +157,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Reactor pattern.md"
+                "file": "libevent_structure.md"
               }
             }
           },
@@ -208,11 +208,11 @@
   },
   "active": "da7c6af468aafc41",
   "lastOpenFiles": [
+    "Variadic function.md",
+    "Reactor pattern.md",
     "Helper types and functions.md",
     "libevent-book/event_states.svg",
     "libevent-book/event_states.png",
-    "Reactor pattern.md",
-    "Variadic function.md",
     "libevent_structure.md",
     "Memory management.md",
     "Macro definition.md",

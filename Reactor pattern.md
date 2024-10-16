@@ -1227,3 +1227,5 @@ void IPCClient::stop(){
 
 }
 ~~~
+
+## IPCServer

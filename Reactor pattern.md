@@ -1101,7 +1101,7 @@ private:
     * \brief A flag to control the client processing thread
 
     */
-
+	//控制线程是否结束
     std::atomic<bool> ipcclient_done_;
 
   

@@ -97,8 +97,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -207,7 +206,7 @@
       "markdown-importer:打开 Markdown 格式转换器": false
     }
   },
-  "active": "da7c6af468aafc41",
+  "active": "e35340117c9e52e1",
   "lastOpenFiles": [
     "Variadic function.md",
     "Reactor pattern.md",
